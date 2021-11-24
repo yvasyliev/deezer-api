@@ -3,3 +3,4 @@
 *.txt
 .idea
 *.iml
+src/test/java/*.java
