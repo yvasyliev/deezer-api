@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @param <T> data type
  */
-public abstract class Data<T> {
+public class Data<T> {
     /**
      * List of data
      */
