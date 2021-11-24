@@ -14,7 +14,7 @@ public class URLParamsEncoder {
      * Encodes request params into URL-encoded params.
      *
      * @param params request params.
-     * @return a string format <i>key1=value1&key2=value2...</i>
+     * @return a string format <i>key1=value1{@literal &}key2=value2...</i>
      * @throws UnsupportedEncodingException if errors occur.
      */
     public static String encode(Map<String, String> params) throws UnsupportedEncodingException {
