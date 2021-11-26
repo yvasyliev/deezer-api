@@ -1,5 +1,7 @@
-package api.deezer.http;
+package api.deezer.http.impl;
 
+import api.deezer.http.HttpClient;
+import api.deezer.http.HttpRequest;
 import api.deezer.http.utils.URLParamsEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

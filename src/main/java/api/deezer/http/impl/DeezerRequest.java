@@ -3,7 +3,6 @@ package api.deezer.http.impl;
 import api.deezer.converters.Converter;
 import api.deezer.converters.GsonConverter;
 import api.deezer.exceptions.DeezerException;
-import api.deezer.http.DefaultHttpClient;
 import api.deezer.http.HttpClient;
 import api.deezer.http.HttpRequest;
 
