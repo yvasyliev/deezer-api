@@ -36,11 +36,11 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 ```java
 DeezerApi deezerApi=new DeezerApi();
 
-        Album album=deezerApi.album().getById(302127).execute();
-        System.out.println(album);
+Album album=deezerApi.album().getById(302127).execute();
+System.out.println(album);
 
-        TrackData trackData=deezerApi.search().searchTrack("eminem").execute();
-        System.out.println(trackData);
+TrackData trackData=deezerApi.search().searchTrack("eminem").execute();
+System.out.println(trackData);
 ```
 
 ## OAuth
@@ -60,12 +60,12 @@ SpringBoot + ngrok). To authorize the user:
 
 ```java
 int appId=123;
-        String redirectUri="your.domain.com";
+String redirectUri="your.domain.com";
 
-        DeezerApi deezerApi=new DeezerApi();
+DeezerApi deezerApi=new DeezerApi();
 
-        String loginUrl=deezerApi.auth().getLoginUrl(appId,redirectUri,Permission.BASIC_ACCESS);
-        System.out.println(loginUrl); // https://connect.deezer.com/oauth/auth.php?app_id=123&redirect_uri=your.domain.com&perms=basic_access
+String loginUrl=deezerApi.auth().getLoginUrl(appId,redirectUri,Permission.BASIC_ACCESS);
+System.out.println(loginUrl); // https://connect.deezer.com/oauth/auth.php?app_id=123&redirect_uri=your.domain.com&perms=basic_access
 ```
 
 2. Open `loginUrl` in your browser and login to Deezer.
@@ -76,22 +76,22 @@ int appId=123;
 
 ```java
 int appId=123;
-        String secret="secret_string";
-        String code="A_CODE_GENERATED_BY_DEEZER";
+String secret="secret_string";
+String code="A_CODE_GENERATED_BY_DEEZER";
 
-        AccessToken accessToken=deezerApi.auth().getAccessToken(appId,secret,code).execute();
-        System.out.println(accessToken);
+AccessToken accessToken=deezerApi.auth().getAccessToken(appId,secret,code).execute();
+System.out.println(accessToken);
 ```
 
 Now all Deezer API requests will be available for you:
 
 ```java
 String accessToken="access_token";
-        DeezerApi deezerApi=new DeezerApi(accessToken);
+DeezerApi deezerApi=new DeezerApi(accessToken);
 
-        User me=deezerApi.user().getMe().execute();
-        System.out.println(me);
+User me=deezerApi.user().getMe().execute();
+System.out.println(me);
 
-        TrackData favouriteTracks=deezerApi.user().getFavouriteTracks(me.getId()).execute();
-        System.out.println(favouriteTracks);
+TrackData favouriteTracks=deezerApi.user().getFavouriteTracks(me.getId()).execute();
+System.out.println(favouriteTracks);
 ```
