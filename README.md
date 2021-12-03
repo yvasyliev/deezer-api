@@ -27,20 +27,24 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 <dependency>
     <groupId>com.github.yvasyliev</groupId>
     <artifactId>deezer-api</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
 2. Start the using of Deezer API:
 
 ```java
-DeezerApi deezerApi=new DeezerApi();
+public class DeezerApp {
+    public static void main(String[] args) {
+        DeezerApi deezerApi = new DeezerApi();
 
-Album album=deezerApi.album().getById(302127).execute();
-System.out.println(album);
+        Album album = deezerApi.album().getById(302127).execute();
+        System.out.println(album);
 
-TrackData trackData=deezerApi.search().searchTrack("eminem").execute();
-System.out.println(trackData);
+        TrackData trackData = deezerApi.search().searchTrack("eminem").execute();
+        System.out.println(trackData);
+    }
+}
 ```
 
 ## OAuth
@@ -59,39 +63,76 @@ SpringBoot + ngrok). To authorize the user:
 1. Create login URL:
 
 ```java
-int appId=123;
-String redirectUri="your.domain.com";
+public class DeezerApp {
+    /**
+     * Can be found at https://developers.deezer.com/myapps
+     */
+    private int appId = 123;
 
-DeezerApi deezerApi=new DeezerApi();
+    /**
+     * Your domain where user will be redirected to.
+     */
+    private String redirectUri = "your.domain.com";
 
-String loginUrl=deezerApi.auth().getLoginUrl(appId,redirectUri,Permission.BASIC_ACCESS);
-System.out.println(loginUrl); // https://connect.deezer.com/oauth/auth.php?app_id=123&redirect_uri=your.domain.com&perms=basic_access
+    private DeezerApi deezerApi = new DeezerApi();
+
+    public static void main(String[] args) {
+        String loginUrl = deezerApi.auth().getLoginUrl(appId, redirectUri, Permission.BASIC_ACCESS);
+        System.out.println(loginUrl); // https://connect.deezer.com/oauth/auth.php?app_id=123&redirect_uri=your.domain.com&perms=basic_access
+    }
+}
 ```
 
 2. Open `loginUrl` in your browser and login to Deezer.
 3. Accept application permissions.
-4. You will be redirected to `redirectUri` and the `code` will in URL parameters:<br/>
+4. You will be redirected to `redirectUri` and the `code` will be in the URL parameters:<br/>
    `http://redirect_uri?code=A_CODE_GENERATED_BY_DEEZER`
 5. Create a request to get `access_token`:
 
 ```java
-int appId=123;
-String secret="secret_string";
-String code="A_CODE_GENERATED_BY_DEEZER";
+public class DeezerApp {
+    /**
+     * Can be found at https://developers.deezer.com/myapps
+     */
+    private int appId = 123;
 
-AccessToken accessToken=deezerApi.auth().getAccessToken(appId,secret,code).execute();
-System.out.println(accessToken);
+    /**
+     * Can be found at https://developers.deezer.com/myapps
+     */
+    private String secret = "secret_string";
+
+    /**
+     * A code from step 4
+     */
+    private String code = "A_CODE_GENERATED_BY_DEEZER";
+
+    private DeezerApi deezerApi = new DeezerApi();
+
+    public static void main(String[] args) {
+        AccessToken accessToken = deezerApi.auth().getAccessToken(appId, secret, code).execute();
+        System.out.println(accessToken);
+    }
+}
 ```
 
 Now all Deezer API requests will be available for you:
 
 ```java
-String accessToken="access_token";
-DeezerApi deezerApi=new DeezerApi(accessToken);
+import api.deezer.objects.AccessToken;
 
-User me=deezerApi.user().getMe().execute();
-System.out.println(me);
+public class DeezerApp {
+    /**
+     * Access token from step 5
+     */
+    private AccessToken accessToken = new AccessToken(); // just to demonstrate
+    private DeezerApi deezerApi = new DeezerApi(accessToken);
 
-TrackData favouriteTracks=deezerApi.user().getFavouriteTracks(me.getId()).execute();
-System.out.println(favouriteTracks);
+    public static void main(String[] args) {
+        User me = deezerApi.user().getMe().execute();
+        System.out.println(me);
+
+        TrackData favouriteTracks = deezerApi.user().getFavouriteTracks(me.getId()).execute();
+        System.out.println(favouriteTracks);
+    }
+}
 ```

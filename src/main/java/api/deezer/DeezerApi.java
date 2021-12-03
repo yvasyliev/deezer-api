@@ -1,5 +1,6 @@
 package api.deezer;
 
+import api.deezer.objects.AccessToken;
 import api.deezer.requests.*;
 
 /**
@@ -16,6 +17,10 @@ public class DeezerApi {
 
     public DeezerApi(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public DeezerApi(AccessToken accessToken) {
+        this(accessToken.getAccessToken());
     }
 
     /**
@@ -133,5 +138,14 @@ public class DeezerApi {
      */
     public UserRequests user() {
         return new UserRequests(accessToken);
+    }
+
+    public DeezerApi setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+        return this;
+    }
+
+    public DeezerApi setAccessToken(AccessToken accessToken) {
+        return setAccessToken(accessToken.getAccessToken());
     }
 }
