@@ -7,6 +7,7 @@ import api.deezer.http.HttpClient;
 import api.deezer.http.HttpRequest;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -38,7 +39,9 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     public DeezerRequest(String url, Map<String, String> params, Class<Response> responseClass) {
         this.url = url;
         this.params = params;
-        setHttpClient(new DefaultHttpClient());
+        setHttpClient(new DefaultHttpClient() {{
+            setSensitiveParamKeys(Collections.singletonList("access_token"));
+        }});
         setResponseConverter(new GsonConverter<>(responseClass));
     }
 
