@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -26,21 +24,14 @@ public class DefaultHttpClient implements HttpClient {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpClient.class);
 
-    /**
-     * List of keys to hide sensitive params from logging.
-     */
-    private List<String> sensitiveParamKeys = Collections.emptyList();
-
     @Override
     public String execute(HttpRequest httpRequest) throws IOException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(
-                    "Request: {} {}{}",
-                    httpRequest.getRequestMethod(),
-                    httpRequest.getUrl(),
-                    toUrlParams(httpRequest.getParams())
-            );
-        }
+        LOGGER.debug(
+                "Request: method={}, url={}, params={}",
+                httpRequest.getRequestMethod(),
+                httpRequest.getUrl(),
+                httpRequest.getParams()
+        );
 
         HttpURLConnection connection = null;
         try {
@@ -66,44 +57,5 @@ public class DefaultHttpClient implements HttpClient {
                 connection.disconnect();
             }
         }
-    }
-
-    /**
-     * Converts HTTP params to URL params hiding sensitive values.
-     *
-     * @param params HTTP params.
-     * @return URL params.
-     */
-    private String toUrlParams(Map<String, String> params) {
-        String urlParams = "";
-        if (params != null && !params.isEmpty()) {
-            urlParams = '?' + params.entrySet().stream()
-                    .map(entry -> {
-                        String key = entry.getKey();
-                        String value = entry.getValue();
-                        if (sensitiveParamKeys.contains(key)) {
-                            value = hide(value);
-                        }
-                        return key + "=" + value;
-                    })
-                    .collect(Collectors.joining("&"));
-        }
-        return urlParams;
-    }
-
-    /**
-     * Hides sensitive values from logging.
-     *
-     * @param value sensitive value.
-     * @return non-sensitive value.
-     */
-    private String hide(String value) {
-        int i = value.length() - 4;
-        i = i > 0 ? i : value.length();
-        return String.join("", Collections.nCopies(i, "*")) + value.substring(i);
-    }
-
-    public void setSensitiveParamKeys(List<String> sensitiveParamKeys) {
-        this.sensitiveParamKeys = sensitiveParamKeys;
     }
 }
