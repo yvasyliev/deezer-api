@@ -31,7 +31,7 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 </dependency>
 ```
 
-2. Start the using of Deezer API:
+2. Create and execute Deezer API requests:
 
 ```java
 public class DeezerApp {
@@ -50,84 +50,57 @@ public class DeezerApp {
 ## OAuth
 
 Some Deezer API requests should be executed with `access_token` param passed.<br/>
-To obtain `access_token` your application must be registered and the user must be authorized.<br/>
-To register your app:
+To obtain `access_token` our application must be registered and the user must be authorized.<br/>
+To register new app:
 
 1. Go to https://developers.deezer.com/myapps
 2. Create new Application.
 
-Now you are ready to authorize the user. Deezer uses OAuth 2.0 protocol for authentication and authorization.<br/>
-*Important:* you must have a domain and a server available to recieve the `code` after user authorization (e.g.
-SpringBoot + ngrok). To authorize the user:
+Now we are ready to authorize the user. Deezer uses OAuth 2.0 protocol for authentication and authorization.<br/>
 
-1. Create login URL:
+### Authorization flow example
 
 ```java
 public class DeezerApp {
     /**
      * Can be found at https://developers.deezer.com/myapps
      */
-    private int appId = 123;
+    private static final int APP_ID = 123;
+
+    /**
+     * Can be found at https://developers.deezer.com/myapps
+     */
+    private static final String SECRET = "secret_string";
 
     /**
      * Your domain where user will be redirected to.
      */
-    private String redirectUri = "your.domain.com";
-
-    private DeezerApi deezerApi = new DeezerApi();
+    private static final String REDIRECT_URI = "your.domain.com";
 
     public static void main(String[] args) {
-        String loginUrl = deezerApi.auth().getLoginUrl(appId, redirectUri, Permission.BASIC_ACCESS);
+        DeezerApi deezerApi = new DeezerApi();
+
+        // Step 1. Create login URL.
+        String loginUrl = deezerApi.auth().getLoginUrl(APP_ID, REDIRECT_URI, Permission.BASIC_ACCESS);
         System.out.println(loginUrl); // https://connect.deezer.com/oauth/auth.php?app_id=123&redirect_uri=your.domain.com&perms=basic_access
-    }
-}
-```
 
-2. Open `loginUrl` in your browser and login to Deezer.
-3. Accept application permissions.
-4. You will be redirected to `redirectUri` and the `code` will be in the URL parameters:<br/>
-   `http://redirect_uri?code=A_CODE_GENERATED_BY_DEEZER`
-5. Create a request to get `access_token`:
+        /*
+         * Step 2. Authorize.
+         *
+         *      1. Open loginUrl in your browser.
+         *      2. Login to Deezer. (if haven't done yet)
+         *      3. Accept application permissions.
+         *      4. Find a 'code' parameter in URL after redirection to:
+         *          http://redirect_uri?code=A_CODE_GENERATED_BY_DEEZER
+         */
+        System.out.print("Please enter code: ");
+        String code = new Scanner(System.in).next();
 
-```java
-public class DeezerApp {
-    /**
-     * Can be found at https://developers.deezer.com/myapps
-     */
-    private int appId = 123;
+        // Step 3. Get access_token.
+        AccessToken accessToken = deezerApi.auth().getAccessToken(APP_ID, SECRET, code).execute();
+        deezerApi.setAccessToken(accessToken);
 
-    /**
-     * Can be found at https://developers.deezer.com/myapps
-     */
-    private String secret = "secret_string";
-
-    /**
-     * A code from step 4
-     */
-    private String code = "A_CODE_GENERATED_BY_DEEZER";
-
-    private DeezerApi deezerApi = new DeezerApi();
-
-    public static void main(String[] args) {
-        AccessToken accessToken = deezerApi.auth().getAccessToken(appId, secret, code).execute();
-        System.out.println(accessToken);
-    }
-}
-```
-
-Now all Deezer API requests will be available for you:
-
-```java
-import api.deezer.objects.AccessToken;
-
-public class DeezerApp {
-    /**
-     * Access token from step 5
-     */
-    private AccessToken accessToken = new AccessToken(); // just to demonstrate
-    private DeezerApi deezerApi = new DeezerApi(accessToken);
-
-    public static void main(String[] args) {
+        // Now we are ready to execute any request we want.
         User me = deezerApi.user().getMe().execute();
         System.out.println(me);
 
