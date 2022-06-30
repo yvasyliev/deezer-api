@@ -12,11 +12,11 @@ public class TracksDataConverter extends GsonConverter<TrackData> {
     }
 
     @Override
-    public TrackData covert(String response) {
+    public TrackData convert(String response) {
         JsonElement jsonElement = super.getGson().fromJson(response, JsonElement.class);
         boolean isFalse = jsonElement.isJsonPrimitive()
                 && jsonElement.getAsJsonPrimitive().isBoolean()
                 && !jsonElement.getAsJsonPrimitive().getAsBoolean();
-        return isFalse ? null : super.covert(response);
+        return isFalse ? null : super.convert(response);
     }
 }

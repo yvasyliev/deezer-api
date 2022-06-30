@@ -23,7 +23,7 @@ public class GsonConverter<Response> implements Converter<String, Response> {
     }
 
     @Override
-    public Response covert(String response) {
+    public Response convert(String response) {
         return gson.fromJson(response, clazz);
     }
 

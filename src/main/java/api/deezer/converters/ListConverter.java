@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  */
 public class ListConverter<T> implements Converter<List<T>, String> {
     @Override
-    public String covert(List<T> list) {
+    public String convert(List<T> list) {
         return list.stream().map(Object::toString).collect(Collectors.joining(","));
     }
 }

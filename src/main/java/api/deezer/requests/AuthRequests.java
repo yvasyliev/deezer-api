@@ -54,7 +54,7 @@ public class AuthRequests extends DeezerRequests {
                     "auth.url",
                     appId,
                     URLParamsEncoder.encode(redirectUri),
-                    URLParamsEncoder.encode(permissionsConverter.covert(perms))
+                    URLParamsEncoder.encode(permissionsConverter.convert(perms))
             );
         } catch (UnsupportedEncodingException e) {
             throw new DeezerException(e);

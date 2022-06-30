@@ -13,5 +13,5 @@ public interface HttpClient {
      * @return response body.
      * @throws IOException if errors occur.
      */
-    String execute(HttpRequest httpRequest) throws IOException;
+    HttpResponse execute(HttpRequest httpRequest) throws IOException;
 }

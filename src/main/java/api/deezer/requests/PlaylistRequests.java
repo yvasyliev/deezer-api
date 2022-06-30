@@ -100,7 +100,7 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> addTracks(int playlistId, List<Integer> trackIds) {
         Map<String, String> params = accessTokenParam();
-        params.put("songs", listConverter.covert(trackIds));
+        params.put("songs", listConverter.convert(trackIds));
         return new DeezerPostRequest<>(
                 property("playlist.tracks", playlistId),
                 params,
@@ -128,7 +128,7 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> orderTracks(int playlistId, List<Integer> trackIds) {
         Map<String, String> params = accessTokenParam();
-        params.put("order", listConverter.covert(trackIds));
+        params.put("order", listConverter.convert(trackIds));
         return new DeezerPostRequest<>(
                 property("playlist.tracks", playlistId),
                 params,
@@ -170,7 +170,7 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> removeTracks(long playlistId, List<Integer> trackIds) {
         Map<String, String> params = accessTokenParam();
-        params.put("songs", listConverter.covert(trackIds));
+        params.put("songs", listConverter.convert(trackIds));
         return new DeezerDeleteRequest<>(
                 property("playlist.get", playlistId),
                 params,

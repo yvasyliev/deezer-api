@@ -434,7 +434,7 @@ public class UserRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> addTracksToFavourites(List<Integer> trackIds) { // TODO: 21.11.2021 check if it's working
         Map<String, String> params = accessTokenParam();
-        params.put("songs", String.valueOf(listConverter.covert(trackIds)));
+        params.put("songs", String.valueOf(listConverter.convert(trackIds)));
         return new DeezerPostRequest<>(
                 property("user.tracks", "me"),
                 params,
