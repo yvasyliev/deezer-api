@@ -172,7 +172,7 @@ public class PlaylistRequests extends DeezerRequests {
         Map<String, String> params = accessTokenParam();
         params.put("songs", listConverter.covert(trackIds));
         return new DeezerDeleteRequest<>(
-                property("playlist.get", playlistId),
+                property("playlist.tracks", playlistId),
                 params,
                 Boolean.class
         );
