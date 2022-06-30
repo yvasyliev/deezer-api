@@ -3,10 +3,7 @@ package api.deezer.requests;
 import api.deezer.DeezerApi;
 import api.deezer.http.impl.DeezerRequest;
 import api.deezer.http.impl.PaginationRequest;
-import api.deezer.objects.GetPermissionsResponse;
-import api.deezer.objects.Options;
-import api.deezer.objects.SendNotificationResponse;
-import api.deezer.objects.User;
+import api.deezer.objects.*;
 import api.deezer.objects.data.*;
 import org.junit.jupiter.api.Test;
 
@@ -236,7 +233,7 @@ class UserRequestsTest {
 
     @Test
     void createPlaylist() {
-        DeezerRequest<Boolean> request = deezerApi.user().createPlaylist("my top tracks");
+        DeezerRequest<Id> request = deezerApi.user().createPlaylist("my top tracks");
         assertEquals("https://api.deezer.com/user/me/playlists", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
         assertEquals("my top tracks", request.getParams().get("title"));
