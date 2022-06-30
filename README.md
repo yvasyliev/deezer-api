@@ -35,7 +35,7 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 
 ```java
 public class DeezerApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DeezerException {
         DeezerApi deezerApi = new DeezerApi();
 
         Album album = deezerApi.album().getById(302127).execute();
@@ -61,6 +61,8 @@ Now we are ready to authorize the user. Deezer uses OAuth 2.0 protocol for authe
 ### Authorization flow example
 
 ```java
+import api.deezer.exceptions.DeezerException;
+
 public class DeezerApp {
     /**
      * Can be found at https://developers.deezer.com/myapps
@@ -77,7 +79,7 @@ public class DeezerApp {
      */
     private static final String REDIRECT_URI = "your.domain.com";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DeezerException {
         DeezerApi deezerApi = new DeezerApi();
 
         // Step 1. Create login URL.
