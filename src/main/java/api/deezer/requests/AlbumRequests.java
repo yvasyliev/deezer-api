@@ -17,7 +17,7 @@ public class AlbumRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return {@link Album} object.
      */
-    public DeezerRequest<Album> getById(int albumId) {
+    public DeezerRequest<Album> getById(long albumId) {
         return new DeezerGetRequest<>(property("album.get", albumId), Album.class);
     }
 
@@ -27,7 +27,7 @@ public class AlbumRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return album fans.
      */
-    public PaginationRequest<UserData> getFans(int albumId) {
+    public PaginationRequest<UserData> getFans(long albumId) {
         return new PaginationRequest<>(property("album.fans", albumId), UserData.class);
     }
 
@@ -37,7 +37,7 @@ public class AlbumRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return album tracks.
      */
-    public PaginationRequest<TrackData> getTracks(int albumId) {
+    public PaginationRequest<TrackData> getTracks(long albumId) {
         return new PaginationRequest<>(property("album.tracks", albumId), TrackData.class);
     }
 }

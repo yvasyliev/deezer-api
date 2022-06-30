@@ -14,7 +14,7 @@ public class Album extends ChartMember {
      * The Deezer album id
      */
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     /**
      * The album title
@@ -178,11 +178,11 @@ public class Album extends ChartMember {
     @SerializedName("tracks")
     private Data<Track> tracks;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

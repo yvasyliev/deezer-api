@@ -13,7 +13,7 @@ public class Track extends ChartMember {
      * The track's Deezer id
      */
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     /**
      * true if the track is readable in the player for the current user
@@ -165,11 +165,11 @@ public class Track extends ChartMember {
     @SerializedName("album")
     private Album album;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

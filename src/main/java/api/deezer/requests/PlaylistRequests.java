@@ -19,7 +19,7 @@ public class PlaylistRequests extends DeezerRequests {
     /**
      * Converts list of integers into comma separated values.
      */
-    private final Converter<List<Integer>, String> listConverter = new ListConverter<>();
+    private final Converter<List<Long>, String> listConverter = new ListConverter<>();
 
     public PlaylistRequests(String accessToken) {
         super(accessToken);
@@ -87,7 +87,7 @@ public class PlaylistRequests extends DeezerRequests {
      * @param trackIds   tracks IDs.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> addTracks(int playlistId, Integer... trackIds) {
+    public DeezerRequest<Boolean> addTracks(long playlistId, Long... trackIds) {
         return addTracks(playlistId, Arrays.asList(trackIds));
     }
 
@@ -98,7 +98,7 @@ public class PlaylistRequests extends DeezerRequests {
      * @param trackIds   tracks IDs.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> addTracks(int playlistId, List<Integer> trackIds) {
+    public DeezerRequest<Boolean> addTracks(long playlistId, List<Long> trackIds) {
         Map<String, String> params = accessTokenParam();
         params.put("songs", listConverter.covert(trackIds));
         return new DeezerPostRequest<>(
@@ -115,7 +115,7 @@ public class PlaylistRequests extends DeezerRequests {
      * @param trackIds   tracks IDs.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> orderTracks(int playlistId, Integer... trackIds) {
+    public DeezerRequest<Boolean> orderTracks(long playlistId, Long... trackIds) {
         return orderTracks(playlistId, Arrays.asList(trackIds));
     }
 
@@ -126,7 +126,7 @@ public class PlaylistRequests extends DeezerRequests {
      * @param trackIds   tracks IDs.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> orderTracks(int playlistId, List<Integer> trackIds) {
+    public DeezerRequest<Boolean> orderTracks(long playlistId, List<Long> trackIds) {
         Map<String, String> params = accessTokenParam();
         params.put("order", listConverter.covert(trackIds));
         return new DeezerPostRequest<>(
@@ -157,7 +157,7 @@ public class PlaylistRequests extends DeezerRequests {
      * @param trackIds   track IDs.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> removeTracks(long playlistId, Integer... trackIds) {
+    public DeezerRequest<Boolean> removeTracks(long playlistId, Long... trackIds) {
         return removeTracks(playlistId, Arrays.asList(trackIds));
     }
 
@@ -168,7 +168,7 @@ public class PlaylistRequests extends DeezerRequests {
      * @param trackIds   track IDs.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> removeTracks(long playlistId, List<Integer> trackIds) {
+    public DeezerRequest<Boolean> removeTracks(long playlistId, List<Long> trackIds) {
         Map<String, String> params = accessTokenParam();
         params.put("songs", listConverter.covert(trackIds));
         return new DeezerDeleteRequest<>(

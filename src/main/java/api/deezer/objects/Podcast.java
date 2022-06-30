@@ -10,7 +10,7 @@ public class Podcast extends ChartMember {
      * The podcast's Deezer id
      */
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     /**
      * The podcast's title
@@ -84,11 +84,11 @@ public class Podcast extends ChartMember {
     @SerializedName("picture_xl")
     private String picture_xl;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

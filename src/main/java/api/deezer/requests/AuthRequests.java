@@ -35,7 +35,7 @@ public class AuthRequests extends DeezerRequests {
      * @return full login URL.
      * @throws DeezerException if errors occur.
      */
-    public String getLoginUrl(int appId, String redirectUri, Permission... perms) throws DeezerException {
+    public String getLoginUrl(long appId, String redirectUri, Permission... perms) throws DeezerException {
         return getLoginUrl(appId, redirectUri, Arrays.asList(perms));
     }
 
@@ -48,7 +48,7 @@ public class AuthRequests extends DeezerRequests {
      * @return full login URL.
      * @throws DeezerException if errors occur.
      */
-    public String getLoginUrl(int appId, String redirectUri, List<Permission> perms) throws DeezerException {
+    public String getLoginUrl(long appId, String redirectUri, List<Permission> perms) throws DeezerException {
         try {
             return property(
                     "auth.url",
@@ -69,7 +69,7 @@ public class AuthRequests extends DeezerRequests {
      * @param code   login code.
      * @return Deezer <i>access_token</i>.
      */
-    public DeezerRequest<AccessToken> getAccessToken(int appId, String secret, String code) {
+    public DeezerRequest<AccessToken> getAccessToken(long appId, String secret, String code) {
         Map<String, String> params = new HashMap<>();
         params.put("app_id", String.valueOf(appId));
         params.put("secret", secret);

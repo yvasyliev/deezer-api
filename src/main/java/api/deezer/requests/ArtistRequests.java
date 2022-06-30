@@ -20,7 +20,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return {@link Artist} object.
      */
-    public DeezerRequest<Artist> getById(int artistId) {
+    public DeezerRequest<Artist> getById(long artistId) {
         return new DeezerGetRequest<>(property("artist.get", artistId), Artist.class);
     }
 
@@ -30,7 +30,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return artist's top five favourite tracks.
      */
-    public PaginationRequest<TrackData> getArtistTopFiveTracks(int artistId) {
+    public PaginationRequest<TrackData> getArtistTopFiveTracks(long artistId) {
         return new PaginationRequest<>(property("artist.top", artistId), TrackData.class);
     }
 
@@ -40,7 +40,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return artist's albums.
      */
-    public PaginationRequest<AlbumData> getAlbums(int artistId) {
+    public PaginationRequest<AlbumData> getAlbums(long artistId) {
         return new PaginationRequest<>(property("artist.albums", artistId), AlbumData.class);
     }
 
@@ -50,7 +50,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return artist fans.
      */
-    public PaginationRequest<UserData> getFans(int artistId) {
+    public PaginationRequest<UserData> getFans(long artistId) {
         return new PaginationRequest<>(property("artist.fans", artistId), UserData.class);
     }
 
@@ -60,7 +60,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return related artists.
      */
-    public PaginationRequest<ArtistData> getRelatedArtists(int artistId) {
+    public PaginationRequest<ArtistData> getRelatedArtists(long artistId) {
         return new PaginationRequest<>(property("artist.related", artistId), ArtistData.class);
     }
 
@@ -70,7 +70,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return artist radio.
      */
-    public PaginationRequest<TrackData> getRadio(int artistId) {
+    public PaginationRequest<TrackData> getRadio(long artistId) {
         return new PaginationRequest<>(property("artist.radio", artistId), TrackData.class);
     }
 
@@ -80,7 +80,7 @@ public class ArtistRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return artist's playlists.
      */
-    public PaginationRequest<PlaylistData> getPlaylists(int artistId) {
+    public PaginationRequest<PlaylistData> getPlaylists(long artistId) {
         return new PaginationRequest<>(property("artist.playlists", artistId), PlaylistData.class);
     }
 }

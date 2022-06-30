@@ -32,7 +32,7 @@ public class UserRequests extends DeezerRequests {
     /**
      * Converts list of integers to comma separated values.
      */
-    private final Converter<List<Integer>, String> listConverter = new ListConverter<>();
+    private final Converter<List<Long>, String> listConverter = new ListConverter<>();
 
     public UserRequests(String accessToken) {
         super(accessToken);
@@ -320,7 +320,7 @@ public class UserRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> addAlbumToLibrary(int albumId) {
+    public DeezerRequest<Boolean> addAlbumToLibrary(long albumId) {
         Map<String, String> params = accessTokenParam();
         params.put("album_id", String.valueOf(albumId));
         return new DeezerPostRequest<>(
@@ -336,7 +336,7 @@ public class UserRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> addArtistToFavourites(int artistId) {
+    public DeezerRequest<Boolean> addArtistToFavourites(long artistId) {
         Map<String, String> params = accessTokenParam();
         params.put("artist_id", String.valueOf(artistId));
         return new DeezerPostRequest<>(
@@ -352,7 +352,7 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID to follow.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> follow(int userId) {
+    public DeezerRequest<Boolean> follow(long userId) {
         Map<String, String> params = accessTokenParam();
         params.put("user_id", String.valueOf(userId));
         return new DeezerPostRequest<>(
@@ -400,7 +400,7 @@ public class UserRequests extends DeezerRequests {
      * @param podcastId podcast ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> addPodcastToFavourites(int podcastId) {
+    public DeezerRequest<Boolean> addPodcastToFavourites(long podcastId) {
         Map<String, String> params = accessTokenParam();
         params.put("podcast_id", String.valueOf(podcastId));
         return new DeezerPostRequest<>(
@@ -416,7 +416,7 @@ public class UserRequests extends DeezerRequests {
      * @param radioId radio ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> addRadioToFavourites(int radioId) {
+    public DeezerRequest<Boolean> addRadioToFavourites(long radioId) {
         Map<String, String> params = accessTokenParam();
         params.put("radio_id", String.valueOf(radioId));
         return new DeezerPostRequest<>(
@@ -432,7 +432,7 @@ public class UserRequests extends DeezerRequests {
      * @param trackIds tracks IDs.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> addTracksToFavourites(Integer... trackIds) {
+    public DeezerRequest<Boolean> addTracksToFavourites(Long... trackIds) {
         return addTracksToFavourites(Arrays.asList(trackIds));
     }
 
@@ -442,7 +442,7 @@ public class UserRequests extends DeezerRequests {
      * @param trackIds tracks IDs.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> addTracksToFavourites(List<Integer> trackIds) { // TODO: 21.11.2021 check if it's working
+    public DeezerRequest<Boolean> addTracksToFavourites(List<Long> trackIds) { // TODO: 21.11.2021 check if it's working
         Map<String, String> params = accessTokenParam();
         params.put("songs", String.valueOf(listConverter.covert(trackIds)));
         return new DeezerPostRequest<>(
@@ -458,7 +458,7 @@ public class UserRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> removeAlbum(int albumId) {
+    public DeezerRequest<Boolean> removeAlbum(long albumId) {
         Map<String, String> params = accessTokenParam();
         params.put("album_id", String.valueOf(albumId));
         return new DeezerDeleteRequest<>(
@@ -474,7 +474,7 @@ public class UserRequests extends DeezerRequests {
      * @param artistId artist ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> removeArtist(int artistId) {
+    public DeezerRequest<Boolean> removeArtist(long artistId) {
         Map<String, String> params = accessTokenParam();
         params.put("artist_id", String.valueOf(artistId));
         return new DeezerDeleteRequest<>(
@@ -522,7 +522,7 @@ public class UserRequests extends DeezerRequests {
      * @param podcastId podcast ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> removePodcast(int podcastId) {
+    public DeezerRequest<Boolean> removePodcast(long podcastId) {
         Map<String, String> params = accessTokenParam();
         params.put("podcast_id", String.valueOf(podcastId));
         return new DeezerDeleteRequest<>(
@@ -538,7 +538,7 @@ public class UserRequests extends DeezerRequests {
      * @param radio radio ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> removeRadio(int radio) {
+    public DeezerRequest<Boolean> removeRadio(long radio) {
         Map<String, String> params = accessTokenParam();
         params.put("radio_id", String.valueOf(radio));
         return new DeezerDeleteRequest<>(
@@ -554,7 +554,7 @@ public class UserRequests extends DeezerRequests {
      * @param trackId track ID.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> removeTrack(int trackId) {
+    public DeezerRequest<Boolean> removeTrack(long trackId) {
         Map<String, String> params = accessTokenParam();
         params.put("track_id", String.valueOf(trackId));
         return new DeezerDeleteRequest<>(
