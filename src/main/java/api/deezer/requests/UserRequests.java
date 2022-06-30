@@ -3,10 +3,7 @@ package api.deezer.requests;
 import api.deezer.converters.Converter;
 import api.deezer.converters.ListConverter;
 import api.deezer.http.impl.*;
-import api.deezer.objects.GetPermissionsResponse;
-import api.deezer.objects.Options;
-import api.deezer.objects.SendNotificationResponse;
-import api.deezer.objects.User;
+import api.deezer.objects.*;
 import api.deezer.objects.data.*;
 
 import java.util.Arrays;
@@ -358,13 +355,13 @@ public class UserRequests extends DeezerRequests {
      * @param playlistTitle playlist title.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<Boolean> createPlaylist(String playlistTitle) {
+    public DeezerRequest<Id> createPlaylist(String playlistTitle) {
         Map<String, String> params = accessTokenParam();
         params.put("title", String.valueOf(playlistTitle));
         return new DeezerPostRequest<>(
                 property("user.playlists", "me"),
                 params,
-                Boolean.class
+                Id.class
         );
     }
 
