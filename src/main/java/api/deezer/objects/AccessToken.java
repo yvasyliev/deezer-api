@@ -1,7 +1,7 @@
 package api.deezer.objects;
 
 /**
- * Deezer access_token. Returned by {@link api.deezer.requests.AuthRequests#getAccessToken(int, String, String)}
+ * Deezer access_token. Returned by {@link api.deezer.requests.AuthRequests#getAccessToken(long, String, String)}
  */
 public class AccessToken {
     /**
