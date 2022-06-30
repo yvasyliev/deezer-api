@@ -3,27 +3,27 @@ package api.deezer.objects;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * An ID object
+ * Object ID.
  */
 public class Id {
     /**
-     * A Deezer ID
+     * Object ID.
      */
     @SerializedName("id")
-    private Long value;
+    private Long id;
 
-    public Long getValue() {
-        return value;
+    public Long getId() {
+        return id;
     }
 
-    public void setValue(Long value) {
-        this.value = value;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "Id{" +
-                "id=" + value +
+                "id=" + id +
                 "} " + super.toString();
     }
 }

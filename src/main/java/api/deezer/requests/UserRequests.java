@@ -2,9 +2,22 @@ package api.deezer.requests;
 
 import api.deezer.converters.Converter;
 import api.deezer.converters.ListConverter;
-import api.deezer.http.impl.*;
-import api.deezer.objects.*;
-import api.deezer.objects.data.*;
+import api.deezer.http.impl.DeezerDeleteRequest;
+import api.deezer.http.impl.DeezerGetRequest;
+import api.deezer.http.impl.DeezerPostRequest;
+import api.deezer.http.impl.DeezerRequest;
+import api.deezer.http.impl.PaginationRequest;
+import api.deezer.objects.GetPermissionsResponse;
+import api.deezer.objects.Id;
+import api.deezer.objects.Options;
+import api.deezer.objects.SendNotificationResponse;
+import api.deezer.objects.User;
+import api.deezer.objects.data.AlbumData;
+import api.deezer.objects.data.ArtistData;
+import api.deezer.objects.data.PlaylistData;
+import api.deezer.objects.data.RadioData;
+import api.deezer.objects.data.TrackData;
+import api.deezer.objects.data.UserData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +32,7 @@ public class UserRequests extends DeezerRequests {
     /**
      * Converts list of integers to comma separated values.
      */
-    private final Converter<List<Integer>, String> listConverter = new ListConverter<Integer>();
+    private final Converter<List<Integer>, String> listConverter = new ListConverter<>();
 
     public UserRequests(String accessToken) {
         super(accessToken);
