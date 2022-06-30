@@ -80,7 +80,7 @@ class PlaylistRequestsTest {
 
     @Test
     void removeTracks() {
-        DeezerRequest<Boolean> request = deezerApi.playlist().removeTracks(908622995, 1111111111111L, 222);
+        DeezerRequest<Boolean> request = deezerApi.playlist().removeTracks(908622995, 1111111111111L, 222L);
         assertEquals("https://api.deezer.com/playlist/908622995/tracks", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
         assertEquals("1111111111111,222", request.getParams().get("songs"));
