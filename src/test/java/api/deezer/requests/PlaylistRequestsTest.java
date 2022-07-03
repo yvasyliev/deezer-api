@@ -57,18 +57,18 @@ class PlaylistRequestsTest {
 
     @Test
     void addTracks() {
-        DeezerRequest<Boolean> request = deezerApi.playlist().addTracks(908622995, 111, 222, 333);
+        DeezerRequest<Boolean> request = deezerApi.playlist().addTracks(908622995, 1111111111111L, 222L, 333L);
         assertEquals("https://api.deezer.com/playlist/908622995/tracks", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("111,222,333", request.getParams().get("songs"));
+        assertEquals("1111111111111,222,333", request.getParams().get("songs"));
     }
 
     @Test
     void orderTracks() {
-        DeezerRequest<Boolean> request = deezerApi.playlist().orderTracks(908622995, 333, 222, 111);
+        DeezerRequest<Boolean> request = deezerApi.playlist().orderTracks(908622995, 333L, 222L, 1111111111111L);
         assertEquals("https://api.deezer.com/playlist/908622995/tracks", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("333,222,111", request.getParams().get("order"));
+        assertEquals("333,222,1111111111111", request.getParams().get("order"));
     }
 
     @Test
@@ -80,9 +80,9 @@ class PlaylistRequestsTest {
 
     @Test
     void removeTracks() {
-        DeezerRequest<Boolean> request = deezerApi.playlist().removeTracks(908622995, 111, 222);
+        DeezerRequest<Boolean> request = deezerApi.playlist().removeTracks(908622995, 1111111111111L, 222L);
         assertEquals("https://api.deezer.com/playlist/908622995/tracks", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("111,222", request.getParams().get("songs"));
+        assertEquals("1111111111111,222", request.getParams().get("songs"));
     }
 }

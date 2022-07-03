@@ -19,7 +19,7 @@ public class TrackRequests extends DeezerRequests {
      * @param id track ID.
      * @return track.
      */
-    public DeezerRequest<Track> getById(int id) {
+    public DeezerRequest<Track> getById(long id) {
         return new DeezerGetRequest<>(property("track.get", id), Track.class);
     }
 
@@ -29,7 +29,7 @@ public class TrackRequests extends DeezerRequests {
      * @param trackId track ID.
      * @return <i>true</i> if successful.
      */
-    public DeezerRequest<Boolean> delete(int trackId) {
+    public DeezerRequest<Boolean> delete(long trackId) {
         return new DeezerDeleteRequest<>(
                 property("track.get", trackId),
                 params(entry("access_token", getAccessToken())),

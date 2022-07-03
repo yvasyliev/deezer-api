@@ -10,7 +10,7 @@ public class Radio {
      * The radio deezer ID
      */
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     /**
      * The radio title
@@ -69,11 +69,11 @@ public class Radio {
     @SerializedName("md5_image")
     private String md5Image;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

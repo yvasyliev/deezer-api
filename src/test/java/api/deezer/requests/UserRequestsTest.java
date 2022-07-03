@@ -23,8 +23,8 @@ class UserRequestsTest {
 
     @Test
     void getById() {
-        DeezerRequest<User> request = deezerApi.user().getById(123);
-        assertEquals("https://api.deezer.com/user/123", request.getUrl());
+        DeezerRequest<User> request = deezerApi.user().getById(123123123123L);
+        assertEquals("https://api.deezer.com/user/123123123123", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
     }
 
@@ -38,8 +38,8 @@ class UserRequestsTest {
 
     @Test
     void getFavouriteAlbums() {
-        PaginationRequest<AlbumData> request = deezerApi.user().getFavouriteAlbums(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/albums", request.getUrl());
+        PaginationRequest<AlbumData> request = deezerApi.user().getFavouriteAlbums(123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123/albums", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -47,8 +47,8 @@ class UserRequestsTest {
 
     @Test
     void getFavouriteArtists() {
-        PaginationRequest<ArtistData> request = deezerApi.user().getFavouriteArtists(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/artists", request.getUrl());
+        PaginationRequest<ArtistData> request = deezerApi.user().getFavouriteArtists(123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123/artists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -66,8 +66,8 @@ class UserRequestsTest {
 
     @Test
     void getFollowings() {
-        PaginationRequest<UserData> request = deezerApi.user().getFollowings(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/followings", request.getUrl());
+        PaginationRequest<UserData> request = deezerApi.user().getFollowings(123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123/followings", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -75,8 +75,8 @@ class UserRequestsTest {
 
     @Test
     void getFollowers() {
-        PaginationRequest<UserData> request = deezerApi.user().getFollowers(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/followers", request.getUrl());
+        PaginationRequest<UserData> request = deezerApi.user().getFollowers(123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123/followers", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -128,8 +128,8 @@ class UserRequestsTest {
 
     @Test
     void getPlaylists() {
-        PaginationRequest<PlaylistData> request = deezerApi.user().getPlaylists(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/playlists", request.getUrl());
+        PaginationRequest<PlaylistData> request = deezerApi.user().getPlaylists(123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123/playlists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -137,8 +137,8 @@ class UserRequestsTest {
 
     @Test
     void getFavouriteRadios() {
-        PaginationRequest<RadioData> request = deezerApi.user().getFavouriteRadios(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/radios", request.getUrl());
+        PaginationRequest<RadioData> request = deezerApi.user().getFavouriteRadios(123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123/radios", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -206,8 +206,8 @@ class UserRequestsTest {
 
     @Test
     void getFavouriteTracks() {
-        PaginationRequest<TrackData> request = deezerApi.user().getFavouriteTracks(123).limit(5).offset(1);
-        assertEquals("https://api.deezer.com/user/123/tracks", request.getUrl());
+        PaginationRequest<TrackData> request = deezerApi.user().getFavouriteTracks(123123123123123L).limit(5).offset(1);
+        assertEquals("https://api.deezer.com/user/123123123123123/tracks", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("offset"));
@@ -215,28 +215,28 @@ class UserRequestsTest {
 
     @Test
     void addAlbumToLibrary() {
-        DeezerRequest<Boolean> request = deezerApi.user().addAlbumToLibrary(456);
+        DeezerRequest<Boolean> request = deezerApi.user().addAlbumToLibrary(456456456456456L);
         assertEquals("https://api.deezer.com/user/me/albums", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("456", request.getParams().get("album_id"));
+        assertEquals("456456456456456", request.getParams().get("album_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void addArtistToFavourites() {
-        DeezerRequest<Boolean> request = deezerApi.user().addArtistToFavourites(789);
+        DeezerRequest<Boolean> request = deezerApi.user().addArtistToFavourites(789789789789L);
         assertEquals("https://api.deezer.com/user/me/artists", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("789", request.getParams().get("artist_id"));
+        assertEquals("789789789789", request.getParams().get("artist_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void follow() {
-        DeezerRequest<Boolean> request = deezerApi.user().follow(123);
+        DeezerRequest<Boolean> request = deezerApi.user().follow(123123123123L);
         assertEquals("https://api.deezer.com/user/me/followings", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("user_id"));
+        assertEquals("123123123123", request.getParams().get("user_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
@@ -251,100 +251,100 @@ class UserRequestsTest {
 
     @Test
     void addPlaylistToFavourites() {
-        DeezerRequest<Boolean> request = deezerApi.user().addPlaylistToFavourites(345);
+        DeezerRequest<Boolean> request = deezerApi.user().addPlaylistToFavourites(345345345345L);
         assertEquals("https://api.deezer.com/user/me/playlists", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("345", request.getParams().get("playlist_id"));
+        assertEquals("345345345345", request.getParams().get("playlist_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void addPodcastToFavourites() {
-        DeezerRequest<Boolean> request = deezerApi.user().addPodcastToFavourites(345);
+        DeezerRequest<Boolean> request = deezerApi.user().addPodcastToFavourites(345345345345L);
         assertEquals("https://api.deezer.com/user/me/podcasts", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("345", request.getParams().get("podcast_id"));
+        assertEquals("345345345345", request.getParams().get("podcast_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void addRadioToFavourites() {
-        DeezerRequest<Boolean> request = deezerApi.user().addRadioToFavourites(345);
+        DeezerRequest<Boolean> request = deezerApi.user().addRadioToFavourites(345345345345L);
         assertEquals("https://api.deezer.com/user/me/radios", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("345", request.getParams().get("radio_id"));
+        assertEquals("345345345345", request.getParams().get("radio_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void addTracksToFavourites() {
-        DeezerRequest<Boolean> request = deezerApi.user().addTracksToFavourites(345, 678);
+        DeezerRequest<Boolean> request = deezerApi.user().addTracksToFavourites(345345345345345L, 678L);
         assertEquals("https://api.deezer.com/user/me/tracks", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("345,678", request.getParams().get("songs"));
+        assertEquals("345345345345345,678", request.getParams().get("songs"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void removeAlbum() {
-        DeezerRequest<Boolean> request = deezerApi.user().removeAlbum(123);
+        DeezerRequest<Boolean> request = deezerApi.user().removeAlbum(123123123123L);
         assertEquals("https://api.deezer.com/user/me/albums", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("album_id"));
+        assertEquals("123123123123", request.getParams().get("album_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void removeArtist() {
-        DeezerRequest<Boolean> request = deezerApi.user().removeArtist(123);
+        DeezerRequest<Boolean> request = deezerApi.user().removeArtist(123123123123L);
         assertEquals("https://api.deezer.com/user/me/artists", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("artist_id"));
+        assertEquals("123123123123", request.getParams().get("artist_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void unfollow() {
-        DeezerRequest<Boolean> request = deezerApi.user().unfollow(123);
+        DeezerRequest<Boolean> request = deezerApi.user().unfollow(123123123123L);
         assertEquals("https://api.deezer.com/user/me/followings", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("user_id"));
+        assertEquals("123123123123", request.getParams().get("user_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void removePlaylist() {
-        DeezerRequest<Boolean> request = deezerApi.user().removePlaylist(123);
+        DeezerRequest<Boolean> request = deezerApi.user().removePlaylist(123123123123L);
         assertEquals("https://api.deezer.com/user/me/playlists", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("playlist_id"));
+        assertEquals("123123123123", request.getParams().get("playlist_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void removePodcast() {
-        DeezerRequest<Boolean> request = deezerApi.user().removePodcast(123);
+        DeezerRequest<Boolean> request = deezerApi.user().removePodcast(123123123123L);
         assertEquals("https://api.deezer.com/user/me/podcasts", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("podcast_id"));
+        assertEquals("123123123123", request.getParams().get("podcast_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void removeRadio() {
-        DeezerRequest<Boolean> request = deezerApi.user().removeRadio(123);
+        DeezerRequest<Boolean> request = deezerApi.user().removeRadio(123123123123L);
         assertEquals("https://api.deezer.com/user/me/radios", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("radio_id"));
+        assertEquals("123123123123", request.getParams().get("radio_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void removeTrack() {
-        DeezerRequest<Boolean> request = deezerApi.user().removeTrack(123);
+        DeezerRequest<Boolean> request = deezerApi.user().removeTrack(123123123123L);
         assertEquals("https://api.deezer.com/user/me/tracks", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
-        assertEquals("123", request.getParams().get("track_id"));
+        assertEquals("123123123123", request.getParams().get("track_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 }

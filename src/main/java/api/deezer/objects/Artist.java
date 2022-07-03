@@ -10,7 +10,7 @@ public class Artist extends ChartMember {
      * The artist's Deezer id
      */
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     /**
      * The artist's name
@@ -84,11 +84,11 @@ public class Artist extends ChartMember {
     @SerializedName("tracklist")
     private String tracklist;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -10,7 +10,7 @@ public class Genre {
      * The editorial's Deezer id
      */
     @SerializedName("id")
-    private Integer id;
+    private Long id;
 
     /**
      * The editorial's name
@@ -48,11 +48,11 @@ public class Genre {
     @SerializedName("picture_xl")
     private String pictureXl;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

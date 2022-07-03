@@ -27,7 +27,7 @@ public class GenreRequests extends DeezerRequests {
      * @param genreId genre ID.
      * @return list of artists.
      */
-    public PaginationRequest<ArtistData> getArtistsByGenreId(int genreId) {
+    public PaginationRequest<ArtistData> getArtistsByGenreId(long genreId) {
         return new PaginationRequest<>(property("genre.artists", genreId), ArtistData.class);
     }
 
@@ -37,7 +37,7 @@ public class GenreRequests extends DeezerRequests {
      * @param genreId genre ID.
      * @return list of radios.
      */
-    public PaginationRequest<RadioData> getRadiosByGenreId(int genreId) {
+    public PaginationRequest<RadioData> getRadiosByGenreId(long genreId) {
         return new PaginationRequest<>(property("genre.radios", genreId), RadioData.class);
     }
 }

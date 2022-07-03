@@ -12,15 +12,15 @@ class TrackRequestsTest {
 
     @Test
     void getById() {
-        DeezerRequest<Track> request = deezerApi.track().getById(3135556);
-        assertEquals("https://api.deezer.com/track/3135556", request.getUrl());
+        DeezerRequest<Track> request = deezerApi.track().getById(31355566666L);
+        assertEquals("https://api.deezer.com/track/31355566666", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
     }
 
     @Test
     void delete() {
-        DeezerRequest<Boolean> request = deezerApi.track().delete(3135556);
-        assertEquals("https://api.deezer.com/track/3135556", request.getUrl());
+        DeezerRequest<Boolean> request = deezerApi.track().delete(31355566666L);
+        assertEquals("https://api.deezer.com/track/31355566666", request.getUrl());
         assertEquals("delete", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
