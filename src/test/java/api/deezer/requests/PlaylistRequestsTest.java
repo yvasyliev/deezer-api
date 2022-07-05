@@ -85,4 +85,20 @@ class PlaylistRequestsTest {
         assertEquals("delete", request.getParams().get("request_method"));
         assertEquals("1111111111111,222", request.getParams().get("songs"));
     }
+
+    @Test
+    void update() {
+        Playlist playlist = new Playlist();
+        playlist.setId(1111111111111L);
+        playlist.setDescription("NewDescription");
+        playlist.setIsCollaborative(false);
+        playlist.setTitle("NewTitle");
+        DeezerRequest<Boolean> request = deezerApi.playlist().update(playlist);
+        assertEquals("https://api.deezer.com/playlist/1111111111111", request.getUrl());
+        assertEquals("post", request.getParams().get("request_method"));
+        assertEquals("NewDescription", request.getParams().get("description"));
+        assertEquals("NewTitle", request.getParams().get("title"));
+        assertEquals("false", request.getParams().get("collaborative"));
+    }
+
 }
