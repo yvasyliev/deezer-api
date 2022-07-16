@@ -2,7 +2,7 @@ package api.deezer.http.impl;
 
 import api.deezer.converters.Converter;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,7 +20,7 @@ public class PaginationRequest<Response> extends DeezerGetRequest<Response> {
     }
 
     public PaginationRequest(String url, Converter<String, Response> responseConverter) {
-        super(url, Collections.emptyMap(), responseConverter);
+        super(url, new HashMap<>(), responseConverter);
     }
 
     /**
