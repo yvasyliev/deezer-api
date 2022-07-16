@@ -10,8 +10,8 @@ public interface HttpClient {
      * Executes a HTTP request.
      *
      * @param httpRequest {@link HttpRequest} object.
-     * @return response body.
+     * @return HTTP response.
      * @throws IOException if errors occur.
      */
-    String execute(HttpRequest httpRequest) throws IOException;
+    HttpResponse execute(HttpRequest httpRequest) throws IOException;
 }

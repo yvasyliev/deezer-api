@@ -6,17 +6,17 @@ import com.google.gson.JsonElement;
 /**
  * Converts Deezer API response to {@link TrackData} object.
  */
-public class TracksDataConverter extends GsonConverter<TrackData> {
+public class TracksDataConverter extends PojoConverter<TrackData> {
     public TracksDataConverter() {
         super(TrackData.class);
     }
 
     @Override
-    public TrackData covert(String response) {
-        JsonElement jsonElement = super.getGson().fromJson(response, JsonElement.class);
+    public TrackData convert(String response) {
+        JsonElement jsonElement = GSON.fromJson(response, JsonElement.class);
         boolean isFalse = jsonElement.isJsonPrimitive()
                 && jsonElement.getAsJsonPrimitive().isBoolean()
                 && !jsonElement.getAsJsonPrimitive().getAsBoolean();
-        return isFalse ? null : super.covert(response);
+        return isFalse ? null : super.convert(response);
     }
 }

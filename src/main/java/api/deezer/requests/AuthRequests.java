@@ -54,7 +54,7 @@ public class AuthRequests extends DeezerRequests {
                     "auth.url",
                     appId,
                     URLParamsEncoder.encode(redirectUri),
-                    URLParamsEncoder.encode(permissionsConverter.covert(perms))
+                    URLParamsEncoder.encode(permissionsConverter.convert(perms))
             );
         } catch (UnsupportedEncodingException e) {
             throw new DeezerException(e);
@@ -76,12 +76,10 @@ public class AuthRequests extends DeezerRequests {
         params.put("code", code);
         params.put("output", "json"); // TODO: 31.10.2021 why does https://connect.deezer.com/oauth/access_token.php always return a string format "access_token=${access_token}&expires=${expires}" ignoring "output=json" parameter?
 
-        DeezerGetRequest<AccessToken> request = new DeezerGetRequest<>(
+        return new DeezerGetRequest<>(
                 DeezerProperties.getProperty("auth.access_token"),
                 params,
-                AccessToken.class
+                new AccessTokenConverter()
         );
-        request.setResponseConverter(new AccessTokenConverter());
-        return request;
     }
 }

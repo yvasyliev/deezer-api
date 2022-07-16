@@ -1,5 +1,7 @@
 package api.deezer.http.impl;
 
+import api.deezer.converters.Converter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +17,11 @@ public class DeezerGetRequest<Response> extends DeezerRequest<Response> {
 
     public DeezerGetRequest(String url, Map<String, String> params, Class<Response> responseClass) {
         super(url, params, responseClass);
+        params.put("request_method", "get");
+    }
+
+    public DeezerGetRequest(String url, Map<String, String> params, Converter<String, Response> responseConverter) {
+        super(url, params, responseConverter);
         params.put("request_method", "get");
     }
 }

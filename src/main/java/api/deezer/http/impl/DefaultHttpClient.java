@@ -2,6 +2,7 @@ package api.deezer.http.impl;
 
 import api.deezer.http.HttpClient;
 import api.deezer.http.HttpRequest;
+import api.deezer.http.HttpResponse;
 import api.deezer.http.utils.URLParamsEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class DefaultHttpClient implements HttpClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpClient.class);
 
     @Override
-    public String execute(HttpRequest httpRequest) throws IOException {
+    public HttpResponse execute(HttpRequest httpRequest) throws IOException {
         LOGGER.debug(
                 "Request: method={}, url={}, params={}",
                 httpRequest.getRequestMethod(),
@@ -48,9 +49,16 @@ public class DefaultHttpClient implements HttpClient {
             }
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                String response = reader.lines().collect(Collectors.joining());
-                LOGGER.debug("Response: {}", response);
-                return response;
+                HttpResponse httpResponse = new HttpResponseImpl(
+                        connection.getResponseCode(),
+                        reader.lines().collect(Collectors.joining())
+                );
+                LOGGER.debug(
+                        "Response: status={}, body={}",
+                        httpResponse.getResponseCode(),
+                        httpResponse.getBody()
+                );
+                return httpResponse;
             }
         } finally {
             if (connection != null) {

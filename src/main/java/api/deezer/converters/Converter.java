@@ -13,5 +13,5 @@ public interface Converter<From, To> {
      * @param from original object.
      * @return converted object.
      */
-    To covert(From from);
+    To convert(From from);
 }

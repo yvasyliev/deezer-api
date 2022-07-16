@@ -1,5 +1,8 @@
 package api.deezer.http.impl;
 
+import api.deezer.converters.Converter;
+
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -14,6 +17,10 @@ public class PaginationRequest<Response> extends DeezerGetRequest<Response> {
 
     public PaginationRequest(String url, Map<String, String> params, Class<Response> responseClass) {
         super(url, params, responseClass);
+    }
+
+    public PaginationRequest(String url, Converter<String, Response> responseConverter) {
+        super(url, Collections.emptyMap(), responseConverter);
     }
 
     /**

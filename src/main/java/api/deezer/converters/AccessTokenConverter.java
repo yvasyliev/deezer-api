@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class AccessTokenConverter implements Converter<String, AccessToken> {
     @Override
-    public AccessToken covert(String response) {
+    public AccessToken convert(String response) {
         Map<String, String> params = toParams(response);
 
         AccessToken accessToken = new AccessToken();

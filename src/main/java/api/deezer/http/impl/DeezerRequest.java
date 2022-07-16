@@ -1,13 +1,16 @@
 package api.deezer.http.impl;
 
 import api.deezer.converters.Converter;
-import api.deezer.converters.GsonConverter;
+import api.deezer.converters.PojoConverter;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.http.HttpClient;
 import api.deezer.http.HttpRequest;
+import api.deezer.http.HttpResponse;
+import api.deezer.validators.DeezerResponseValidator;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * Basic implementation if {@link HttpRequest}. Executes Deezer API requests.
@@ -26,20 +29,28 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     private final Map<String, String> params;
 
     /**
-     * HTTP client.
+     * Converts Deezer response.
      */
-    private HttpClient httpClient;
+    private final Converter<String, Response> responseConverter;
 
     /**
-     * Deezer API response converter.
+     * HTTP client.
      */
-    private Converter<String, Response> responseConverter;
+    private final HttpClient httpClient = new DefaultHttpClient();
+
+    /**
+     * Validates Deezer response.
+     */
+    private final Predicate<String> deezerResponseValidator = new DeezerResponseValidator();
 
     public DeezerRequest(String url, Map<String, String> params, Class<Response> responseClass) {
+        this(url, params, new PojoConverter<>(responseClass));
+    }
+
+    public DeezerRequest(String url, Map<String, String> params, Converter<String, Response> responseConverter) {
         this.url = url;
         this.params = params;
-        setHttpClient(new DefaultHttpClient());
-        setResponseConverter(new GsonConverter<>(responseClass));
+        this.responseConverter = responseConverter;
     }
 
     /**
@@ -50,20 +61,14 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
      */
     public Response execute() throws DeezerException {
         try {
-            return responseConverter.covert(httpClient.execute(this));
+            HttpResponse httpResponse = httpClient.execute(this);
+            if (!deezerResponseValidator.test(httpResponse.getBody())) {
+                throw new DeezerException(httpResponse.getBody());
+            }
+            return responseConverter.convert(httpResponse.getBody());
         } catch (IOException e) {
             throw new DeezerException(e);
         }
-    }
-
-    public DeezerRequest<Response> setHttpClient(HttpClient httpClient) {
-        this.httpClient = httpClient;
-        return this;
-    }
-
-    public DeezerRequest<Response> setResponseConverter(Converter<String, Response> responseConverter) {
-        this.responseConverter = responseConverter;
-        return this;
     }
 
     @Override
