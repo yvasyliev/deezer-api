@@ -1,19 +1,7 @@
 package api.deezer;
 
 import api.deezer.objects.AccessToken;
-import api.deezer.requests.AlbumRequests;
-import api.deezer.requests.ArtistRequests;
-import api.deezer.requests.AuthRequests;
-import api.deezer.requests.ChartRequests;
-import api.deezer.requests.EditorialRequests;
-import api.deezer.requests.GenreRequests;
-import api.deezer.requests.InfosRequests;
-import api.deezer.requests.OptionsRequests;
-import api.deezer.requests.PlaylistRequests;
-import api.deezer.requests.RadioRequests;
-import api.deezer.requests.SearchRequests;
-import api.deezer.requests.TrackRequests;
-import api.deezer.requests.UserRequests;
+import api.deezer.requests.*;
 
 /**
  * Deezer APIs.
@@ -104,6 +92,7 @@ public class DeezerApi {
      * @return playlist requests.
      */
     public PlaylistRequests playlist() {
+        validateAccessToken();
         return new PlaylistRequests(accessToken);
     }
 
@@ -140,6 +129,7 @@ public class DeezerApi {
      * @return track requests.
      */
     public TrackRequests track() {
+        validateAccessToken();
         return new TrackRequests(accessToken);
     }
 
@@ -149,6 +139,7 @@ public class DeezerApi {
      * @return user requests.
      */
     public UserRequests user() {
+        validateAccessToken();
         return new UserRequests(accessToken);
     }
 
@@ -159,5 +150,11 @@ public class DeezerApi {
 
     public DeezerApi setAccessToken(AccessToken accessToken) {
         return setAccessToken(accessToken.getAccessToken());
+    }
+
+    public void validateAccessToken() {
+        if (accessToken == null) {
+            throw new IllegalStateException("'accessToken' is not set.");
+        }
     }
 }
