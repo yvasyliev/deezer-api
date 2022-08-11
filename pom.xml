@@ -7,7 +7,7 @@
     <groupId>com.github.yvasyliev</groupId>
     <artifactId>deezer-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <name>Deezer API Java Library</name>
     <description>A Java implementation of Deezer API.</description>
     <url>https://github.com/yvasyliev/deezer-api</url>
@@ -40,13 +40,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
+            <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.17.2</version>
+            <version>2.18.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
