@@ -15,7 +15,6 @@ import api.deezer.objects.data.UserData;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Requests related to playlists.
@@ -48,13 +47,13 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> update(Playlist playlist) {
         Map<String, String> params = accessTokenParam();
-        if(!"".equals(playlist.getTitle())) {
+        if (!"".equals(playlist.getTitle())) {
             params.put("title", playlist.getTitle());
         }
-        if(!"".equals(playlist.getDescription())) {
+        if (!"".equals(playlist.getDescription())) {
             params.put("description", playlist.getDescription());
         }
-        if(playlist.getIsCollaborative() != null) {
+        if (playlist.getIsCollaborative() != null) {
             params.put("collaborative", playlist.getIsCollaborative().toString());
         }
         return new DeezerPostRequest<>(property("playlist.get", playlist.getId()), params, Boolean.class);
