@@ -73,6 +73,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<AlbumData> getFavouriteAlbums(long userId) {
         return new PaginationRequest<>(
                 property("user.albums", userId),
+                accessTokenParam(),
                 AlbumData.class
         );
     }
@@ -86,6 +87,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<ArtistData> getFavouriteArtists(long userId) {
         return new PaginationRequest<>(
                 property("user.artists", userId),
+                accessTokenParam(),
                 ArtistData.class
         );
     }
@@ -112,6 +114,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<UserData> getFollowings(long userId) {
         return new PaginationRequest<>(
                 property("user.followings", userId),
+                accessTokenParam(),
                 UserData.class
         );
     }
@@ -125,6 +128,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<UserData> getFollowers(long userId) {
         return new PaginationRequest<>(
                 property("user.followers", userId),
+                accessTokenParam(),
                 UserData.class
         );
     }
@@ -206,6 +210,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<PlaylistData> getPlaylists(long userId) {
         return new PaginationRequest<>(
                 property("user.playlists", userId),
+                accessTokenParam(),
                 PlaylistData.class
         );
     }
@@ -219,6 +224,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<RadioData> getFavouriteRadios(long userId) {
         return new PaginationRequest<>(
                 property("user.radios", userId),
+                accessTokenParam(),
                 RadioData.class
         );
     }
@@ -310,6 +316,7 @@ public class UserRequests extends DeezerRequests {
     public PaginationRequest<TrackData> getFavouriteTracks(long userId) {
         return new PaginationRequest<>(
                 property("user.tracks", userId),
+                accessTokenParam(),
                 TrackData.class
         );
     }
