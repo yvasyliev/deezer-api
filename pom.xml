@@ -7,7 +7,7 @@
     <groupId>com.github.yvasyliev</groupId>
     <artifactId>deezer-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <name>Deezer API Java Library</name>
     <description>A Java implementation of Deezer API.</description>
     <url>https://github.com/yvasyliev/deezer-api</url>
