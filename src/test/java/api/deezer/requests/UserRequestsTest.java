@@ -288,7 +288,7 @@ class UserRequestsTest {
         DeezerRequest<Boolean> request = deezerApi.user().addTracksToFavourites(345345345345345L, 678L);
         assertEquals("https://api.deezer.com/user/me/tracks", request.getUrl());
         assertEquals("post", request.getParams().get("request_method"));
-        assertEquals("345345345345345,678", request.getParams().get("songs"));
+        assertEquals("345345345345345,678", request.getParams().get("track_id"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
