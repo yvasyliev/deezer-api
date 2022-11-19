@@ -14,11 +14,11 @@ class EditorialRequestsTest {
 
     @Test
     void getSelectedAlbums() {
-        PaginationRequest<AlbumData> request = deezerApi.editorial().getSelectedAlbums().limit(5).offset(1);
+        PaginationRequest<AlbumData> request = deezerApi.editorial().getSelectedAlbums().limit(5).index(1);
         assertEquals("https://api.deezer.com/editorial/0/selection", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
@@ -30,10 +30,10 @@ class EditorialRequestsTest {
 
     @Test
     void getNewReleases() {
-        PaginationRequest<AlbumData> request = deezerApi.editorial().getNewReleases().limit(5).offset(1);
+        PaginationRequest<AlbumData> request = deezerApi.editorial().getNewReleases().limit(5).index(1);
         assertEquals("https://api.deezer.com/editorial/0/releases", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 }

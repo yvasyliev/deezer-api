@@ -16,8 +16,8 @@ public class AdvancedSearchRequest<Response> extends SearchRequest<Response> {
     }
 
     @Override
-    public AdvancedSearchRequest<Response> offset(int offset) {
-        return (AdvancedSearchRequest<Response>) super.offset(offset);
+    public AdvancedSearchRequest<Response> index(int index) {
+        return (AdvancedSearchRequest<Response>) super.index(index);
     }
 
     /**

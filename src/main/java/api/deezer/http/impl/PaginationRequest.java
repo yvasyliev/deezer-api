@@ -35,13 +35,13 @@ public class PaginationRequest<Response> extends DeezerGetRequest<Response> {
     }
 
     /**
-     * Adds <b>offset</b> parameter to the request.
+     * Adds <b>index</b> parameter to the request.
      *
-     * @param offset offset value.
+     * @param index index value.
      * @return current instance.
      */
-    public PaginationRequest<Response> offset(int offset) {
-        getParams().put("offset", String.valueOf(offset));
+    public PaginationRequest<Response> index(int index) {
+        getParams().put("index", String.valueOf(index));
         return this;
     }
 }
