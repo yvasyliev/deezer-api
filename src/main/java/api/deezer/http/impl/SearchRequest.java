@@ -23,8 +23,8 @@ public class SearchRequest<Response> extends PaginationRequest<Response> {
     }
 
     @Override
-    public SearchRequest<Response> offset(int offset) {
-        return (SearchRequest<Response>) super.offset(offset);
+    public SearchRequest<Response> index(int index) {
+        return (SearchRequest<Response>) super.index(index);
     }
 
     /**

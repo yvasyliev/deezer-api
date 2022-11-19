@@ -22,19 +22,19 @@ class AlbumRequestsTest {
 
     @Test
     void getFans() {
-        PaginationRequest<UserData> request = deezerApi.album().getFans(302127302127302127L).limit(5).offset(2);
+        PaginationRequest<UserData> request = deezerApi.album().getFans(302127302127302127L).limit(5).index(2);
         assertEquals("https://api.deezer.com/album/302127302127302127/fans", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("2", request.getParams().get("offset"));
+        assertEquals("2", request.getParams().get("index"));
     }
 
     @Test
     void getTracks() {
-        PaginationRequest<TrackData> request = deezerApi.album().getTracks(302127302127302127L).limit(5).offset(2);
+        PaginationRequest<TrackData> request = deezerApi.album().getTracks(302127302127302127L).limit(5).index(2);
         assertEquals("https://api.deezer.com/album/302127302127302127/tracks", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("2", request.getParams().get("offset"));
+        assertEquals("2", request.getParams().get("index"));
     }
 }

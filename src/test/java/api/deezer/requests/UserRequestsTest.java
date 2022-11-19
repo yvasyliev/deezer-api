@@ -38,61 +38,61 @@ class UserRequestsTest {
 
     @Test
     void getFavouriteAlbums() {
-        PaginationRequest<AlbumData> request = deezerApi.user().getFavouriteAlbums(123123123123L).limit(5).offset(1);
+        PaginationRequest<AlbumData> request = deezerApi.user().getFavouriteAlbums(123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123/albums", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getFavouriteArtists() {
-        PaginationRequest<ArtistData> request = deezerApi.user().getFavouriteArtists(123123123123L).limit(5).offset(1);
+        PaginationRequest<ArtistData> request = deezerApi.user().getFavouriteArtists(123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123/artists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getFlow() {
-        PaginationRequest<TrackData> request = deezerApi.user().getFlow().limit(5).offset(1);
+        PaginationRequest<TrackData> request = deezerApi.user().getFlow().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/flow", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getFollowings() {
-        PaginationRequest<UserData> request = deezerApi.user().getFollowings(123123123123L).limit(5).offset(1);
+        PaginationRequest<UserData> request = deezerApi.user().getFollowings(123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123/followings", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getFollowers() {
-        PaginationRequest<UserData> request = deezerApi.user().getFollowers(123123123123L).limit(5).offset(1);
+        PaginationRequest<UserData> request = deezerApi.user().getFollowers(123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123/followers", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getMyHistory() {
-        PaginationRequest<TrackData> request = deezerApi.user().getMyHistory().limit(5).offset(1);
+        PaginationRequest<TrackData> request = deezerApi.user().getMyHistory().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/history", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
@@ -122,102 +122,102 @@ class UserRequestsTest {
 
     @Test
     void getPersonalSongs() {
-        PaginationRequest<TrackData> request = deezerApi.user().getPersonalSongs().limit(5).offset(1);
+        PaginationRequest<TrackData> request = deezerApi.user().getPersonalSongs().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/personal_songs", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getPlaylists() {
-        PaginationRequest<PlaylistData> request = deezerApi.user().getPlaylists(123123123123L).limit(5).offset(1);
+        PaginationRequest<PlaylistData> request = deezerApi.user().getPlaylists(123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123/playlists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getFavouriteRadios() {
-        PaginationRequest<RadioData> request = deezerApi.user().getFavouriteRadios(123123123123L).limit(5).offset(1);
+        PaginationRequest<RadioData> request = deezerApi.user().getFavouriteRadios(123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123/radios", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getRecommendedAlbums() {
-        PaginationRequest<AlbumData> request = deezerApi.user().getRecommendedAlbums().limit(5).offset(1);
+        PaginationRequest<AlbumData> request = deezerApi.user().getRecommendedAlbums().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/recommendations/albums", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getRecommendedReleases() {
-        PaginationRequest<AlbumData> request = deezerApi.user().getRecommendedReleases().limit(5).offset(1);
+        PaginationRequest<AlbumData> request = deezerApi.user().getRecommendedReleases().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/recommendations/releases", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getRecommendedArtists() {
-        PaginationRequest<ArtistData> request = deezerApi.user().getRecommendedArtists().limit(5).offset(1);
+        PaginationRequest<ArtistData> request = deezerApi.user().getRecommendedArtists().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/recommendations/artists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getRecommendedPlaylists() {
-        PaginationRequest<PlaylistData> request = deezerApi.user().getRecommendedPlaylists().limit(5).offset(1);
+        PaginationRequest<PlaylistData> request = deezerApi.user().getRecommendedPlaylists().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/recommendations/playlists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getRecommendedTracks() {
-        PaginationRequest<TrackData> request = deezerApi.user().getRecommendedTracks().limit(5).offset(1);
+        PaginationRequest<TrackData> request = deezerApi.user().getRecommendedTracks().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/recommendations/tracks", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getRecommendedRadios() {
-        PaginationRequest<RadioData> request = deezerApi.user().getRecommendedRadios().limit(5).offset(1);
+        PaginationRequest<RadioData> request = deezerApi.user().getRecommendedRadios().limit(5).index(1);
         assertEquals("https://api.deezer.com/user/me/recommendations/radios", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
         assertEquals("accessToken", request.getParams().get("access_token"));
     }
 
     @Test
     void getFavouriteTracks() {
-        PaginationRequest<TrackData> request = deezerApi.user().getFavouriteTracks(123123123123123L).limit(5).offset(1);
+        PaginationRequest<TrackData> request = deezerApi.user().getFavouriteTracks(123123123123123L).limit(5).index(1);
         assertEquals("https://api.deezer.com/user/123123123123123/tracks", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("accessToken", request.getParams().get("access_token"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test

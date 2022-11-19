@@ -22,19 +22,19 @@ class GenreRequestsTest {
 
     @Test
     void getArtistsByGenreId() {
-        PaginationRequest<ArtistData> request = deezerApi.genre().getArtistsByGenreId(12345678912L).limit(5).offset(1);
+        PaginationRequest<ArtistData> request = deezerApi.genre().getArtistsByGenreId(12345678912L).limit(5).index(1);
         assertEquals("https://api.deezer.com/genre/12345678912/artists", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 
     @Test
     void getRadiosByGenreId() {
-        PaginationRequest<RadioData> request = deezerApi.genre().getRadiosByGenreId(12345678912L).limit(5).offset(1);
+        PaginationRequest<RadioData> request = deezerApi.genre().getRadiosByGenreId(12345678912L).limit(5).index(1);
         assertEquals("https://api.deezer.com/genre/12345678912/radios", request.getUrl());
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
-        assertEquals("1", request.getParams().get("offset"));
+        assertEquals("1", request.getParams().get("index"));
     }
 }
