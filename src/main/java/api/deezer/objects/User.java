@@ -1,5 +1,7 @@
 package api.deezer.objects;
 
+import api.deezer.deserializers.ZeroDateDeserializer;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -49,6 +51,7 @@ public class User {
      * The user's birthday
      */
     @SerializedName("birthday")
+    @JsonAdapter(ZeroDateDeserializer.class)
     private Date birthday;
 
     /**
