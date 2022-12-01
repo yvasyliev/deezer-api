@@ -1,7 +1,6 @@
 package api.deezer.requests;
 
 import api.deezer.converters.AccessTokenConverter;
-import api.deezer.converters.Converter;
 import api.deezer.converters.PermissionsConverter;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.http.impl.DeezerGetRequest;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Authorization requests.
@@ -25,7 +25,7 @@ public class AuthRequests extends DeezerRequests {
     /**
      * Converts list of {@link Permission} into comma separated values.
      */
-    private final Converter<List<Permission>, String> permissionsConverter = new PermissionsConverter();
+    private final Function<List<Permission>, String> permissionsConverter = new PermissionsConverter();
 
     /**
      * Gets login url for current application.
@@ -55,7 +55,7 @@ public class AuthRequests extends DeezerRequests {
                     "auth.url",
                     appId,
                     URLParamsEncoder.encode(redirectUri),
-                    URLParamsEncoder.encode(permissionsConverter.convert(perms))
+                    URLParamsEncoder.encode(permissionsConverter.apply(perms))
             );
         } catch (UnsupportedEncodingException e) {
             throw new DeezerException(e);

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  */
 public class PermissionsConverter extends ListConverter<Permission> {
     @Override
-    public String convert(List<Permission> list) {
+    public String apply(List<Permission> list) {
         return list.stream().map(Permission::getValue).collect(Collectors.joining(","));
     }
 }

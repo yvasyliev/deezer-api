@@ -4,14 +4,15 @@ import api.deezer.objects.AccessToken;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * Converts Deezer API response to {@link AccessToken} object.
  */
-public class AccessTokenConverter implements Converter<String, AccessToken> {
+public class AccessTokenConverter implements Function<String, AccessToken> {
     @Override
-    public AccessToken convert(String response) {
+    public AccessToken apply(String response) {
         Map<String, String> params = toParams(response);
 
         AccessToken accessToken = new AccessToken();

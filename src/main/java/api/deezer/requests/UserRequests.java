@@ -1,6 +1,5 @@
 package api.deezer.requests;
 
-import api.deezer.converters.Converter;
 import api.deezer.converters.ListConverter;
 import api.deezer.http.impl.DeezerDeleteRequest;
 import api.deezer.http.impl.DeezerGetRequest;
@@ -22,6 +21,7 @@ import api.deezer.objects.data.UserData;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 // TODO: 01.11.2021 user / charts - what is the implementation?
 
@@ -32,7 +32,7 @@ public class UserRequests extends DeezerRequests {
     /**
      * Converts list of integers to comma separated values.
      */
-    private final Converter<List<Long>, String> listConverter = new ListConverter<>();
+    private final Function<List<Long>, String> listConverter = new ListConverter<>();
 
     public UserRequests(String accessToken) {
         super(accessToken);
@@ -451,7 +451,7 @@ public class UserRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> addTracksToFavourites(List<Long> trackIds) { // TODO: 21.11.2021 check if it's working
         Map<String, String> params = accessTokenParam();
-        params.put("track_id", String.valueOf(listConverter.convert(trackIds)));
+        params.put("track_id", String.valueOf(listConverter.apply(trackIds)));
         return new DeezerPostRequest<>(
                 property("user.tracks", "me"),
                 params,

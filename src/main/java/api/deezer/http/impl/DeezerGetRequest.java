@@ -1,10 +1,10 @@
 package api.deezer.http.impl;
 
-import api.deezer.converters.Converter;
 import api.deezer.http.HttpResponse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -22,12 +22,12 @@ public class DeezerGetRequest<Response> extends DeezerRequest<Response> {
         params.put("request_method", "get");
     }
 
-    public DeezerGetRequest(String url, Map<String, String> params, Converter<String, Response> responseConverter) {
+    public DeezerGetRequest(String url, Map<String, String> params, Function<String, Response> responseConverter) {
         super(url, params, responseConverter);
         params.put("request_method", "get");
     }
 
-    public DeezerGetRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Converter<String, Response> responseConverter) {
+    public DeezerGetRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Function<String, Response> responseConverter) {
         super(url, params, responseValidator, responseConverter);
         params.put("request_method", "get");
     }

@@ -1,6 +1,5 @@
 package api.deezer.http.impl;
 
-import api.deezer.converters.Converter;
 import api.deezer.converters.PojoConverter;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.http.HttpClient;
@@ -10,6 +9,7 @@ import api.deezer.validators.DeezerResponseValidator;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -31,7 +31,7 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     /**
      * Converts Deezer response.
      */
-    private final Converter<String, Response> responseConverter;
+    private final Function<String, Response> responseConverter;
 
     /**
      * HTTP client.
@@ -47,11 +47,11 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
         this(url, params, new PojoConverter<>(responseClass));
     }
 
-    public DeezerRequest(String url, Map<String, String> params, Converter<String, Response> responseConverter) {
+    public DeezerRequest(String url, Map<String, String> params, Function<String, Response> responseConverter) {
         this(url, params, new DeezerResponseValidator(), responseConverter);
     }
 
-    public DeezerRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Converter<String, Response> responseConverter) {
+    public DeezerRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Function<String, Response> responseConverter) {
         this.url = url;
         this.params = params;
         this.responseValidator = responseValidator;
@@ -70,7 +70,7 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
             if (!responseValidator.test(httpResponse)) {
                 throw new DeezerException(httpResponse.getBody());
             }
-            return responseConverter.convert(httpResponse.getBody());
+            return responseConverter.apply(httpResponse.getBody());
         } catch (IOException e) {
             throw new DeezerException(e);
         }

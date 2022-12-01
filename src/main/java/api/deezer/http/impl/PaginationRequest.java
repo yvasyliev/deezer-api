@@ -1,9 +1,8 @@
 package api.deezer.http.impl;
 
-import api.deezer.converters.Converter;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Executes Deezer API request with pagination.
@@ -19,7 +18,7 @@ public class PaginationRequest<Response> extends DeezerGetRequest<Response> {
         super(url, params, responseClass);
     }
 
-    public PaginationRequest(String url, Converter<String, Response> responseConverter) {
+    public PaginationRequest(String url, Function<String, Response> responseConverter) {
         super(url, new HashMap<>(), responseConverter);
     }
 

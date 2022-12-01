@@ -2,12 +2,14 @@ package api.deezer.converters;
 
 import com.google.gson.Gson;
 
+import java.util.function.Function;
+
 /**
  * Converts {@link String} to {@link Pojo}.
  *
  * @param <Pojo> target type.
  */
-public class PojoConverter<Pojo> implements Converter<String, Pojo> {
+public class PojoConverter<Pojo> implements Function<String, Pojo> {
     /**
      * {@link Gson} converter.
      */
@@ -23,7 +25,7 @@ public class PojoConverter<Pojo> implements Converter<String, Pojo> {
     }
 
     @Override
-    public Pojo convert(String json) {
+    public Pojo apply(String json) {
         return GSON.fromJson(json, clazz);
     }
 }

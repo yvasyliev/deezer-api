@@ -12,11 +12,11 @@ public class TracksDataConverter extends PojoConverter<TrackData> {
     }
 
     @Override
-    public TrackData convert(String response) {
+    public TrackData apply(String response) {
         JsonElement jsonElement = GSON.fromJson(response, JsonElement.class);
         boolean isFalse = jsonElement.isJsonPrimitive()
                 && jsonElement.getAsJsonPrimitive().isBoolean()
                 && !jsonElement.getAsJsonPrimitive().getAsBoolean();
-        return isFalse ? null : super.convert(response);
+        return isFalse ? null : super.apply(response);
     }
 }
