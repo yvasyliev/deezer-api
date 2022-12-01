@@ -41,15 +41,20 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     /**
      * Validates Deezer response.
      */
-    private final Predicate<String> deezerResponseValidator = new DeezerResponseValidator();
+    private final Predicate<HttpResponse> responseValidator;
 
     public DeezerRequest(String url, Map<String, String> params, Class<Response> responseClass) {
         this(url, params, new PojoConverter<>(responseClass));
     }
 
     public DeezerRequest(String url, Map<String, String> params, Converter<String, Response> responseConverter) {
+        this(url, params, new DeezerResponseValidator(), responseConverter);
+    }
+
+    public DeezerRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Converter<String, Response> responseConverter) {
         this.url = url;
         this.params = params;
+        this.responseValidator = responseValidator;
         this.responseConverter = responseConverter;
     }
 
@@ -62,7 +67,7 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     public Response execute() throws DeezerException {
         try {
             HttpResponse httpResponse = httpClient.execute(this);
-            if (!deezerResponseValidator.test(httpResponse.getBody())) {
+            if (!responseValidator.test(httpResponse)) {
                 throw new DeezerException(httpResponse.getBody());
             }
             return responseConverter.convert(httpResponse.getBody());

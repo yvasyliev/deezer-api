@@ -2,6 +2,7 @@ package api.deezer.validators;
 
 import api.deezer.converters.Converter;
 import api.deezer.converters.JsonElementConverter;
+import api.deezer.http.HttpResponse;
 import com.google.gson.JsonElement;
 
 import java.util.function.Predicate;
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 /**
  * Validates Deezer response.
  */
-public class DeezerResponseValidator implements Predicate<String> {
+public class DeezerResponseValidator implements Predicate<HttpResponse> {
     /**
      * <code>wrong code</code> body content.
      */
@@ -21,8 +22,8 @@ public class DeezerResponseValidator implements Predicate<String> {
     private static final Converter<String, JsonElement> JSON_ELEMENT_CONVERTER = new JsonElementConverter();
 
     @Override
-    public boolean test(String responseBody) {
-        return !isWrongCode(responseBody) && !hasErrorField(responseBody);
+    public boolean test(HttpResponse response) {
+        return !isWrongCode(response.getBody()) && !hasErrorField(response.getBody());
     }
 
     private boolean isWrongCode(String responseBody) {

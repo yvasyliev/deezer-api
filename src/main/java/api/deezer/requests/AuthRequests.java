@@ -10,6 +10,7 @@ import api.deezer.http.utils.URLParamsEncoder;
 import api.deezer.objects.AccessToken;
 import api.deezer.objects.Permission;
 import api.deezer.properties.DeezerProperties;
+import api.deezer.validators.AccessTokenResponseValidator;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -79,6 +80,7 @@ public class AuthRequests extends DeezerRequests {
         return new DeezerGetRequest<>(
                 DeezerProperties.getProperty("auth.access_token"),
                 params,
+                new AccessTokenResponseValidator(),
                 new AccessTokenConverter()
         );
     }
