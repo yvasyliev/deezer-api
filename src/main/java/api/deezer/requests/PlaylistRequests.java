@@ -2,6 +2,7 @@ package api.deezer.requests;
 
 import api.deezer.converters.ListConverter;
 import api.deezer.converters.TracksDataConverter;
+import api.deezer.http.HttpRequestFilePart;
 import api.deezer.http.impl.DeezerDeleteRequest;
 import api.deezer.http.impl.DeezerGetRequest;
 import api.deezer.http.impl.DeezerPostRequest;
@@ -99,6 +100,26 @@ public class PlaylistRequests extends DeezerRequests {
         return new PaginationRequest<>(
                 property("playlist.radio", playlistId),
                 new TracksDataConverter()
+        );
+    }
+
+    /**
+     * Adds tracks to playlist
+     *
+     * @param playlistId  playlist ID.
+     * @param uploadToken the upload token provided by {@link InfosRequests#get()}.
+     * @param image       the image
+     * @return <i>true</i> if successful.
+     */
+    public DeezerRequest<Boolean> uploadPicture(long playlistId, final String uploadToken, byte[] image) {
+        Map<String, String> params = accessTokenParam();
+        params.put("upload_token", uploadToken);
+
+        return new DeezerPostRequest<>(
+                property("playlist.picture", playlistId),
+                params,
+                Boolean.class,
+                new HttpRequestFilePart[]{ HttpRequestFilePart.image("file", image) }
         );
     }
 

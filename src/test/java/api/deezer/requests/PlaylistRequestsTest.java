@@ -8,6 +8,8 @@ import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.StandardCharsets;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlaylistRequestsTest {
@@ -53,6 +55,14 @@ class PlaylistRequestsTest {
         assertEquals("get", request.getParams().get("request_method"));
         assertEquals("5", request.getParams().get("limit"));
         assertEquals("1", request.getParams().get("index"));
+    }
+
+    @Test
+    void uploadPicture() {
+        DeezerRequest<Boolean> request = deezerApi.playlist().uploadPicture(908622995, "abcdefg", "abcdefg".getBytes(StandardCharsets.UTF_8));
+        assertEquals("https://upload.deezer.com/playlist/908622995", request.getUrl());
+        assertEquals("post", request.getParams().get("request_method"));
+        assertEquals("abcdefg", request.getParams().get("upload_token"));
     }
 
     @Test
