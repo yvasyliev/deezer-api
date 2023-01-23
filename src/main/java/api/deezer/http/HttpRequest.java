@@ -30,8 +30,7 @@ public interface HttpRequest {
     /**
      * File as bytes.
      *
-     * @return the file as bytes
+     * @return the file as bytes.
      */
     HttpRequestFilePart[] getFileParts();
-
 }

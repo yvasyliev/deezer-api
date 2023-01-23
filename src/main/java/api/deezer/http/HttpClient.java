@@ -1,7 +1,6 @@
 package api.deezer.http;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Executes HTTP requests.
@@ -15,5 +14,4 @@ public interface HttpClient {
      * @throws IOException if errors occur.
      */
     HttpResponse execute(HttpRequest httpRequest) throws IOException;
-
 }

@@ -1,19 +1,47 @@
 package api.deezer.http;
 
+/**
+ * A file to upload as {@code multipart/form-data}.
+ */
 public class HttpRequestFilePart {
+    /**
+     * Form field name.
+     */
+    private final String name;
 
-    private String name = null;
-    private String filename = null;
-    private String contentType = null;
-    private String contentTransferEncoding = null;
-    private byte[] value = null;
+    /**
+     * File data.
+     */
+    private final byte[] value;
+
+    /**
+     * Filename.
+     */
+    private String filename;
+
+    /**
+     * Form field content type.
+     */
+    private String contentType;
+
+    /**
+     * Content encoding.
+     */
+    private String contentTransferEncoding;
 
     public HttpRequestFilePart(final String name, final byte[] value) {
         this.name = name;
         this.value = value;
     }
 
-    public static HttpRequestFilePart image(final String name, final byte[] value){
+    /**
+     * Creates an instance of {@link HttpRequestFilePart} with a PNG image as a value.
+     *
+     * @param name  form field name.
+     * @param value image data.
+     * @return instance of {@link HttpRequestFilePart}.
+     */
+    public static HttpRequestFilePart png(final String name, final byte[] value) {
         HttpRequestFilePart image = new HttpRequestFilePart(name, value);
         image.setContentType("image/png");
         image.setFilename("image.png");
@@ -51,5 +79,4 @@ public class HttpRequestFilePart {
     public byte[] getValue() {
         return value;
     }
-
 }

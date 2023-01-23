@@ -8,7 +8,10 @@ import api.deezer.http.utils.URLParamsEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -60,6 +63,13 @@ public class DefaultHttpClient implements HttpClient {
         }
     }
 
+    /**
+     * Creates GET request.
+     *
+     * @param httpRequest request data.
+     * @return {@link HttpURLConnection}.
+     * @throws IOException if errors occur.
+     */
     private static HttpURLConnection prepareRegularRequest(HttpRequest httpRequest) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(httpRequest.getUrl()).openConnection();
         connection.setRequestMethod(httpRequest.getRequestMethod());
@@ -74,7 +84,13 @@ public class DefaultHttpClient implements HttpClient {
         return connection;
     }
 
-
+    /**
+     * Creates POST request.
+     *
+     * @param httpRequest request data.
+     * @return {@link HttpURLConnection}.
+     * @throws IOException if errors occur.
+     */
     private static HttpURLConnection prepareMultipartRequest(HttpRequest httpRequest) throws IOException {
         Map<String, String> params = httpRequest.getParams();
         String urlParams = "";
@@ -109,7 +125,4 @@ public class DefaultHttpClient implements HttpClient {
         }
         return connection;
     }
-
-
-
 }

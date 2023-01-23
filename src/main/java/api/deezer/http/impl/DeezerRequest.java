@@ -30,7 +30,7 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     private final Map<String, String> params;
 
     /**
-     * File
+     * File.
      */
     private final HttpRequestFilePart[] parts;
 

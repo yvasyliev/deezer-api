@@ -119,7 +119,7 @@ public class PlaylistRequests extends DeezerRequests {
                 property("playlist.picture", playlistId),
                 params,
                 Boolean.class,
-                new HttpRequestFilePart[]{ HttpRequestFilePart.image("file", image) }
+                new HttpRequestFilePart[]{ HttpRequestFilePart.png("file", image) }
         );
     }
 
