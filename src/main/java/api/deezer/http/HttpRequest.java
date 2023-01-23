@@ -26,4 +26,12 @@ public interface HttpRequest {
      * @return request URL params.
      */
     Map<String, String> getParams();
+
+    /**
+     * File as bytes.
+     *
+     * @return the file as bytes
+     */
+    HttpRequestFilePart[] getFileParts();
+
 }

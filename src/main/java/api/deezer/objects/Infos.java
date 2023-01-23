@@ -26,6 +26,9 @@ public class Infos {
     @SerializedName("open")
     private Boolean isOpen;
 
+    @SerializedName("upload_token")
+    private String uploadToken;
+
     /**
      * An array of available offers in the current country
      */
@@ -64,6 +67,14 @@ public class Infos {
         this.offers = offers;
     }
 
+    public String getUploadToken() {
+        return uploadToken;
+    }
+
+    public void setUploadToken(String uploadToken) {
+        this.uploadToken = uploadToken;
+    }
+
     @Override
     public String toString() {
         return "Infos{" +
@@ -71,6 +82,7 @@ public class Infos {
                 ", country='" + country + '\'' +
                 ", open=" + isOpen +
                 ", offers=" + offers +
+                ", uploadToken='" + uploadToken + + '\'' +
                 '}';
     }
 }

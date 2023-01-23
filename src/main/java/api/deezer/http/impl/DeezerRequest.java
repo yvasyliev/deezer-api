@@ -3,6 +3,7 @@ package api.deezer.http.impl;
 import api.deezer.converters.PojoConverter;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.http.HttpClient;
+import api.deezer.http.HttpRequestFilePart;
 import api.deezer.http.HttpRequest;
 import api.deezer.http.HttpResponse;
 import api.deezer.validators.DeezerResponseValidator;
@@ -29,6 +30,11 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     private final Map<String, String> params;
 
     /**
+     * File
+     */
+    private final HttpRequestFilePart[] parts;
+
+    /**
      * Converts Deezer response.
      */
     private final Function<String, Response> responseConverter;
@@ -52,8 +58,17 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
     }
 
     public DeezerRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Function<String, Response> responseConverter) {
+		this(url, params, responseValidator, responseConverter, null);
+    }
+
+    public DeezerRequest(String url, Map<String, String> params, Function<String, Response> responseConverter,  HttpRequestFilePart[] parts) {
+        this(url, params, new DeezerResponseValidator(), responseConverter, parts);
+    }
+
+    public DeezerRequest(String url, Map<String, String> params, Predicate<HttpResponse> responseValidator, Function<String, Response> responseConverter, HttpRequestFilePart[] parts) {
         this.url = url;
         this.params = params;
+        this.parts = parts;
         this.responseValidator = responseValidator;
         this.responseConverter = responseConverter;
     }
@@ -74,6 +89,11 @@ public abstract class DeezerRequest<Response> implements HttpRequest {
         } catch (IOException e) {
             throw new DeezerException(e);
         }
+    }
+
+    @Override
+    public HttpRequestFilePart[]  getFileParts() {
+        return parts;
     }
 
     @Override

@@ -1,16 +1,14 @@
 package api.deezer.http.impl;
 
 import api.deezer.http.HttpClient;
+import api.deezer.http.HttpRequestFilePart;
 import api.deezer.http.HttpRequest;
 import api.deezer.http.HttpResponse;
 import api.deezer.http.utils.URLParamsEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -36,16 +34,11 @@ public class DefaultHttpClient implements HttpClient {
 
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) new URL(httpRequest.getUrl()).openConnection();
-            connection.setRequestMethod(httpRequest.getRequestMethod());
-            connection.setDoOutput(true);
 
-            Map<String, String> params = httpRequest.getParams();
-            if (params != null && !params.isEmpty()) {
-                try (DataOutputStream output = new DataOutputStream(connection.getOutputStream())) {
-                    output.writeBytes(URLParamsEncoder.encode(params));
-                    output.flush();
-                }
+            if (httpRequest.getFileParts() == null || httpRequest.getFileParts().length == 0) {
+                connection = prepareRegularRequest(httpRequest);
+            } else {
+                connection = prepareMultipartRequest(httpRequest);
             }
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -66,4 +59,57 @@ public class DefaultHttpClient implements HttpClient {
             }
         }
     }
+
+    private static HttpURLConnection prepareRegularRequest(HttpRequest httpRequest) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(httpRequest.getUrl()).openConnection();
+        connection.setRequestMethod(httpRequest.getRequestMethod());
+        connection.setDoOutput(true);
+        Map<String, String> params = httpRequest.getParams();
+        if (params != null && !params.isEmpty()) {
+            try (DataOutputStream output = new DataOutputStream(connection.getOutputStream())) {
+                output.writeBytes(URLParamsEncoder.encode(params));
+                output.flush();
+            }
+        }
+        return connection;
+    }
+
+
+    private static HttpURLConnection prepareMultipartRequest(HttpRequest httpRequest) throws IOException {
+        Map<String, String> params = httpRequest.getParams();
+        String urlParams = "";
+        if (params != null && !params.isEmpty()) {
+            urlParams = "?" + URLParamsEncoder.encode(params);
+        }
+        HttpURLConnection connection = (HttpURLConnection) new URL(httpRequest.getUrl() + urlParams).openConnection();
+        connection.setRequestMethod(httpRequest.getRequestMethod());
+        connection.setDoOutput(true);
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "----" + System.currentTimeMillis() + "----";
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+            for (HttpRequestFilePart part : httpRequest.getFileParts()) {
+                outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + part.getName() + "\"");
+                if (part.getFilename() != null)
+                    outputStream.writeBytes("; filename=\"" + part.getFilename() + "\"");
+                outputStream.writeBytes(lineEnd);
+
+                if (part.getContentType() != null)
+                    outputStream.writeBytes("Content-Type: " + part.getContentType() + lineEnd);
+                if (part.getContentTransferEncoding() != null)
+                    outputStream.writeBytes("Content-Transfer-Encoding: " + part.getContentTransferEncoding() + lineEnd);
+                outputStream.writeBytes(lineEnd);
+                outputStream.write(part.getValue());
+                outputStream.writeBytes(lineEnd);
+            }
+            outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            outputStream.flush();
+        }
+        return connection;
+    }
+
+
+
 }
