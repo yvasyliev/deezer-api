@@ -1,8 +1,8 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.DeezerDeleteRequest;
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerRequest;
+import api.deezer.http.DeezerDeleteRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerRequest;
 import api.deezer.objects.Track;
 
 /**

@@ -1,8 +1,8 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerRequest;
-import api.deezer.http.impl.PaginationRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerRequest;
+import api.deezer.http.PagingRequest;
 import api.deezer.objects.Chart;
 import api.deezer.objects.data.AlbumData;
 import api.deezer.objects.data.ArtistData;
@@ -29,8 +29,8 @@ public class ChartRequests extends ArtistRequests {
      *
      * @return top tracks.
      */
-    public PaginationRequest<TrackData> getTopTracks() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("chart.tracks"), TrackData.class);
+    public PagingRequest<TrackData> getTopTracks() {
+        return new PagingRequest<>(DeezerProperties.getProperty("chart.tracks"), TrackData.class);
     }
 
     /**
@@ -38,8 +38,8 @@ public class ChartRequests extends ArtistRequests {
      *
      * @return top albums.
      */
-    public PaginationRequest<AlbumData> getTopAlbums() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("chart.albums"), AlbumData.class);
+    public PagingRequest<AlbumData> getTopAlbums() {
+        return new PagingRequest<>(DeezerProperties.getProperty("chart.albums"), AlbumData.class);
     }
 
     /**
@@ -47,8 +47,8 @@ public class ChartRequests extends ArtistRequests {
      *
      * @return top artists.
      */
-    public PaginationRequest<ArtistData> getTopArtists() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("chart.artists"), ArtistData.class);
+    public PagingRequest<ArtistData> getTopArtists() {
+        return new PagingRequest<>(DeezerProperties.getProperty("chart.artists"), ArtistData.class);
     }
 
     /**
@@ -56,8 +56,8 @@ public class ChartRequests extends ArtistRequests {
      *
      * @return top playlists.
      */
-    public PaginationRequest<PlaylistData> getTopPlaylists() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("chart.playlists"), PlaylistData.class);
+    public PagingRequest<PlaylistData> getTopPlaylists() {
+        return new PagingRequest<>(DeezerProperties.getProperty("chart.playlists"), PlaylistData.class);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ChartRequests extends ArtistRequests {
      *
      * @return top podcasts.
      */
-    public PaginationRequest<PodcastData> getTopPodcasts() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("chart.podcasts"), PodcastData.class);
+    public PagingRequest<PodcastData> getTopPodcasts() {
+        return new PagingRequest<>(DeezerProperties.getProperty("chart.podcasts"), PodcastData.class);
     }
 }

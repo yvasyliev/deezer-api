@@ -1,11 +1,11 @@
 package api.deezer.requests;
 
 import api.deezer.converters.ListConverter;
-import api.deezer.http.impl.DeezerDeleteRequest;
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerPostRequest;
-import api.deezer.http.impl.DeezerRequest;
-import api.deezer.http.impl.PaginationRequest;
+import api.deezer.http.DeezerDeleteRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerPostRequest;
+import api.deezer.http.DeezerRequest;
+import api.deezer.http.PagingRequest;
 import api.deezer.objects.GetPermissionsResponse;
 import api.deezer.objects.Id;
 import api.deezer.objects.Options;
@@ -70,8 +70,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's favourite albums.
      */
-    public PaginationRequest<AlbumData> getFavouriteAlbums(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<AlbumData> getFavouriteAlbums(long userId) {
+        return new PagingRequest<>(
                 property("user.albums", userId),
                 accessTokenParam(),
                 AlbumData.class
@@ -84,8 +84,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's favourite albums.
      */
-    public PaginationRequest<ArtistData> getFavouriteArtists(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<ArtistData> getFavouriteArtists(long userId) {
+        return new PagingRequest<>(
                 property("user.artists", userId),
                 accessTokenParam(),
                 ArtistData.class
@@ -97,8 +97,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's flow.
      */
-    public PaginationRequest<TrackData> getFlow() {
-        return new PaginationRequest<>(
+    public PagingRequest<TrackData> getFlow() {
+        return new PagingRequest<>(
                 property("user.flow", "me"),
                 accessTokenParam(),
                 TrackData.class
@@ -111,8 +111,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's followings.
      */
-    public PaginationRequest<UserData> getFollowings(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<UserData> getFollowings(long userId) {
+        return new PagingRequest<>(
                 property("user.followings", userId),
                 accessTokenParam(),
                 UserData.class
@@ -125,8 +125,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's followers.
      */
-    public PaginationRequest<UserData> getFollowers(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<UserData> getFollowers(long userId) {
+        return new PagingRequest<>(
                 property("user.followers", userId),
                 accessTokenParam(),
                 UserData.class
@@ -138,8 +138,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return current user's history.
      */
-    public PaginationRequest<TrackData> getMyHistory() {
-        return new PaginationRequest<>(
+    public PagingRequest<TrackData> getMyHistory() {
+        return new PagingRequest<>(
                 property("user.history", "me"),
                 accessTokenParam(),
                 TrackData.class
@@ -193,8 +193,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's songs.
      */
-    public PaginationRequest<TrackData> getPersonalSongs() {
-        return new PaginationRequest<>(
+    public PagingRequest<TrackData> getPersonalSongs() {
+        return new PagingRequest<>(
                 property("user.personal"),
                 accessTokenParam(),
                 TrackData.class
@@ -207,8 +207,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's playlists.
      */
-    public PaginationRequest<PlaylistData> getPlaylists(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<PlaylistData> getPlaylists(long userId) {
+        return new PagingRequest<>(
                 property("user.playlists", userId),
                 accessTokenParam(),
                 PlaylistData.class
@@ -221,8 +221,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's favourite radios.
      */
-    public PaginationRequest<RadioData> getFavouriteRadios(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<RadioData> getFavouriteRadios(long userId) {
+        return new PagingRequest<>(
                 property("user.radios", userId),
                 accessTokenParam(),
                 RadioData.class
@@ -234,8 +234,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's recommended albums.
      */
-    public PaginationRequest<AlbumData> getRecommendedAlbums() {
-        return new PaginationRequest<>(
+    public PagingRequest<AlbumData> getRecommendedAlbums() {
+        return new PagingRequest<>(
                 property("recommendations.albums"),
                 accessTokenParam(),
                 AlbumData.class
@@ -247,8 +247,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's recommended releases.
      */
-    public PaginationRequest<AlbumData> getRecommendedReleases() {
-        return new PaginationRequest<>(
+    public PagingRequest<AlbumData> getRecommendedReleases() {
+        return new PagingRequest<>(
                 property("recommendations.releases"),
                 accessTokenParam(),
                 AlbumData.class
@@ -260,8 +260,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's recommended releases.
      */
-    public PaginationRequest<ArtistData> getRecommendedArtists() {
-        return new PaginationRequest<>(
+    public PagingRequest<ArtistData> getRecommendedArtists() {
+        return new PagingRequest<>(
                 property("recommendations.artists"),
                 accessTokenParam(),
                 ArtistData.class
@@ -273,8 +273,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's recommended playlists.
      */
-    public PaginationRequest<PlaylistData> getRecommendedPlaylists() {
-        return new PaginationRequest<>(
+    public PagingRequest<PlaylistData> getRecommendedPlaylists() {
+        return new PagingRequest<>(
                 property("recommendations.playlists"),
                 accessTokenParam(),
                 PlaylistData.class
@@ -286,8 +286,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's recommended tracks.
      */
-    public PaginationRequest<TrackData> getRecommendedTracks() {
-        return new PaginationRequest<>(
+    public PagingRequest<TrackData> getRecommendedTracks() {
+        return new PagingRequest<>(
                 property("recommendations.tracks"),
                 accessTokenParam(),
                 TrackData.class
@@ -299,8 +299,8 @@ public class UserRequests extends DeezerRequests {
      *
      * @return user's recommended radios.
      */
-    public PaginationRequest<RadioData> getRecommendedRadios() {
-        return new PaginationRequest<>(
+    public PagingRequest<RadioData> getRecommendedRadios() {
+        return new PagingRequest<>(
                 property("recommendations.radios"),
                 accessTokenParam(),
                 RadioData.class
@@ -313,8 +313,8 @@ public class UserRequests extends DeezerRequests {
      * @param userId user ID.
      * @return user's favourite tracks.
      */
-    public PaginationRequest<TrackData> getFavouriteTracks(long userId) {
-        return new PaginationRequest<>(
+    public PagingRequest<TrackData> getFavouriteTracks(long userId) {
+        return new PagingRequest<>(
                 property("user.tracks", userId),
                 accessTokenParam(),
                 TrackData.class

@@ -2,16 +2,17 @@ package api.deezer.requests;
 
 import api.deezer.converters.ListConverter;
 import api.deezer.converters.TracksDataConverter;
-import api.deezer.http.HttpRequestFilePart;
-import api.deezer.http.impl.DeezerDeleteRequest;
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerPostRequest;
-import api.deezer.http.impl.DeezerRequest;
-import api.deezer.http.impl.PaginationRequest;
+import api.deezer.http.DeezerDeleteRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerPostRequest;
+import api.deezer.http.DeezerRequest;
+import api.deezer.http.PagingRequest;
 import api.deezer.objects.Playlist;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -76,8 +77,8 @@ public class PlaylistRequests extends DeezerRequests {
      * @param playlistId playlist ID.
      * @return playlist fans.
      */
-    public PaginationRequest<UserData> getFans(long playlistId) {
-        return new PaginationRequest<>(property("playlist.fans", playlistId), UserData.class);
+    public PagingRequest<UserData> getFans(long playlistId) {
+        return new PagingRequest<>(property("playlist.fans", playlistId), UserData.class);
     }
 
     /**
@@ -86,8 +87,8 @@ public class PlaylistRequests extends DeezerRequests {
      * @param playlistId playlist ID.
      * @return playlist tracks.
      */
-    public PaginationRequest<TrackData> getTracks(long playlistId) {
-        return new PaginationRequest<>(property("playlist.tracks", playlistId), TrackData.class);
+    public PagingRequest<TrackData> getTracks(long playlistId) {
+        return new PagingRequest<>(property("playlist.tracks", playlistId), TrackData.class);
     }
 
     /**
@@ -96,30 +97,71 @@ public class PlaylistRequests extends DeezerRequests {
      * @param playlistId playlist ID.
      * @return playlist radio.
      */
-    public PaginationRequest<TrackData> getRadio(long playlistId) {
-        return new PaginationRequest<>(
+    public PagingRequest<TrackData> getRadio(long playlistId) {
+        return new PagingRequest<>(
                 property("playlist.radio", playlistId),
                 new TracksDataConverter()
         );
     }
 
     /**
-     * Adds tracks to playlist
+     * Sets playlist cover.
      *
      * @param playlistId  playlist ID.
      * @param uploadToken the upload token provided by {@link InfosRequests#get()}.
-     * @param image       the image
-     * @return <i>true</i> if successful.
+     * @param imageName   image name.
+     * @param image       the image.
+     * @return {@code true} if successful.
      */
-    public DeezerRequest<Boolean> uploadPicture(long playlistId, final String uploadToken, byte[] image) {
+    public DeezerRequest<Boolean> setPlaylistCover(long playlistId, final String uploadToken, String imageName, byte[] image) {
         Map<String, String> params = accessTokenParam();
         params.put("upload_token", uploadToken);
-
         return new DeezerPostRequest<>(
                 property("playlist.picture", playlistId),
                 params,
                 Boolean.class,
-                new HttpRequestFilePart[]{ HttpRequestFilePart.png("file", image) }
+                imageName,
+                image
+        );
+    }
+
+    /**
+     * Sets playlist cover.
+     *
+     * @param playlistId  playlist ID.
+     * @param uploadToken the upload token provided by {@link InfosRequests#get()}.
+     * @param image       the image.
+     * @return {@code true} if successful.
+     */
+    public DeezerRequest<Boolean> setPlaylistCover(long playlistId, final String uploadToken, File image) {
+        Map<String, String> params = accessTokenParam();
+        params.put("upload_token", uploadToken);
+        return new DeezerPostRequest<>(
+                property("playlist.picture", playlistId),
+                params,
+                Boolean.class,
+                image
+        );
+    }
+
+    /**
+     * Sets playlist cover.
+     *
+     * @param playlistId  playlist ID.
+     * @param uploadToken the upload token provided by {@link InfosRequests#get()}.
+     * @param imageName   image name.
+     * @param image       the image.
+     * @return {@code true} if successful.
+     */
+    public DeezerRequest<Boolean> setPlaylistCover(long playlistId, final String uploadToken, String imageName, InputStream image) {
+        Map<String, String> params = accessTokenParam();
+        params.put("upload_token", uploadToken);
+        return new DeezerPostRequest<>(
+                property("playlist.picture", playlistId),
+                params,
+                Boolean.class,
+                imageName,
+                image
         );
     }
 

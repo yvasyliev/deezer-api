@@ -1,7 +1,7 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.AdvancedSearchRequest;
-import api.deezer.http.impl.SearchRequest;
+import api.deezer.http.AdvancedSearchRequest;
+import api.deezer.http.SearchRequest;
 import api.deezer.objects.data.AlbumData;
 import api.deezer.objects.data.ArtistData;
 import api.deezer.objects.data.PlaylistData;
