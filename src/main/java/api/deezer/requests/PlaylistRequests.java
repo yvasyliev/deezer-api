@@ -100,7 +100,7 @@ public class PlaylistRequests extends DeezerRequests {
     public PagingRequest<TrackData> getRadio(long playlistId) {
         return new PagingRequest<>(
                 property("playlist.radio", playlistId),
-                new TracksDataConverter()
+                TrackData.class
         );
     }
 

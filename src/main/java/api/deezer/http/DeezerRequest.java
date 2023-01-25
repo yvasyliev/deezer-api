@@ -1,8 +1,8 @@
 package api.deezer.http;
 
-import api.deezer.converters.PojoConverter;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.validators.DeezerResponseValidator;
+import com.google.gson.Gson;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,7 +11,6 @@ import okhttp3.ResponseBody;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -26,28 +25,24 @@ public abstract class DeezerRequest<Answer> {
     protected final HttpUrl.Builder urlBuilder;
 
     /**
-     * Converts Deezer response.
+     * Answer class.
      */
-    private final Function<String, Answer> responseConverter;
+    private final Class<Answer> answerClass;
+
+    /**
+     * JSON converter.
+     */
+    private final Gson gson = new Gson();
 
     /**
      * Validates Deezer response.
      */
-    private final Predicate<String> responseValidator;
+    private final Predicate<String> responseValidator = new DeezerResponseValidator();
 
-    public DeezerRequest(String url, Map<String, String> params, Class<Answer> responseClass) {
-        this(url, params, new PojoConverter<>(responseClass));
-    }
-
-    public DeezerRequest(String url, Map<String, String> params, Function<String, Answer> responseConverter) {
-        this(url, params, new DeezerResponseValidator(), responseConverter);
-    }
-
-    public DeezerRequest(String url, Map<String, String> params, Predicate<String> responseValidator, Function<String, Answer> responseConverter) {
+    public DeezerRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
         this.urlBuilder = HttpUrl.get(url).newBuilder();
         params.forEach(this.urlBuilder::addQueryParameter);
-        this.responseValidator = responseValidator;
-        this.responseConverter = responseConverter;
+        this.answerClass = answerClass;
     }
 
     /**
@@ -66,7 +61,7 @@ public abstract class DeezerRequest<Answer> {
                 if (!responseValidator.test(rawAnswer)) {
                     throw new DeezerException(rawAnswer);
                 }
-                return responseConverter.apply(rawAnswer);
+                return gson.fromJson(rawAnswer, answerClass);
             }
         } catch (IOException e) {
             throw new DeezerException(e);

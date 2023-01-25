@@ -1,8 +1,6 @@
 package api.deezer.http;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Executes Deezer API request with pagination.
@@ -10,16 +8,12 @@ import java.util.function.Function;
  * @param <Answer> response POJO type.
  */
 public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
-    public PagingRequest(String url, Class<Answer> responseClass) {
-        super(url, responseClass);
+    public PagingRequest(String url, Class<Answer> answerClass) {
+        super(url, answerClass);
     }
 
-    public PagingRequest(String url, Map<String, String> params, Class<Answer> responseClass) {
-        super(url, params, responseClass);
-    }
-
-    public PagingRequest(String url, Function<String, Answer> responseConverter) {
-        super(url, new HashMap<>(), responseConverter);
+    public PagingRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
+        super(url, params, answerClass);
     }
 
     /**

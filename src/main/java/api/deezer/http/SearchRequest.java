@@ -8,13 +8,13 @@ import api.deezer.objects.SearchOrder;
  * @param <Answer> response POJO type.
  */
 public class SearchRequest<Answer> extends PagingRequest<Answer> {
-    public SearchRequest(String url, String q, Class<Answer> responseClass) {
-        super(url, responseClass);
+    public SearchRequest(String url, String q, Class<Answer> answerClass) {
+        super(url, answerClass);
         this.urlBuilder.addQueryParameter("q", q);
     }
 
-    public SearchRequest(String url, Class<Answer> responseClass) {
-        super(url, responseClass);
+    public SearchRequest(String url, Class<Answer> answerClass) {
+        super(url, answerClass);
     }
 
     @Override
