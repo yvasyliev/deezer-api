@@ -1,6 +1,6 @@
 package api.deezer.http;
 
-import api.deezer.http.utils.RequestBodies;
+import api.deezer.http.utils.HttpBodies;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
@@ -20,7 +20,7 @@ public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
     /**
      * Request body.
      */
-    private RequestBody requestBody = RequestBodies.EMPTY_REQUEST_BODY;
+    private RequestBody requestBody = HttpBodies.EMPTY_REQUEST_BODY;
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
         super(url, params, answerClass);
