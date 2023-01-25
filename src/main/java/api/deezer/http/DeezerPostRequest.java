@@ -18,7 +18,7 @@ import java.util.Map;
  * @param <Answer> response POJO type.
  */
 public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
-    private final MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
+    private MultipartBody.Builder multipartBodyBuilder;
 
     public DeezerPostRequest(String url, Class<Answer> responseClass) {
         this(url, new HashMap<>(), responseClass);
@@ -26,17 +26,19 @@ public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass) {
         super(url, params, responseClass);
-        params.put("request_method", "post");
+        this.urlBuilder.addQueryParameter("request_method", "post");
     }
 
     @Override
     protected Request newRequest() {
-        return newRequestBuilder().post(multipartBodyBuilder.build()).build();
+        return multipartBodyBuilder != null
+                ? newRequestBuilder().post(multipartBodyBuilder.setType(MultipartBody.FORM).build()).build()
+                : newRequestBuilder().get().build();
     }
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass, File file) {
         super(url, params, new PojoConverter<>(responseClass));
-        this.multipartBodyBuilder.addFormDataPart(
+        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart(
                 "file",
                 file.getName(),
                 RequestBody.create(
@@ -48,7 +50,7 @@ public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass, String filename, byte[] file) {
         super(url, params, new PojoConverter<>(responseClass));
-        this.multipartBodyBuilder.addFormDataPart(
+        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart(
                 "file",
                 filename,
                 RequestBody.create(
@@ -60,7 +62,7 @@ public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass, String filename, InputStream file) {
         super(url, params, new PojoConverter<>(responseClass));
-        this.multipartBodyBuilder.addFormDataPart(
+        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart(
                 "file",
                 filename,
                 new InputStreamRequestBody(filename, file)
