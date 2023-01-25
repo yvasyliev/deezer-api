@@ -1,7 +1,6 @@
 package api.deezer.requests;
 
 import api.deezer.converters.ListConverter;
-import api.deezer.converters.TracksDataConverter;
 import api.deezer.http.DeezerDeleteRequest;
 import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerPostRequest;
