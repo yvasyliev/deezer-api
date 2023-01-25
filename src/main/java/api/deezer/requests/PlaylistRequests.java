@@ -1,11 +1,11 @@
 package api.deezer.requests;
 
-import api.deezer.converters.ListConverter;
 import api.deezer.http.DeezerDeleteRequest;
 import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerPostRequest;
 import api.deezer.http.DeezerRequest;
 import api.deezer.http.PagingRequest;
+import api.deezer.http.utils.ParamUtils;
 import api.deezer.objects.Playlist;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
@@ -15,16 +15,11 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Requests related to playlists.
  */
 public class PlaylistRequests extends DeezerRequests {
-    /**
-     * Converts list of integers into comma separated values.
-     */
-    private final Function<List<Long>, String> listConverter = new ListConverter<>();
 
     public PlaylistRequests(String accessToken) {
         super(accessToken);
@@ -184,7 +179,7 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> addTracks(long playlistId, List<Long> trackIds) {
         Map<String, String> params = accessTokenParam();
-        params.put("songs", listConverter.apply(trackIds));
+        params.put("songs", ParamUtils.encode(trackIds));
         return new DeezerPostRequest<>(
                 property("playlist.tracks", playlistId),
                 params,
@@ -212,7 +207,7 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> orderTracks(long playlistId, List<Long> trackIds) {
         Map<String, String> params = accessTokenParam();
-        params.put("order", listConverter.apply(trackIds));
+        params.put("order", ParamUtils.encode(trackIds));
         return new DeezerPostRequest<>(
                 property("playlist.tracks", playlistId),
                 params,
@@ -254,7 +249,7 @@ public class PlaylistRequests extends DeezerRequests {
      */
     public DeezerRequest<Boolean> removeTracks(long playlistId, List<Long> trackIds) {
         Map<String, String> params = accessTokenParam();
-        params.put("songs", listConverter.apply(trackIds));
+        params.put("songs", ParamUtils.encode(trackIds));
         return new DeezerDeleteRequest<>(
                 property("playlist.tracks", playlistId),
                 params,
