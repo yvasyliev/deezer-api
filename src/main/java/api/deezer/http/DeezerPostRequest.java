@@ -1,6 +1,7 @@
 package api.deezer.http;
 
 import api.deezer.converters.PojoConverter;
+import api.deezer.http.utils.RequestBodies;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
@@ -17,45 +18,37 @@ import java.util.Map;
  * @param <Answer> response POJO type.
  */
 public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
+    /**
+     * Multipart body builder.
+     */
     private MultipartBody.Builder multipartBodyBuilder;
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass) {
         super(url, params, responseClass);
-        this.urlBuilder.addQueryParameter("request_method", "post");
     }
 
     @Override
     protected Request newRequest() {
         RequestBody requestBody = multipartBodyBuilder != null
                 ? multipartBodyBuilder.setType(MultipartBody.FORM).build()
-                : RequestBody.create(new byte[0], null);
+                : RequestBodies.EMPTY_REQUEST_BODY;
         return newRequestBuilder().post(requestBody).build();
     }
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass, File file) {
-        super(url, params, new PojoConverter<>(responseClass));
-        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart(
-                "file",
-                file.getName(),
-                RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(file.getName())))
-        );
+        this(url, params, responseClass, file.getName(), RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(file.getName()))));
     }
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass, String filename, byte[] file) {
-        super(url, params, new PojoConverter<>(responseClass));
-        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart(
-                "file",
-                filename,
-                RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(filename)))
-        );
+        this(url, params, responseClass, filename, RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(filename))));
     }
 
     public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> responseClass, String filename, InputStream file) {
-        super(url, params, new PojoConverter<>(responseClass));
-        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart(
-                "file",
-                filename,
-                new InputStreamRequestBody(filename, file)
-        );
+        this(url, params, responseClass, filename, new InputStreamRequestBody(filename, file));
+    }
+
+    private DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass, String filename, RequestBody file) {
+        super(url, params, new PojoConverter<>(answerClass));
+        this.multipartBodyBuilder = new MultipartBody.Builder().addFormDataPart("file", filename, file);
     }
 }
