@@ -4,16 +4,20 @@ import api.deezer.exceptions.DeezerException;
 import api.deezer.http.utils.HttpBodies;
 import api.deezer.validators.DeezerResponseValidator;
 import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 /**
@@ -99,18 +103,58 @@ public abstract class DeezerRequest<Answer> {
     public Answer execute() throws DeezerException {
         try (Response response = okHttpClient.newCall(newRequest()).execute()) {
             try (ResponseBody responseBody = response.body()) {
-                if (responseBody == null) {
-                    throw new DeezerException("Response body is null. " + response);
-                }
-                String rawAnswer = responseBody.string();
-                if (!responseValidator.test(rawAnswer)) {
-                    throw new DeezerException(rawAnswer);
-                }
-                return gson.fromJson(rawAnswer, answerClass);
+                return extractAnswer(responseBody);
             }
         } catch (IOException e) {
             throw new DeezerException(e);
         }
+    }
+
+    /**
+     * Executes Deezer API request.
+     *
+     * @return Deezer API response.
+     * @return
+     */
+    public CompletableFuture<Answer> executeAsync() {
+        CompletableFuture<Answer> completableFuture = new CompletableFuture<>();
+        okHttpClient.newCall(newRequest()).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                completableFuture.completeExceptionally(e);
+                okHttpClient.dispatcher().executorService().shutdown();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    completableFuture.complete(extractAnswer(response.body()));
+                } catch (DeezerException e) {
+                    completableFuture.completeExceptionally(e);
+                }
+                okHttpClient.dispatcher().executorService().shutdown();
+            }
+        });
+        return completableFuture;
+    }
+
+    /**
+     * Extracts an {@link Answer} from response body.
+     *
+     * @param responseBody response body.
+     * @return {@link Answer}.
+     * @throws DeezerException if errors occur.
+     * @throws IOException     if errors occur.
+     */
+    private Answer extractAnswer(ResponseBody responseBody) throws DeezerException, IOException {
+        if (responseBody == null) {
+            throw new DeezerException("Response body is null.");
+        }
+        String rawAnswer = responseBody.string();
+        if (!responseValidator.test(rawAnswer)) {
+            throw new DeezerException(rawAnswer);
+        }
+        return gson.fromJson(rawAnswer, answerClass);
     }
 
     /**
