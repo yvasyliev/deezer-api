@@ -6,8 +6,8 @@ package api.deezer.http;
  * @param <Answer> response POJO type.
  */
 public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
-    public AdvancedSearchRequest(String url, Class<Answer> responseClass) {
-        super(url, responseClass);
+    public AdvancedSearchRequest(String url, Class<Answer> answerClass) {
+        super(url, answerClass);
     }
 
     @Override
