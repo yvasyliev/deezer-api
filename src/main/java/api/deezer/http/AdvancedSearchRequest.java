@@ -11,6 +11,11 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
     }
 
     @Override
+    public AdvancedSearchRequest<Answer> addParam(String name, String value) {
+        return (AdvancedSearchRequest<Answer>) super.addParam(name, value);
+    }
+
+    @Override
     public AdvancedSearchRequest<Answer> limit(int limit) {
         return (AdvancedSearchRequest<Answer>) super.limit(limit);
     }

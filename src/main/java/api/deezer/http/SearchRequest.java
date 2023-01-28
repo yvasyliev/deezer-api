@@ -10,11 +10,16 @@ import api.deezer.objects.SearchOrder;
 public class SearchRequest<Answer> extends PagingRequest<Answer> {
     public SearchRequest(String url, String q, Class<Answer> answerClass) {
         super(url, answerClass);
-        this.urlBuilder.addQueryParameter("q", q);
+        addParam("q", q);
     }
 
     public SearchRequest(String url, Class<Answer> answerClass) {
         super(url, answerClass);
+    }
+
+    @Override
+    public SearchRequest<Answer> addParam(String name, String value) {
+        return (SearchRequest<Answer>) super.addParam(name, value);
     }
 
     @Override
@@ -33,8 +38,7 @@ public class SearchRequest<Answer> extends PagingRequest<Answer> {
      * @return current instance.
      */
     public SearchRequest<Answer> strict() {
-        this.urlBuilder.addQueryParameter("strict", "on");
-        return this;
+        return addParam("strict", "on");
     }
 
     /**
@@ -44,7 +48,6 @@ public class SearchRequest<Answer> extends PagingRequest<Answer> {
      * @return current instance.
      */
     public SearchRequest<Answer> order(SearchOrder searchOrder) {
-        this.urlBuilder.addQueryParameter("order", searchOrder.name());
-        return this;
+        return addParam("order", searchOrder.name());
     }
 }

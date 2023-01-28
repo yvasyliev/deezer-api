@@ -2,9 +2,6 @@ package api.deezer.http;
 
 import okhttp3.Request;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Executes Deezer API GET request.
  *
@@ -12,11 +9,12 @@ import java.util.Map;
  */
 public class DeezerGetRequest<Answer> extends DeezerRequest<Answer> {
     public DeezerGetRequest(String url, Class<Answer> answerClass) {
-        this(url, Collections.emptyMap(), answerClass);
+        super(url, answerClass);
     }
 
-    public DeezerGetRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
-        super(url, params, answerClass);
+    @Override
+    public DeezerGetRequest<Answer> addParam(String name, String value) {
+        return (DeezerGetRequest<Answer>) super.addParam(name, value);
     }
 
     @Override

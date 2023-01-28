@@ -9,7 +9,6 @@ import okhttp3.RequestBody;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.util.Map;
 
 /**
  * Executes Deezer API POST request.
@@ -22,28 +21,33 @@ public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
      */
     private RequestBody requestBody = HttpBodies.EMPTY_REQUEST_BODY;
 
-    public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
-        super(url, params, answerClass);
+    public DeezerPostRequest(String url, Class<Answer> answerClass) {
+        super(url, answerClass);
     }
 
-    public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass, File file) {
-        this(url, params, answerClass, file.getName(), RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(file.getName()))));
+    public DeezerPostRequest(String url, Class<Answer> answerClass, File file) {
+        this(url, answerClass, file.getName(), RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(file.getName()))));
     }
 
-    public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass, String filename, byte[] file) {
-        this(url, params, answerClass, filename, RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(filename))));
+    public DeezerPostRequest(String url, Class<Answer> answerClass, String filename, byte[] file) {
+        this(url, answerClass, filename, RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(filename))));
     }
 
-    public DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass, String filename, InputStream file) {
-        this(url, params, answerClass, filename, new InputStreamRequestBody(filename, file));
+    public DeezerPostRequest(String url, Class<Answer> answerClass, String filename, InputStream file) {
+        this(url, answerClass, filename, new InputStreamRequestBody(filename, file));
     }
 
-    private DeezerPostRequest(String url, Map<String, String> params, Class<Answer> answerClass, String filename, RequestBody file) {
-        super(url, params, answerClass);
+    private DeezerPostRequest(String url, Class<Answer> answerClass, String filename, RequestBody file) {
+        super(url, answerClass);
         this.requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("file", filename, file)
                 .build();
+    }
+
+    @Override
+    public DeezerPostRequest<Answer> addParam(String name, String value) {
+        return (DeezerPostRequest<Answer>) super.addParam(name, value);
     }
 
     @Override

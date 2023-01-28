@@ -20,7 +20,6 @@ import api.deezer.objects.data.UserData;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 // TODO: 01.11.2021 user / charts - what is the implementation?
 
@@ -52,11 +51,8 @@ public class UserRequests extends DeezerRequests {
      * @return current user.
      */
     public DeezerRequest<User> getMe() {
-        return new DeezerGetRequest<>(
-                property("user.get", "me"),
-                accessTokenParam(),
-                User.class
-        );
+        return new DeezerGetRequest<>(property("user.get", "me"), User.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -66,11 +62,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's favourite albums.
      */
     public PagingRequest<AlbumData> getFavouriteAlbums(long userId) {
-        return new PagingRequest<>(
-                property("user.albums", userId),
-                accessTokenParam(),
-                AlbumData.class
-        );
+        return new PagingRequest<>(property("user.albums", userId), AlbumData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -80,11 +73,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's favourite albums.
      */
     public PagingRequest<ArtistData> getFavouriteArtists(long userId) {
-        return new PagingRequest<>(
-                property("user.artists", userId),
-                accessTokenParam(),
-                ArtistData.class
-        );
+        return new PagingRequest<>(property("user.artists", userId), ArtistData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -93,11 +83,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's flow.
      */
     public PagingRequest<TrackData> getFlow() {
-        return new PagingRequest<>(
-                property("user.flow", "me"),
-                accessTokenParam(),
-                TrackData.class
-        );
+        return new PagingRequest<>(property("user.flow", "me"), TrackData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -107,11 +94,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's followings.
      */
     public PagingRequest<UserData> getFollowings(long userId) {
-        return new PagingRequest<>(
-                property("user.followings", userId),
-                accessTokenParam(),
-                UserData.class
-        );
+        return new PagingRequest<>(property("user.followings", userId), UserData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -121,11 +105,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's followers.
      */
     public PagingRequest<UserData> getFollowers(long userId) {
-        return new PagingRequest<>(
-                property("user.followers", userId),
-                accessTokenParam(),
-                UserData.class
-        );
+        return new PagingRequest<>(property("user.followers", userId), UserData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -134,11 +115,8 @@ public class UserRequests extends DeezerRequests {
      * @return current user's history.
      */
     public PagingRequest<TrackData> getMyHistory() {
-        return new PagingRequest<>(
-                property("user.history", "me"),
-                accessTokenParam(),
-                TrackData.class
-        );
+        return new PagingRequest<>(property("user.history", "me"), TrackData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     // TODO: 03.11.2021 is it working?
@@ -150,11 +128,8 @@ public class UserRequests extends DeezerRequests {
      * @return request status.
      */
     public DeezerRequest<SendNotificationResponse> sendNotification(String message) {
-        return new DeezerPostRequest<>(
-                property("user.notifications"),
-                accessTokenParam(),
-                SendNotificationResponse.class
-        );
+        return new DeezerPostRequest<>(property("user.notifications"), SendNotificationResponse.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -163,11 +138,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's permissions.
      */
     public DeezerRequest<GetPermissionsResponse> getPermissions() {
-        return new DeezerGetRequest<>(
-                property("user.permissions"),
-                accessTokenParam(),
-                GetPermissionsResponse.class
-        );
+        return new DeezerGetRequest<>(property("user.permissions"), GetPermissionsResponse.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -176,11 +148,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's options.
      */
     public DeezerRequest<Options> getOptions() {
-        return new DeezerGetRequest<>(
-                property("user.options"),
-                accessTokenParam(),
-                Options.class
-        );
+        return new DeezerGetRequest<>(property("user.options"), Options.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -189,11 +158,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's songs.
      */
     public PagingRequest<TrackData> getPersonalSongs() {
-        return new PagingRequest<>(
-                property("user.personal"),
-                accessTokenParam(),
-                TrackData.class
-        );
+        return new PagingRequest<>(property("user.personal"), TrackData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -203,11 +169,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's playlists.
      */
     public PagingRequest<PlaylistData> getPlaylists(long userId) {
-        return new PagingRequest<>(
-                property("user.playlists", userId),
-                accessTokenParam(),
-                PlaylistData.class
-        );
+        return new PagingRequest<>(property("user.playlists", userId), PlaylistData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -217,11 +180,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's favourite radios.
      */
     public PagingRequest<RadioData> getFavouriteRadios(long userId) {
-        return new PagingRequest<>(
-                property("user.radios", userId),
-                accessTokenParam(),
-                RadioData.class
-        );
+        return new PagingRequest<>(property("user.radios", userId), RadioData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -230,11 +190,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's recommended albums.
      */
     public PagingRequest<AlbumData> getRecommendedAlbums() {
-        return new PagingRequest<>(
-                property("recommendations.albums"),
-                accessTokenParam(),
-                AlbumData.class
-        );
+        return new PagingRequest<>(property("recommendations.albums"), AlbumData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -243,11 +200,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's recommended releases.
      */
     public PagingRequest<AlbumData> getRecommendedReleases() {
-        return new PagingRequest<>(
-                property("recommendations.releases"),
-                accessTokenParam(),
-                AlbumData.class
-        );
+        return new PagingRequest<>(property("recommendations.releases"), AlbumData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -256,11 +210,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's recommended releases.
      */
     public PagingRequest<ArtistData> getRecommendedArtists() {
-        return new PagingRequest<>(
-                property("recommendations.artists"),
-                accessTokenParam(),
-                ArtistData.class
-        );
+        return new PagingRequest<>(property("recommendations.artists"), ArtistData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -269,11 +220,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's recommended playlists.
      */
     public PagingRequest<PlaylistData> getRecommendedPlaylists() {
-        return new PagingRequest<>(
-                property("recommendations.playlists"),
-                accessTokenParam(),
-                PlaylistData.class
-        );
+        return new PagingRequest<>(property("recommendations.playlists"), PlaylistData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -282,11 +230,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's recommended tracks.
      */
     public PagingRequest<TrackData> getRecommendedTracks() {
-        return new PagingRequest<>(
-                property("recommendations.tracks"),
-                accessTokenParam(),
-                TrackData.class
-        );
+        return new PagingRequest<>(property("recommendations.tracks"), TrackData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -295,11 +240,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's recommended radios.
      */
     public PagingRequest<RadioData> getRecommendedRadios() {
-        return new PagingRequest<>(
-                property("recommendations.radios"),
-                accessTokenParam(),
-                RadioData.class
-        );
+        return new PagingRequest<>(property("recommendations.radios"), RadioData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -309,11 +251,8 @@ public class UserRequests extends DeezerRequests {
      * @return user's favourite tracks.
      */
     public PagingRequest<TrackData> getFavouriteTracks(long userId) {
-        return new PagingRequest<>(
-                property("user.tracks", userId),
-                accessTokenParam(),
-                TrackData.class
-        );
+        return new PagingRequest<>(property("user.tracks", userId), TrackData.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -323,13 +262,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> addAlbumToLibrary(long albumId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("album_id", String.valueOf(albumId));
-        return new DeezerPostRequest<>(
-                property("user.albums", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.albums", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("album_id", String.valueOf(albumId));
     }
 
     /**
@@ -339,13 +274,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> addArtistToFavourites(long artistId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("artist_id", String.valueOf(artistId));
-        return new DeezerPostRequest<>(
-                property("user.artists", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.artists", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("artist_id", String.valueOf(artistId));
     }
 
     /**
@@ -355,13 +286,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> follow(long userId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("user_id", String.valueOf(userId));
-        return new DeezerPostRequest<>(
-                property("user.followings", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.followings", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("user_id", String.valueOf(userId));
     }
 
     /**
@@ -371,13 +298,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Id> createPlaylist(String playlistTitle) {
-        Map<String, String> params = accessTokenParam();
-        params.put("title", String.valueOf(playlistTitle));
-        return new DeezerPostRequest<>(
-                property("user.playlists", "me"),
-                params,
-                Id.class
-        );
+        return new DeezerPostRequest<>(property("user.playlists", "me"), Id.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("title", String.valueOf(playlistTitle));
     }
 
     /**
@@ -387,13 +310,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> addPlaylistToFavourites(long playlistId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("playlist_id", String.valueOf(playlistId));
-        return new DeezerPostRequest<>(
-                property("user.playlists", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.playlists", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("playlist_id", String.valueOf(playlistId));
     }
 
     /**
@@ -403,13 +322,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> addPodcastToFavourites(long podcastId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("podcast_id", String.valueOf(podcastId));
-        return new DeezerPostRequest<>(
-                property("user.podcasts", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.podcasts", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("podcast_id", String.valueOf(podcastId));
     }
 
     /**
@@ -419,13 +334,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> addRadioToFavourites(long radioId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("radio_id", String.valueOf(radioId));
-        return new DeezerPostRequest<>(
-                property("user.radios", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.radios", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("radio_id", String.valueOf(radioId));
     }
 
     /**
@@ -445,13 +356,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> addTracksToFavourites(List<Long> trackIds) { // TODO: 21.11.2021 check if it's working
-        Map<String, String> params = accessTokenParam();
-        params.put("track_id", ParamUtils.encode(trackIds));
-        return new DeezerPostRequest<>(
-                property("user.tracks", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("user.tracks", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("track_id", ParamUtils.encode(trackIds));
     }
 
     /**
@@ -461,13 +368,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> removeAlbum(long albumId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("album_id", String.valueOf(albumId));
-        return new DeezerDeleteRequest<>(
-                property("user.albums", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("user.albums", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("album_id", String.valueOf(albumId));
     }
 
     /**
@@ -477,13 +380,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> removeArtist(long artistId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("artist_id", String.valueOf(artistId));
-        return new DeezerDeleteRequest<>(
-                property("user.artists", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("user.artists", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("artist_id", String.valueOf(artistId));
     }
 
     /**
@@ -493,13 +392,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> unfollow(long followingId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("user_id", String.valueOf(followingId));
-        return new DeezerDeleteRequest<>(
-                property("user.followings", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("user.followings", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("user_id", String.valueOf(followingId));
     }
 
     /**
@@ -509,13 +404,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> removePlaylist(long playlistId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("playlist_id", String.valueOf(playlistId));
-        return new DeezerDeleteRequest<>(
-                property("user.playlists", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("user.playlists", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("playlist_id", String.valueOf(playlistId));
     }
 
     /**
@@ -525,13 +416,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> removePodcast(long podcastId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("podcast_id", String.valueOf(podcastId));
-        return new DeezerDeleteRequest<>(
-                property("user.podcasts", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("user.podcasts", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("podcast_id", String.valueOf(podcastId));
     }
 
     /**
@@ -541,13 +428,9 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> removeRadio(long radio) {
-        Map<String, String> params = accessTokenParam();
-        params.put("radio_id", String.valueOf(radio));
-        return new DeezerDeleteRequest<>(
-                property("user.radios", "me"),
-                params,
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("user.radios", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("radio_id", String.valueOf(radio));
     }
 
     /**
@@ -557,21 +440,8 @@ public class UserRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> removeTrack(long trackId) {
-        Map<String, String> params = accessTokenParam();
-        params.put("track_id", String.valueOf(trackId));
-        return new DeezerDeleteRequest<>(
-                property("user.tracks", "me"),
-                params,
-                Boolean.class
-        );
-    }
-
-    /**
-     * Creates <i>access_token</i> param.
-     *
-     * @return <i>access_token</i> param.
-     */
-    private Map<String, String> accessTokenParam() {
-        return params(entry("access_token", getAccessToken()));
+        return new DeezerDeleteRequest<>(property("user.tracks", "me"), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("track_id", String.valueOf(trackId));
     }
 }

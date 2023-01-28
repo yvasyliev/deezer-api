@@ -1,7 +1,5 @@
 package api.deezer.http;
 
-import java.util.Map;
-
 /**
  * Executes Deezer API request with pagination.
  *
@@ -12,8 +10,9 @@ public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
         super(url, answerClass);
     }
 
-    public PagingRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
-        super(url, params, answerClass);
+    @Override
+    public PagingRequest<Answer> addParam(String name, String value) {
+        return (PagingRequest<Answer>) super.addParam(name, value);
     }
 
     /**
@@ -23,8 +22,7 @@ public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
      * @return current instance.
      */
     public PagingRequest<Answer> limit(int limit) {
-        this.urlBuilder.addQueryParameter("limit", String.valueOf(limit));
-        return this;
+        return addParam("limit", String.valueOf(limit));
     }
 
     /**
@@ -34,7 +32,6 @@ public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
      * @return current instance.
      */
     public PagingRequest<Answer> index(int index) {
-        this.urlBuilder.addQueryParameter("index", String.valueOf(index));
-        return this;
+        return addParam("index", String.valueOf(index));
     }
 }

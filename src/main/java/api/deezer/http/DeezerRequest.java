@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
@@ -88,9 +87,8 @@ public abstract class DeezerRequest<Answer> {
             })
             .build();
 
-    public DeezerRequest(String url, Map<String, String> params, Class<Answer> answerClass) {
+    public DeezerRequest(String url, Class<Answer> answerClass) {
         this.urlBuilder = HttpUrl.get(url).newBuilder();
-        params.forEach(this.urlBuilder::addQueryParameter);
         this.answerClass = answerClass;
     }
 
@@ -114,7 +112,6 @@ public abstract class DeezerRequest<Answer> {
      * Executes Deezer API request.
      *
      * @return Deezer API response.
-     * @return
      */
     public CompletableFuture<Answer> executeAsync() {
         CompletableFuture<Answer> completableFuture = new CompletableFuture<>();
@@ -136,6 +133,18 @@ public abstract class DeezerRequest<Answer> {
             }
         });
         return completableFuture;
+    }
+
+    /**
+     * Adds query params to the request.
+     *
+     * @param name  param name.
+     * @param value param value.
+     * @return {@code this} instance.
+     */
+    public DeezerRequest<Answer> addParam(String name, String value) {
+        this.urlBuilder.addQueryParameter(name, value);
+        return this;
     }
 
     /**

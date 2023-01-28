@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Requests related to playlists.
@@ -42,17 +41,20 @@ public class PlaylistRequests extends DeezerRequests {
      * @return {@link Playlist} object.
      */
     public DeezerRequest<Boolean> update(Playlist playlist) {
-        Map<String, String> params = accessTokenParam();
-        if (!"".equals(playlist.getTitle())) {
-            params.put("title", playlist.getTitle());
+        DeezerPostRequest<Boolean> request = new DeezerPostRequest<>(property("playlist.get", playlist.getId()), Boolean.class)
+                .addParam("access_token", getAccessToken());
+
+        if (playlist.getTitle() != null && !playlist.getTitle().isEmpty()) {
+            request.addParam("title", playlist.getTitle());
         }
-        if (!"".equals(playlist.getDescription())) {
-            params.put("description", playlist.getDescription());
+        if (playlist.getDescription() != null && !playlist.getDescription().isEmpty()) {
+            request.addParam("description", playlist.getDescription());
         }
         if (playlist.getIsCollaborative() != null) {
-            params.put("collaborative", playlist.getIsCollaborative().toString());
+            request.addParam("collaborative", playlist.getIsCollaborative().toString());
         }
-        return new DeezerPostRequest<>(property("playlist.get", playlist.getId()), params, Boolean.class);
+
+        return request;
     }
 
     /**
@@ -62,7 +64,8 @@ public class PlaylistRequests extends DeezerRequests {
      * @return <i>true</i> if was successful.
      */
     public DeezerRequest<Boolean> markAsSeen(long playlistId) {
-        return new DeezerPostRequest<>(property("playlist.seen", playlistId), accessTokenParam(), Boolean.class);
+        return new DeezerPostRequest<>(property("playlist.seen", playlistId), Boolean.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -108,15 +111,9 @@ public class PlaylistRequests extends DeezerRequests {
      * @return {@code true} if successful.
      */
     public DeezerRequest<Boolean> setPlaylistCover(long playlistId, final String uploadToken, String imageName, byte[] image) {
-        Map<String, String> params = accessTokenParam();
-        params.put("upload_token", uploadToken);
-        return new DeezerPostRequest<>(
-                property("playlist.picture", playlistId),
-                params,
-                Boolean.class,
-                imageName,
-                image
-        );
+        return new DeezerPostRequest<>(property("playlist.picture", playlistId), Boolean.class, imageName, image)
+                .addParam("access_token", getAccessToken())
+                .addParam("upload_token", uploadToken);
     }
 
     /**
@@ -128,14 +125,9 @@ public class PlaylistRequests extends DeezerRequests {
      * @return {@code true} if successful.
      */
     public DeezerRequest<Boolean> setPlaylistCover(long playlistId, final String uploadToken, File image) {
-        Map<String, String> params = accessTokenParam();
-        params.put("upload_token", uploadToken);
-        return new DeezerPostRequest<>(
-                property("playlist.picture", playlistId),
-                params,
-                Boolean.class,
-                image
-        );
+        return new DeezerPostRequest<>(property("playlist.picture", playlistId), Boolean.class, image)
+                .addParam("access_token", getAccessToken())
+                .addParam("upload_token", uploadToken);
     }
 
     /**
@@ -148,15 +140,9 @@ public class PlaylistRequests extends DeezerRequests {
      * @return {@code true} if successful.
      */
     public DeezerRequest<Boolean> setPlaylistCover(long playlistId, final String uploadToken, String imageName, InputStream image) {
-        Map<String, String> params = accessTokenParam();
-        params.put("upload_token", uploadToken);
-        return new DeezerPostRequest<>(
-                property("playlist.picture", playlistId),
-                params,
-                Boolean.class,
-                imageName,
-                image
-        );
+        return new DeezerPostRequest<>(property("playlist.picture", playlistId), Boolean.class, imageName, image)
+                .addParam("access_token", getAccessToken())
+                .addParam("upload_token", uploadToken);
     }
 
     /**
@@ -178,13 +164,9 @@ public class PlaylistRequests extends DeezerRequests {
      * @return <i>true</i> if successful.
      */
     public DeezerRequest<Boolean> addTracks(long playlistId, List<Long> trackIds) {
-        Map<String, String> params = accessTokenParam();
-        params.put("songs", ParamUtils.encode(trackIds));
-        return new DeezerPostRequest<>(
-                property("playlist.tracks", playlistId),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("playlist.tracks", playlistId), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("songs", ParamUtils.encode(trackIds));
     }
 
     /**
@@ -206,13 +188,9 @@ public class PlaylistRequests extends DeezerRequests {
      * @return <i>true</i> if successful.
      */
     public DeezerRequest<Boolean> orderTracks(long playlistId, List<Long> trackIds) {
-        Map<String, String> params = accessTokenParam();
-        params.put("order", ParamUtils.encode(trackIds));
-        return new DeezerPostRequest<>(
-                property("playlist.tracks", playlistId),
-                params,
-                Boolean.class
-        );
+        return new DeezerPostRequest<>(property("playlist.tracks", playlistId), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("order", ParamUtils.encode(trackIds));
     }
 
     /**
@@ -222,11 +200,8 @@ public class PlaylistRequests extends DeezerRequests {
      * @return <i>true</i> if successful.
      */
     public DeezerRequest<Boolean> delete(long playlistId) {
-        return new DeezerDeleteRequest<>(
-                property("playlist.get", playlistId),
-                accessTokenParam(),
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("playlist.get", playlistId), Boolean.class)
+                .addParam("access_token", getAccessToken());
     }
 
     /**
@@ -248,21 +223,8 @@ public class PlaylistRequests extends DeezerRequests {
      * @return <i>true</i> if successful.
      */
     public DeezerRequest<Boolean> removeTracks(long playlistId, List<Long> trackIds) {
-        Map<String, String> params = accessTokenParam();
-        params.put("songs", ParamUtils.encode(trackIds));
-        return new DeezerDeleteRequest<>(
-                property("playlist.tracks", playlistId),
-                params,
-                Boolean.class
-        );
-    }
-
-    /**
-     * Creates <i>access_token</i> param.
-     *
-     * @return <i>access_token</i> param.
-     */
-    private Map<String, String> accessTokenParam() {
-        return params(entry("access_token", getAccessToken()));
+        return new DeezerDeleteRequest<>(property("playlist.tracks", playlistId), Boolean.class)
+                .addParam("access_token", getAccessToken())
+                .addParam("songs", ParamUtils.encode(trackIds));
     }
 }

@@ -8,11 +8,8 @@ import api.deezer.objects.AccessToken;
 import api.deezer.objects.Permission;
 import api.deezer.properties.DeezerProperties;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Authorization requests.
@@ -59,16 +56,10 @@ public class AuthRequests extends DeezerRequests {
      * @return Deezer <i>access_token</i>.
      */
     public DeezerRequest<AccessToken> getAccessToken(long appId, String secret, String code) {
-        Map<String, String> params = new HashMap<>();
-        params.put("app_id", String.valueOf(appId));
-        params.put("secret", secret);
-        params.put("code", code);
-        params.put("output", "json"); // TODO: 31.10.2021 why does https://connect.deezer.com/oauth/access_token.php always return a string format "access_token=${access_token}&expires=${expires}" ignoring "output=json" parameter?
-
-        return new DeezerGetRequest<>(
-                DeezerProperties.getProperty("auth.access_token"),
-                params,
-                AccessToken.class
-        );
+        return new DeezerGetRequest<>(DeezerProperties.getProperty("auth.access_token"), AccessToken.class)
+                .addParam("app_id", String.valueOf(appId))
+                .addParam("secret", secret)
+                .addParam("code", code)
+                .addParam("output", "json");
     }
 }
