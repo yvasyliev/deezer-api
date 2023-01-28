@@ -1,8 +1,8 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerRequest;
-import api.deezer.http.impl.PaginationRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerRequest;
+import api.deezer.http.PagingRequest;
 import api.deezer.objects.Album;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
@@ -27,8 +27,8 @@ public class AlbumRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return album fans.
      */
-    public PaginationRequest<UserData> getFans(long albumId) {
-        return new PaginationRequest<>(property("album.fans", albumId), UserData.class);
+    public PagingRequest<UserData> getFans(long albumId) {
+        return new PagingRequest<>(property("album.fans", albumId), UserData.class);
     }
 
     /**
@@ -37,7 +37,7 @@ public class AlbumRequests extends DeezerRequests {
      * @param albumId album ID.
      * @return album tracks.
      */
-    public PaginationRequest<TrackData> getTracks(long albumId) {
-        return new PaginationRequest<>(property("album.tracks", albumId), TrackData.class);
+    public PagingRequest<TrackData> getTracks(long albumId) {
+        return new PagingRequest<>(property("album.tracks", albumId), TrackData.class);
     }
 }

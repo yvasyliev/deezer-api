@@ -2,11 +2,6 @@ package api.deezer.requests;
 
 import api.deezer.properties.DeezerProperties;
 
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
  * Deezer requests.
  */
@@ -35,28 +30,6 @@ public abstract class DeezerRequests {
                 DeezerProperties.getProperty(property),
                 args
         );
-    }
-
-    /**
-     * Creates params map.
-     *
-     * @param entries params.
-     * @return params map.
-     */
-    @SafeVarargs
-    protected final Map<String, String> params(Map.Entry<String, String>... entries) {
-        return Arrays.stream(entries).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
-
-    /**
-     * Creates param.
-     *
-     * @param key   param key.
-     * @param value param value.
-     * @return param entry.
-     */
-    public Map.Entry<String, String> entry(String key, String value) {
-        return new AbstractMap.SimpleEntry<>(key, value);
     }
 
     /**

@@ -1,8 +1,8 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.DeezerDeleteRequest;
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerRequest;
+import api.deezer.http.DeezerDeleteRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerRequest;
 import api.deezer.objects.Track;
 
 /**
@@ -30,10 +30,7 @@ public class TrackRequests extends DeezerRequests {
      * @return <i>true</i> if successful.
      */
     public DeezerRequest<Boolean> delete(long trackId) {
-        return new DeezerDeleteRequest<>(
-                property("track.get", trackId),
-                params(entry("access_token", getAccessToken())),
-                Boolean.class
-        );
+        return new DeezerDeleteRequest<>(property("track.get", trackId), Boolean.class)
+                .addParam("access_token", getAccessToken());
     }
 }

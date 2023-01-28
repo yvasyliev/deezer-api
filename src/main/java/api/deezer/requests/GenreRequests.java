@@ -1,8 +1,8 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerRequest;
-import api.deezer.http.impl.PaginationRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerRequest;
+import api.deezer.http.PagingRequest;
 import api.deezer.objects.data.ArtistData;
 import api.deezer.objects.data.GenreData;
 import api.deezer.objects.data.RadioData;
@@ -27,8 +27,8 @@ public class GenreRequests extends DeezerRequests {
      * @param genreId genre ID.
      * @return list of artists.
      */
-    public PaginationRequest<ArtistData> getArtistsByGenreId(long genreId) {
-        return new PaginationRequest<>(property("genre.artists", genreId), ArtistData.class);
+    public PagingRequest<ArtistData> getArtistsByGenreId(long genreId) {
+        return new PagingRequest<>(property("genre.artists", genreId), ArtistData.class);
     }
 
     /**
@@ -37,7 +37,7 @@ public class GenreRequests extends DeezerRequests {
      * @param genreId genre ID.
      * @return list of radios.
      */
-    public PaginationRequest<RadioData> getRadiosByGenreId(long genreId) {
-        return new PaginationRequest<>(property("genre.radios", genreId), RadioData.class);
+    public PagingRequest<RadioData> getRadiosByGenreId(long genreId) {
+        return new PagingRequest<>(property("genre.radios", genreId), RadioData.class);
     }
 }

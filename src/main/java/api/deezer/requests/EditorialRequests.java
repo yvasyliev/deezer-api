@@ -1,8 +1,8 @@
 package api.deezer.requests;
 
-import api.deezer.http.impl.DeezerGetRequest;
-import api.deezer.http.impl.DeezerRequest;
-import api.deezer.http.impl.PaginationRequest;
+import api.deezer.http.DeezerGetRequest;
+import api.deezer.http.DeezerRequest;
+import api.deezer.http.PagingRequest;
 import api.deezer.objects.Chart;
 import api.deezer.objects.data.AlbumData;
 import api.deezer.properties.DeezerProperties;
@@ -16,8 +16,8 @@ public class EditorialRequests extends DeezerRequests {
      *
      * @return selected albums.
      */
-    public PaginationRequest<AlbumData> getSelectedAlbums() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("editorial.selection"), AlbumData.class);
+    public PagingRequest<AlbumData> getSelectedAlbums() {
+        return new PagingRequest<>(DeezerProperties.getProperty("editorial.selection"), AlbumData.class);
     }
 
     /**
@@ -34,7 +34,7 @@ public class EditorialRequests extends DeezerRequests {
      *
      * @return new releases.
      */
-    public PaginationRequest<AlbumData> getNewReleases() {
-        return new PaginationRequest<>(DeezerProperties.getProperty("editorial.releases"), AlbumData.class);
+    public PagingRequest<AlbumData> getNewReleases() {
+        return new PagingRequest<>(DeezerProperties.getProperty("editorial.releases"), AlbumData.class);
     }
 }

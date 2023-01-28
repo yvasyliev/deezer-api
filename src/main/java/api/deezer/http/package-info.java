@@ -1,4 +1,4 @@
 /**
- * Services to work with HTTP protocol.
+ * HTTP requests.
  */
 package api.deezer.http;
