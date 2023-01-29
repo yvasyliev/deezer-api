@@ -10,8 +10,9 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 
 ## Third-party dependencies
 
-- SLF4J
-- Gson
+- `SLF4J`
+- `Gson`
+- `OkHttp`
 
 ## Requirements
 
