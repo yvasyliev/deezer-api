@@ -1,5 +1,6 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.yvasyliev/deezer-api/badge.svg?&kill_cache=1)](https://search.maven.org/artifact/com.github.yvasyliev/deezer-api)
 ![Build status](https://github.com/yvasyliev/deezer-api/actions/workflows/build-maven-project.yml/badge.svg?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/yvasyliev/deezer-api/badge.svg)](https://snyk.io/test/github/yvasyliev/deezer-api)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/yvasyliev/deezer-api/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 [![javadoc](https://javadoc.io/badge2/com.github.yvasyliev/deezer-api/javadoc.svg)](https://javadoc.io/doc/com.github.yvasyliev/deezer-api)
