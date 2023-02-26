@@ -30,7 +30,6 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
         <version>2.1.0</version>
     </dependency>
     ```
-
 2. Use `DeezerApi` instance to execute Deezer API requests:
    ```java
    public class DeezerApp {
