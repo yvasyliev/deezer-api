@@ -87,7 +87,7 @@ public abstract class DeezerRequest<T> {
             })
             .build();
 
-    public DeezerRequest(String url, Class<T> answerClass) {
+    protected DeezerRequest(String url, Class<T> answerClass) {
         this.urlBuilder = HttpUrl.get(url).newBuilder();
         this.answerClass = answerClass;
     }
