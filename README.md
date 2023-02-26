@@ -22,32 +22,29 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 
 ## Quickstart
 
-1. Add to your pom.xml:
+1. Add to your `pom.xml`:
+    ```xml
+    <dependency>
+        <groupId>com.github.yvasyliev</groupId>
+        <artifactId>deezer-api</artifactId>
+        <version>2.1.0</version>
+    </dependency>
+    ```
 
-```xml
-
-<dependency>
-    <groupId>com.github.yvasyliev</groupId>
-    <artifactId>deezer-api</artifactId>
-    <version>2.0.1</version>
-</dependency>
-```
-
-2. Create and execute Deezer API requests:
-
-```java
-public class DeezerApp {
-    public static void main(String[] args) throws DeezerException {
-        DeezerApi deezerApi = new DeezerApi();
-
-        Album album = deezerApi.album().getById(302127).execute();
-        System.out.println(album);
-
-        TrackData trackData = deezerApi.search().searchTrack("eminem").execute();
-        System.out.println(trackData);
-    }
-}
-```
+2. Use `DeezerApi` instance to execute Deezer API requests:
+   ```java
+   public class DeezerApp {
+       public static void main(String[] args) throws DeezerException {
+           DeezerApi deezerApi = new DeezerApi();
+   
+           Album album = deezerApi.album().getById(302127).execute();
+           System.out.println(album);
+   
+           TrackData trackData = deezerApi.search().searchTrack("eminem").execute();
+           System.out.println(trackData);
+       }
+   }
+   ```
 
 ## OAuth
 
