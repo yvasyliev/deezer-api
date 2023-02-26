@@ -5,16 +5,16 @@ import okhttp3.Request;
 /**
  * Executes Deezer API GET request.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public class DeezerGetRequest<Answer> extends DeezerRequest<Answer> {
-    public DeezerGetRequest(String url, Class<Answer> answerClass) {
+public class DeezerGetRequest<T> extends DeezerRequest<T> {
+    public DeezerGetRequest(String url, Class<T> answerClass) {
         super(url, answerClass);
     }
 
     @Override
-    public DeezerGetRequest<Answer> addParam(String name, String value) {
-        return (DeezerGetRequest<Answer>) super.addParam(name, value);
+    public DeezerGetRequest<T> addParam(String name, String value) {
+        return (DeezerGetRequest<T>) super.addParam(name, value);
     }
 
     @Override

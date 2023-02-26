@@ -3,16 +3,16 @@ package api.deezer.http;
 /**
  * Executes Deezer API request with pagination.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
-    public PagingRequest(String url, Class<Answer> answerClass) {
+public class PagingRequest<T> extends DeezerGetRequest<T> {
+    public PagingRequest(String url, Class<T> answerClass) {
         super(url, answerClass);
     }
 
     @Override
-    public PagingRequest<Answer> addParam(String name, String value) {
-        return (PagingRequest<Answer>) super.addParam(name, value);
+    public PagingRequest<T> addParam(String name, String value) {
+        return (PagingRequest<T>) super.addParam(name, value);
     }
 
     /**
@@ -21,7 +21,7 @@ public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
      * @param limit limit value.
      * @return current instance.
      */
-    public PagingRequest<Answer> limit(int limit) {
+    public PagingRequest<T> limit(int limit) {
         return addParam("limit", String.valueOf(limit));
     }
 
@@ -31,7 +31,7 @@ public class PagingRequest<Answer> extends DeezerGetRequest<Answer> {
      * @param index index value.
      * @return current instance.
      */
-    public PagingRequest<Answer> index(int index) {
+    public PagingRequest<T> index(int index) {
         return addParam("index", String.valueOf(index));
     }
 }

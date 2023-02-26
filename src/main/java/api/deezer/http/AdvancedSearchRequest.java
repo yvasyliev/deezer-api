@@ -3,26 +3,26 @@ package api.deezer.http;
 /**
  * Executes Deezer API advanced search request.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
-    public AdvancedSearchRequest(String url, Class<Answer> answerClass) {
+public class AdvancedSearchRequest<T> extends SearchRequest<T> {
+    public AdvancedSearchRequest(String url, Class<T> answerClass) {
         super(url, answerClass);
     }
 
     @Override
-    public AdvancedSearchRequest<Answer> addParam(String name, String value) {
-        return (AdvancedSearchRequest<Answer>) super.addParam(name, value);
+    public AdvancedSearchRequest<T> addParam(String name, String value) {
+        return (AdvancedSearchRequest<T>) super.addParam(name, value);
     }
 
     @Override
-    public AdvancedSearchRequest<Answer> limit(int limit) {
-        return (AdvancedSearchRequest<Answer>) super.limit(limit);
+    public AdvancedSearchRequest<T> limit(int limit) {
+        return (AdvancedSearchRequest<T>) super.limit(limit);
     }
 
     @Override
-    public AdvancedSearchRequest<Answer> index(int index) {
-        return (AdvancedSearchRequest<Answer>) super.index(index);
+    public AdvancedSearchRequest<T> index(int index) {
+        return (AdvancedSearchRequest<T>) super.index(index);
     }
 
     /**
@@ -31,7 +31,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param artist artist name.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> artist(String artist) {
+    public AdvancedSearchRequest<T> artist(String artist) {
         return mergeQ("artist", str(artist));
     }
 
@@ -41,7 +41,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param album album name.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> album(String album) {
+    public AdvancedSearchRequest<T> album(String album) {
         return mergeQ("album", str(album));
     }
 
@@ -51,7 +51,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param track track name.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> track(String track) {
+    public AdvancedSearchRequest<T> track(String track) {
         return mergeQ("track", str(track));
     }
 
@@ -61,7 +61,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param label label.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> label(String label) {
+    public AdvancedSearchRequest<T> label(String label) {
         return mergeQ("label", str(label));
     }
 
@@ -71,7 +71,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param durMin minimum duration.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> durMin(int durMin) {
+    public AdvancedSearchRequest<T> durMin(int durMin) {
         return mergeQ("dur_min", String.valueOf(durMin));
     }
 
@@ -81,7 +81,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param durMax maximum duration.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> durMax(int durMax) {
+    public AdvancedSearchRequest<T> durMax(int durMax) {
         return mergeQ("dur_max", String.valueOf(durMax));
     }
 
@@ -91,7 +91,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param bpmMin minimum BPM.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> bpmMin(int bpmMin) {
+    public AdvancedSearchRequest<T> bpmMin(int bpmMin) {
         return mergeQ("bpm_min", String.valueOf(bpmMin));
     }
 
@@ -101,7 +101,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param bpmMax maximum BPM.
      * @return current instance.
      */
-    public AdvancedSearchRequest<Answer> bpmMax(int bpmMax) {
+    public AdvancedSearchRequest<T> bpmMax(int bpmMax) {
         return mergeQ("bpm_max", String.valueOf(bpmMax));
     }
 
@@ -122,7 +122,7 @@ public class AdvancedSearchRequest<Answer> extends SearchRequest<Answer> {
      * @param val q value.
      * @return current instance.
      */
-    private AdvancedSearchRequest<Answer> mergeQ(String key, String val) {
+    private AdvancedSearchRequest<T> mergeQ(String key, String val) {
         String newQ = key + ":" + val;
         String existingQ = this.urlBuilder.build().queryParameter("q");
         if (existingQ != null && !existingQ.isEmpty()) {
