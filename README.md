@@ -63,8 +63,6 @@ Now we are ready to authorize the user. Deezer uses OAuth 2.0 protocol for authe
 ### Authorization flow example
 
 ```java
-import api.deezer.exceptions.DeezerException;
-
 public class DeezerApp {
     /**
      * Can be found at https://developers.deezer.com/myapps
@@ -101,7 +99,7 @@ public class DeezerApp {
         String code = new Scanner(System.in).next();
 
         // Step 3. Get access_token.
-        AccessToken accessToken = deezerApi.auth().getAccessToken(APP_ID, SECRET, code).execute();
+        DeezerAccessToken accessToken = deezerApi.auth().getAccessToken(APP_ID, SECRET, code).execute();
         deezerApi.setAccessToken(accessToken);
 
         // Now we are ready to execute any request we want.
