@@ -82,7 +82,7 @@ jobs:
             <dependency>
                 <groupId>com.github.yvasyliev</groupId>
                 <artifactId>deezer-api</artifactId>
-                <version>{{ github.event.inputs.version }}</version>
+                <version>${{ github.event.inputs.version }}</version>
             </dependency>
             ```
       - name: Upload Release Asset
