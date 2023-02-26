@@ -3,10 +3,10 @@ package api.deezer.requests;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerRequest;
-import api.deezer.http.utils.ParamUtils;
 import api.deezer.objects.DeezerAccessToken;
 import api.deezer.objects.Permission;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
+import api.deezer.utils.ParamUtils;
 
 import java.util.Arrays;
 import java.util.List;

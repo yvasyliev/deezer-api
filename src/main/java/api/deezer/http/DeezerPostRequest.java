@@ -1,6 +1,6 @@
 package api.deezer.http;
 
-import api.deezer.http.utils.HttpBodies;
+import api.deezer.utils.HttpBodies;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;

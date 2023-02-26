@@ -1,7 +1,7 @@
 package api.deezer.http;
 
 import api.deezer.exceptions.DeezerException;
-import api.deezer.http.utils.HttpBodies;
+import api.deezer.utils.HttpBodies;
 import api.deezer.validators.DeezerResponseValidator;
 import com.google.gson.Gson;
 import okhttp3.Call;

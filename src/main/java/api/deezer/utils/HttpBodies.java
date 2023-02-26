@@ -1,4 +1,4 @@
-package api.deezer.http.utils;
+package api.deezer.utils;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;

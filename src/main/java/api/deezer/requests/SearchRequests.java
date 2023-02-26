@@ -8,7 +8,7 @@ import api.deezer.objects.data.PlaylistData;
 import api.deezer.objects.data.RadioData;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
 
 /**
  * Requests related to search.

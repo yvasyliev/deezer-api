@@ -1,4 +1,4 @@
-package api.deezer.properties;
+package api.deezer.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Stores Deezer API properties.
  */
-public class DeezerProperties {
+public final class DeezerProperties {
     /**
      * {@link Logger} object.
      */
@@ -25,6 +25,10 @@ public class DeezerProperties {
      * {@link Properties} object.
      */
     private static final Properties PROPERTIES = new Properties();
+
+    private DeezerProperties() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated.");
+    }
 
     /**
      * Loads {@link DeezerProperties#PROPERTIES}

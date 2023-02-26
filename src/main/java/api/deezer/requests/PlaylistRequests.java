@@ -5,10 +5,10 @@ import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerPostRequest;
 import api.deezer.http.DeezerRequest;
 import api.deezer.http.PagingRequest;
-import api.deezer.http.utils.ParamUtils;
 import api.deezer.objects.Playlist;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
+import api.deezer.utils.ParamUtils;
 
 import java.io.File;
 import java.io.InputStream;
