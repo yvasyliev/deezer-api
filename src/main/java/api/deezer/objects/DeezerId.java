@@ -24,6 +24,6 @@ public class DeezerId {
     public String toString() {
         return "DeezerId{" +
                 "id=" + id +
-                "} " + super.toString();
+                "}";
     }
 }
