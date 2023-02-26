@@ -6,8 +6,16 @@ import okhttp3.ResponseBody;
 /**
  * Static HTTP bodies.
  */
-public class HttpBodies {
+public final class HttpBodies {
+    /**
+     * Empty byte array.
+     */
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
+    private HttpBodies() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated.");
+    }
+
     /**
      * Empty request body.
      */

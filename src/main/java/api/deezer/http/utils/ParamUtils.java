@@ -9,7 +9,11 @@ import java.util.stream.Collectors;
 /**
  * Parameter utilities.
  */
-public class ParamUtils {
+public final class ParamUtils {
+    private ParamUtils() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated.");
+    }
+
     /**
      * Encodes a string into URL-encoded string.
      *
