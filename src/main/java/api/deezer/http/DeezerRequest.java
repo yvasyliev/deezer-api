@@ -1,9 +1,12 @@
 package api.deezer.http;
 
+import api.deezer.deserializers.TrackDataDeserializer;
 import api.deezer.exceptions.DeezerException;
+import api.deezer.objects.data.TrackData;
 import api.deezer.utils.HttpBodies;
 import api.deezer.validators.DeezerResponseValidator;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -43,7 +46,9 @@ public abstract class DeezerRequest<T> {
     /**
      * JSON converter.
      */
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(TrackData.class, new TrackDataDeserializer())
+            .create();
 
     /**
      * Validates Deezer response.
