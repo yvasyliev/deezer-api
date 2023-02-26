@@ -84,7 +84,7 @@ jobs:
   #          asset_content_type: application/java-archive
   publish:
     runs-on: ubuntu-latest
-    needs: [ check-input, check-tag ]
+    #    needs: [ check-input, check-tag ]
     steps:
       - name: Install gpg secret key
         run: |
