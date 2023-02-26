@@ -5,5 +5,5 @@ import api.deezer.objects.Podcast;
 /**
  * List of podcasts.
  */
-public class PodcastData extends Data<Podcast> {
+public class PodcastData extends DeezerData<Podcast> {
 }

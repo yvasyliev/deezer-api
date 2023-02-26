@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @param <T> data type
  */
-public class Data<T> {
+public class DeezerData<T> {
     /**
      * List of data
      */
@@ -55,7 +55,7 @@ public class Data<T> {
 
     @Override
     public String toString() {
-        return "Data{" +
+        return "DeezerData{" +
                 "data=" + data +
                 ", total=" + total +
                 ", next=" + next +

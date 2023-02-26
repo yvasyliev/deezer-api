@@ -5,5 +5,5 @@ import api.deezer.objects.Artist;
 /**
  * List of artists.
  */
-public class ArtistData extends Data<Artist> {
+public class ArtistData extends DeezerData<Artist> {
 }
