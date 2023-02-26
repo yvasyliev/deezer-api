@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Object ID.
  */
-public class PlaylistId {
+public class DeezerId {
     /**
      * Object ID.
      */
@@ -22,7 +22,7 @@ public class PlaylistId {
 
     @Override
     public String toString() {
-        return "Id{" +
+        return "DeezerId{" +
                 "id=" + id +
                 "} " + super.toString();
     }

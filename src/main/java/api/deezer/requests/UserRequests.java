@@ -5,9 +5,9 @@ import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerPostRequest;
 import api.deezer.http.DeezerRequest;
 import api.deezer.http.PagingRequest;
+import api.deezer.objects.DeezerId;
 import api.deezer.objects.GetPermissionsResponse;
 import api.deezer.objects.Options;
-import api.deezer.objects.PlaylistId;
 import api.deezer.objects.SendNotificationResponse;
 import api.deezer.objects.User;
 import api.deezer.objects.data.AlbumData;
@@ -331,8 +331,8 @@ public class UserRequests extends DeezerRequests {
      * @param playlistTitle playlist title.
      * @return <i>true</i> if was successful.
      */
-    public DeezerRequest<PlaylistId> createPlaylist(String playlistTitle) {
-        return new DeezerPostRequest<>(property(USER_PLAYLISTS, "me"), PlaylistId.class)
+    public DeezerRequest<DeezerId> createPlaylist(String playlistTitle) {
+        return new DeezerPostRequest<>(property(USER_PLAYLISTS, "me"), DeezerId.class)
                 .addParam(ACCESS_TOKEN, getAccessToken())
                 .addParam("title", String.valueOf(playlistTitle));
     }
