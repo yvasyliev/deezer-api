@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Object ID.
  */
-public class Id {
+public class PlaylistId {
     /**
      * Object ID.
      */
