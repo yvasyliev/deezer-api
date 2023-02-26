@@ -4,9 +4,7 @@ on: [ push, pull_request ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 8
@@ -14,14 +12,9 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          cache: maven
       - name: Build with Maven
-        run: mvn package --file pom.xml
+        run: mvn package
 #      - name: Coveralls GitHub Action
 #        uses: codecov/codecov-action@v1
 #        with:

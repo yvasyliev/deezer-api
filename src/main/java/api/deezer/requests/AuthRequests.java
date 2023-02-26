@@ -3,10 +3,10 @@ package api.deezer.requests;
 import api.deezer.exceptions.DeezerException;
 import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerRequest;
-import api.deezer.http.utils.ParamUtils;
-import api.deezer.objects.AccessToken;
+import api.deezer.objects.DeezerAccessToken;
 import api.deezer.objects.Permission;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
+import api.deezer.utils.ParamUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,8 +55,8 @@ public class AuthRequests extends DeezerRequests {
      * @param code   login code.
      * @return Deezer <i>access_token</i>.
      */
-    public DeezerRequest<AccessToken> getAccessToken(long appId, String secret, String code) {
-        return new DeezerGetRequest<>(DeezerProperties.getProperty("auth.access_token"), AccessToken.class)
+    public DeezerRequest<DeezerAccessToken> getAccessToken(long appId, String secret, String code) {
+        return new DeezerGetRequest<>(DeezerProperties.getProperty("auth.access_token"), DeezerAccessToken.class)
                 .addParam("app_id", String.valueOf(appId))
                 .addParam("secret", secret)
                 .addParam("code", code)

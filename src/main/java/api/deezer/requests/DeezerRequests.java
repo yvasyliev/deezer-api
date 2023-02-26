@@ -1,6 +1,6 @@
 package api.deezer.requests;
 
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
 
 /**
  * Deezer requests.
@@ -11,10 +11,10 @@ public abstract class DeezerRequests {
      */
     private String accessToken;
 
-    public DeezerRequests() {
+    protected DeezerRequests() {
     }
 
-    public DeezerRequests(String accessToken) {
+    protected DeezerRequests(String accessToken) {
         this.accessToken = accessToken;
     }
 

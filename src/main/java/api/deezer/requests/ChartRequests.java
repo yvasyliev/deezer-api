@@ -9,7 +9,7 @@ import api.deezer.objects.data.ArtistData;
 import api.deezer.objects.data.PlaylistData;
 import api.deezer.objects.data.PodcastData;
 import api.deezer.objects.data.TrackData;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
 
 /**
  * Requests related to charts.

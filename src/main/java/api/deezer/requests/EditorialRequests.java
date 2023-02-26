@@ -5,7 +5,7 @@ import api.deezer.http.DeezerRequest;
 import api.deezer.http.PagingRequest;
 import api.deezer.objects.Chart;
 import api.deezer.objects.data.AlbumData;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
 
 /**
  * Requests related to editorial.

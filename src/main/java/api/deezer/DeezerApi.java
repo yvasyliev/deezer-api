@@ -1,7 +1,19 @@
 package api.deezer;
 
-import api.deezer.objects.AccessToken;
-import api.deezer.requests.*;
+import api.deezer.objects.DeezerAccessToken;
+import api.deezer.requests.AlbumRequests;
+import api.deezer.requests.ArtistRequests;
+import api.deezer.requests.AuthRequests;
+import api.deezer.requests.ChartRequests;
+import api.deezer.requests.EditorialRequests;
+import api.deezer.requests.GenreRequests;
+import api.deezer.requests.InfosRequests;
+import api.deezer.requests.OptionsRequests;
+import api.deezer.requests.PlaylistRequests;
+import api.deezer.requests.RadioRequests;
+import api.deezer.requests.SearchRequests;
+import api.deezer.requests.TrackRequests;
+import api.deezer.requests.UserRequests;
 
 /**
  * Deezer APIs.
@@ -19,8 +31,8 @@ public class DeezerApi {
         this.accessToken = accessToken;
     }
 
-    public DeezerApi(AccessToken accessToken) {
-        this(accessToken.getAccessToken());
+    public DeezerApi(DeezerAccessToken deezerAccessToken) {
+        this(deezerAccessToken.getAccessToken());
     }
 
     /**
@@ -148,8 +160,8 @@ public class DeezerApi {
         return this;
     }
 
-    public DeezerApi setAccessToken(AccessToken accessToken) {
-        return setAccessToken(accessToken.getAccessToken());
+    public DeezerApi setAccessToken(DeezerAccessToken deezerAccessToken) {
+        return setAccessToken(deezerAccessToken.getAccessToken());
     }
 
     public void validateAccessToken() {

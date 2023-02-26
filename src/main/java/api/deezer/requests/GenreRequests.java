@@ -6,7 +6,7 @@ import api.deezer.http.PagingRequest;
 import api.deezer.objects.data.ArtistData;
 import api.deezer.objects.data.GenreData;
 import api.deezer.objects.data.RadioData;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
 
 /**
  * Requests related to genres.

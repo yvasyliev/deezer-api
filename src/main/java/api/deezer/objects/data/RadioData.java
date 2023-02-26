@@ -5,5 +5,5 @@ import api.deezer.objects.Radio;
 /**
  * List of radio.
  */
-public class RadioData extends Data<Radio> {
+public class RadioData extends DeezerData<Radio> {
 }

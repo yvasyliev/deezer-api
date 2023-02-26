@@ -5,31 +5,31 @@ import api.deezer.objects.SearchOrder;
 /**
  * Executes Deezer API search request.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public class SearchRequest<Answer> extends PagingRequest<Answer> {
-    public SearchRequest(String url, String q, Class<Answer> answerClass) {
+public class SearchRequest<T> extends PagingRequest<T> {
+    public SearchRequest(String url, String q, Class<T> answerClass) {
         super(url, answerClass);
         addParam("q", q);
     }
 
-    public SearchRequest(String url, Class<Answer> answerClass) {
+    public SearchRequest(String url, Class<T> answerClass) {
         super(url, answerClass);
     }
 
     @Override
-    public SearchRequest<Answer> addParam(String name, String value) {
-        return (SearchRequest<Answer>) super.addParam(name, value);
+    public SearchRequest<T> addParam(String name, String value) {
+        return (SearchRequest<T>) super.addParam(name, value);
     }
 
     @Override
-    public SearchRequest<Answer> limit(int limit) {
-        return (SearchRequest<Answer>) super.limit(limit);
+    public SearchRequest<T> limit(int limit) {
+        return (SearchRequest<T>) super.limit(limit);
     }
 
     @Override
-    public SearchRequest<Answer> index(int index) {
-        return (SearchRequest<Answer>) super.index(index);
+    public SearchRequest<T> index(int index) {
+        return (SearchRequest<T>) super.index(index);
     }
 
     /**
@@ -37,7 +37,7 @@ public class SearchRequest<Answer> extends PagingRequest<Answer> {
      *
      * @return current instance.
      */
-    public SearchRequest<Answer> strict() {
+    public SearchRequest<T> strict() {
         return addParam("strict", "on");
     }
 
@@ -47,7 +47,7 @@ public class SearchRequest<Answer> extends PagingRequest<Answer> {
      * @param searchOrder search order.
      * @return current instance.
      */
-    public SearchRequest<Answer> order(SearchOrder searchOrder) {
+    public SearchRequest<T> order(SearchOrder searchOrder) {
         return addParam("order", searchOrder.name());
     }
 }

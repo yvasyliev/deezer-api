@@ -5,16 +5,16 @@ import okhttp3.Request;
 /**
  * Executes Deezer API DELETE request.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public class DeezerDeleteRequest<Answer> extends DeezerRequest<Answer> {
-    public DeezerDeleteRequest(String url, Class<Answer> answerClass) {
+public class DeezerDeleteRequest<T> extends DeezerRequest<T> {
+    public DeezerDeleteRequest(String url, Class<T> answerClass) {
         super(url, answerClass);
     }
 
     @Override
-    public DeezerDeleteRequest<Answer> addParam(String name, String value) {
-        return (DeezerDeleteRequest<Answer>) super.addParam(name, value);
+    public DeezerDeleteRequest<T> addParam(String name, String value) {
+        return (DeezerDeleteRequest<T>) super.addParam(name, value);
     }
 
     @Override

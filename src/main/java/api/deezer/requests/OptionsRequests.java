@@ -3,7 +3,7 @@ package api.deezer.requests;
 import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerRequest;
 import api.deezer.objects.Options;
-import api.deezer.properties.DeezerProperties;
+import api.deezer.utils.DeezerProperties;
 
 /**
  * Requests related to options.

@@ -12,7 +12,7 @@ public class Infos {
      * The current country ISO code
      */
     @SerializedName("country_iso")
-    private String country_iso;
+    private String countryIso;
 
     /**
      * The current country name
@@ -35,12 +35,12 @@ public class Infos {
     @SerializedName("offers")
     private List<Offer> offers;
 
-    public String getCountry_iso() {
-        return country_iso;
+    public String getCountryIso() {
+        return countryIso;
     }
 
-    public void setCountry_iso(String country_iso) {
-        this.country_iso = country_iso;
+    public void setCountryIso(String countryIso) {
+        this.countryIso = countryIso;
     }
 
     public String getCountry() {
@@ -78,11 +78,11 @@ public class Infos {
     @Override
     public String toString() {
         return "Infos{" +
-                "country_iso='" + country_iso + '\'' +
+                "countryIso='" + countryIso + '\'' +
                 ", country='" + country + '\'' +
                 ", open=" + isOpen +
                 ", offers=" + offers +
-                ", uploadToken='" + uploadToken + + '\'' +
+                ", uploadToken='" + uploadToken + +'\'' +
                 '}';
     }
 }

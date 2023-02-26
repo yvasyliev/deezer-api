@@ -8,5 +8,5 @@ import com.google.gson.annotations.JsonAdapter;
  * List of tracks.
  */
 @JsonAdapter(TrackDataDeserializer.class)
-public class TrackData extends Data<Track> {
+public class TrackData extends DeezerData<Track> {
 }

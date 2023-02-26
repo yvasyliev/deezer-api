@@ -22,32 +22,28 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
 
 ## Quickstart
 
-1. Add to your pom.xml:
-
-```xml
-
-<dependency>
-    <groupId>com.github.yvasyliev</groupId>
-    <artifactId>deezer-api</artifactId>
-    <version>2.0.1</version>
-</dependency>
-```
-
-2. Create and execute Deezer API requests:
-
-```java
-public class DeezerApp {
-    public static void main(String[] args) throws DeezerException {
-        DeezerApi deezerApi = new DeezerApi();
-
-        Album album = deezerApi.album().getById(302127).execute();
-        System.out.println(album);
-
-        TrackData trackData = deezerApi.search().searchTrack("eminem").execute();
-        System.out.println(trackData);
-    }
-}
-```
+1. Add to your `pom.xml`:
+    ```xml
+    <dependency>
+        <groupId>com.github.yvasyliev</groupId>
+        <artifactId>deezer-api</artifactId>
+        <version>2.1.0</version>
+    </dependency>
+    ```
+2. Use `DeezerApi` instance to execute Deezer API requests:
+   ```java
+   public class DeezerApp {
+       public static void main(String[] args) throws DeezerException {
+           DeezerApi deezerApi = new DeezerApi();
+   
+           Album album = deezerApi.album().getById(302127).execute();
+           System.out.println(album);
+   
+           TrackData trackData = deezerApi.search().searchTrack("eminem").execute();
+           System.out.println(trackData);
+       }
+   }
+   ```
 
 ## OAuth
 
@@ -63,8 +59,6 @@ Now we are ready to authorize the user. Deezer uses OAuth 2.0 protocol for authe
 ### Authorization flow example
 
 ```java
-import api.deezer.exceptions.DeezerException;
-
 public class DeezerApp {
     /**
      * Can be found at https://developers.deezer.com/myapps
@@ -101,7 +95,7 @@ public class DeezerApp {
         String code = new Scanner(System.in).next();
 
         // Step 3. Get access_token.
-        AccessToken accessToken = deezerApi.auth().getAccessToken(APP_ID, SECRET, code).execute();
+        DeezerAccessToken accessToken = deezerApi.auth().getAccessToken(APP_ID, SECRET, code).execute();
         deezerApi.setAccessToken(accessToken);
 
         // Now we are ready to execute any request we want.

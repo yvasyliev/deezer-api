@@ -1,6 +1,6 @@
 package api.deezer.http;
 
-import api.deezer.http.utils.HttpBodies;
+import api.deezer.utils.HttpBodies;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
@@ -13,31 +13,31 @@ import java.net.URLConnection;
 /**
  * Executes Deezer API POST request.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
+public class DeezerPostRequest<T> extends DeezerRequest<T> {
     /**
      * Request body.
      */
     private RequestBody requestBody = HttpBodies.EMPTY_REQUEST_BODY;
 
-    public DeezerPostRequest(String url, Class<Answer> answerClass) {
+    public DeezerPostRequest(String url, Class<T> answerClass) {
         super(url, answerClass);
     }
 
-    public DeezerPostRequest(String url, Class<Answer> answerClass, File file) {
+    public DeezerPostRequest(String url, Class<T> answerClass, File file) {
         this(url, answerClass, file.getName(), RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(file.getName()))));
     }
 
-    public DeezerPostRequest(String url, Class<Answer> answerClass, String filename, byte[] file) {
+    public DeezerPostRequest(String url, Class<T> answerClass, String filename, byte[] file) {
         this(url, answerClass, filename, RequestBody.create(file, MediaType.get(URLConnection.guessContentTypeFromName(filename))));
     }
 
-    public DeezerPostRequest(String url, Class<Answer> answerClass, String filename, InputStream file) {
+    public DeezerPostRequest(String url, Class<T> answerClass, String filename, InputStream file) {
         this(url, answerClass, filename, new InputStreamRequestBody(filename, file));
     }
 
-    private DeezerPostRequest(String url, Class<Answer> answerClass, String filename, RequestBody file) {
+    private DeezerPostRequest(String url, Class<T> answerClass, String filename, RequestBody file) {
         super(url, answerClass);
         this.requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -46,8 +46,8 @@ public class DeezerPostRequest<Answer> extends DeezerRequest<Answer> {
     }
 
     @Override
-    public DeezerPostRequest<Answer> addParam(String name, String value) {
-        return (DeezerPostRequest<Answer>) super.addParam(name, value);
+    public DeezerPostRequest<T> addParam(String name, String value) {
+        return (DeezerPostRequest<T>) super.addParam(name, value);
     }
 
     @Override

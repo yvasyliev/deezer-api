@@ -1,6 +1,6 @@
 package api.deezer.objects;
 
-import api.deezer.objects.data.Data;
+import api.deezer.objects.data.DeezerData;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -83,7 +83,7 @@ public class Album extends ChartMember {
      * List of genre object
      */
     @SerializedName("genres")
-    private Data<Genre> genres;
+    private DeezerData<Genre> genres;
 
     /**
      * The album's label name
@@ -176,7 +176,7 @@ public class Album extends ChartMember {
      * list of {@link Track}
      */
     @SerializedName("tracks")
-    private Data<Track> tracks;
+    private DeezerData<Track> tracks;
 
     public Long getId() {
         return id;
@@ -274,11 +274,11 @@ public class Album extends ChartMember {
         this.genreId = genreId;
     }
 
-    public Data<Genre> getGenres() {
+    public DeezerData<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(Data<Genre> genres) {
+    public void setGenres(DeezerData<Genre> genres) {
         this.genres = genres;
     }
 
@@ -402,11 +402,11 @@ public class Album extends ChartMember {
         this.artist = artist;
     }
 
-    public Data<Track> getTracks() {
+    public DeezerData<Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Data<Track> tracks) {
+    public void setTracks(DeezerData<Track> tracks) {
         this.tracks = tracks;
     }
 

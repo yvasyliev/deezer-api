@@ -1,6 +1,6 @@
 package api.deezer.objects;
 
-import api.deezer.objects.data.Data;
+import api.deezer.objects.data.DeezerData;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -11,69 +11,69 @@ public class Chart {
      * list of {@link Track}
      */
     @SerializedName("tracks")
-    private Data<Track> tracks;
+    private DeezerData<Track> tracks;
 
     /**
      * list of {@link Album}
      */
     @SerializedName("albums")
-    private Data<Album> albums;
+    private DeezerData<Album> albums;
 
     /**
      * list of {@link Artist}
      */
     @SerializedName("artists")
-    private Data<Artist> artists;
+    private DeezerData<Artist> artists;
 
     /**
      * list of {@link Playlist}
      */
     @SerializedName("playlists")
-    private Data<Playlist> playlists;
+    private DeezerData<Playlist> playlists;
 
     /**
      * list of {@link Podcast}
      */
     @SerializedName("podcasts")
-    private Data<Playlist> podcasts;
+    private DeezerData<Playlist> podcasts;
 
-    public Data<Track> getTracks() {
+    public DeezerData<Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Data<Track> tracks) {
+    public void setTracks(DeezerData<Track> tracks) {
         this.tracks = tracks;
     }
 
-    public Data<Album> getAlbums() {
+    public DeezerData<Album> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(Data<Album> albums) {
+    public void setAlbums(DeezerData<Album> albums) {
         this.albums = albums;
     }
 
-    public Data<Artist> getArtists() {
+    public DeezerData<Artist> getArtists() {
         return artists;
     }
 
-    public void setArtists(Data<Artist> artists) {
+    public void setArtists(DeezerData<Artist> artists) {
         this.artists = artists;
     }
 
-    public Data<Playlist> getPlaylists() {
+    public DeezerData<Playlist> getPlaylists() {
         return playlists;
     }
 
-    public void setPlaylists(Data<Playlist> playlists) {
+    public void setPlaylists(DeezerData<Playlist> playlists) {
         this.playlists = playlists;
     }
 
-    public Data<Playlist> getPodcasts() {
+    public DeezerData<Playlist> getPodcasts() {
         return podcasts;
     }
 
-    public void setPodcasts(Data<Playlist> podcasts) {
+    public void setPodcasts(DeezerData<Playlist> podcasts) {
         this.podcasts = podcasts;
     }
 

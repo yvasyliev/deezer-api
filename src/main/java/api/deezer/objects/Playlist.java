@@ -1,6 +1,6 @@
 package api.deezer.objects;
 
-import api.deezer.objects.data.Data;
+import api.deezer.objects.data.DeezerData;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -131,7 +131,7 @@ public class Playlist extends ChartMember {
      * list of {@link Track}
      */
     @SerializedName("tracks")
-    private Data<Track> tracks;
+    private DeezerData<Track> tracks;
 
     public Long getId() {
         return id;
@@ -293,11 +293,11 @@ public class Playlist extends ChartMember {
         this.creator = creator;
     }
 
-    public Data<Track> getTracks() {
+    public DeezerData<Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Data<Track> tracks) {
+    public void setTracks(DeezerData<Track> tracks) {
         this.tracks = tracks;
     }
 

@@ -1,7 +1,7 @@
 package api.deezer.http;
 
 import api.deezer.exceptions.DeezerException;
-import api.deezer.http.utils.HttpBodies;
+import api.deezer.utils.HttpBodies;
 import api.deezer.validators.DeezerResponseValidator;
 import com.google.gson.Gson;
 import okhttp3.Call;
@@ -22,9 +22,9 @@ import java.util.function.Predicate;
 /**
  * Executes Deezer API requests.
  *
- * @param <Answer> response POJO type.
+ * @param <T> response POJO type.
  */
-public abstract class DeezerRequest<Answer> {
+public abstract class DeezerRequest<T> {
     /**
      * Logger instance.
      */
@@ -38,7 +38,7 @@ public abstract class DeezerRequest<Answer> {
     /**
      * Answer class.
      */
-    private final Class<Answer> answerClass;
+    private final Class<T> answerClass;
 
     /**
      * JSON converter.
@@ -87,7 +87,7 @@ public abstract class DeezerRequest<Answer> {
             })
             .build();
 
-    public DeezerRequest(String url, Class<Answer> answerClass) {
+    protected DeezerRequest(String url, Class<T> answerClass) {
         this.urlBuilder = HttpUrl.get(url).newBuilder();
         this.answerClass = answerClass;
     }
@@ -98,7 +98,7 @@ public abstract class DeezerRequest<Answer> {
      * @return Deezer API response.
      * @throws DeezerException if errors occur.
      */
-    public Answer execute() throws DeezerException {
+    public T execute() throws DeezerException {
         try (Response response = okHttpClient.newCall(newRequest()).execute()) {
             try (ResponseBody responseBody = response.body()) {
                 return extractAnswer(responseBody);
@@ -113,8 +113,8 @@ public abstract class DeezerRequest<Answer> {
      *
      * @return Deezer API response.
      */
-    public CompletableFuture<Answer> executeAsync() {
-        CompletableFuture<Answer> completableFuture = new CompletableFuture<>();
+    public CompletableFuture<T> executeAsync() {
+        CompletableFuture<T> completableFuture = new CompletableFuture<>();
         okHttpClient.newCall(newRequest()).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -142,20 +142,20 @@ public abstract class DeezerRequest<Answer> {
      * @param value param value.
      * @return {@code this} instance.
      */
-    public DeezerRequest<Answer> addParam(String name, String value) {
+    public DeezerRequest<T> addParam(String name, String value) {
         this.urlBuilder.addQueryParameter(name, value);
         return this;
     }
 
     /**
-     * Extracts an {@link Answer} from response body.
+     * Extracts an {@link T} from response body.
      *
      * @param responseBody response body.
-     * @return {@link Answer}.
+     * @return {@link T}.
      * @throws DeezerException if errors occur.
      * @throws IOException     if errors occur.
      */
-    private Answer extractAnswer(ResponseBody responseBody) throws DeezerException, IOException {
+    private T extractAnswer(ResponseBody responseBody) throws DeezerException, IOException {
         if (responseBody == null) {
             throw new DeezerException("Response body is null.");
         }

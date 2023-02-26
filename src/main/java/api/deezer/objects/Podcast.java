@@ -64,25 +64,25 @@ public class Podcast extends ChartMember {
      * The url of the podcast's cover in size small.
      */
     @SerializedName("picture_small")
-    private String picture_small;
+    private String pictureSmall;
 
     /**
      * The url of the podcast's cover in size medium.
      */
     @SerializedName("picture_medium")
-    private String picture_medium;
+    private String pictureMedium;
 
     /**
      * The url of the podcast's cover in size big.
      */
     @SerializedName("picture_big")
-    private String picture_big;
+    private String pictureBig;
 
     /**
      * The url of the podcast's cover in size xl.
      */
     @SerializedName("picture_xl")
-    private String picture_xl;
+    private String pictureXl;
 
     public Long getId() {
         return id;
@@ -156,36 +156,36 @@ public class Podcast extends ChartMember {
         this.picture = picture;
     }
 
-    public String getPicture_small() {
-        return picture_small;
+    public String getPictureSmall() {
+        return pictureSmall;
     }
 
-    public void setPicture_small(String picture_small) {
-        this.picture_small = picture_small;
+    public void setPictureSmall(String pictureSmall) {
+        this.pictureSmall = pictureSmall;
     }
 
-    public String getPicture_medium() {
-        return picture_medium;
+    public String getPictureMedium() {
+        return pictureMedium;
     }
 
-    public void setPicture_medium(String picture_medium) {
-        this.picture_medium = picture_medium;
+    public void setPictureMedium(String pictureMedium) {
+        this.pictureMedium = pictureMedium;
     }
 
-    public String getPicture_big() {
-        return picture_big;
+    public String getPictureBig() {
+        return pictureBig;
     }
 
-    public void setPicture_big(String picture_big) {
-        this.picture_big = picture_big;
+    public void setPictureBig(String pictureBig) {
+        this.pictureBig = pictureBig;
     }
 
-    public String getPicture_xl() {
-        return picture_xl;
+    public String getPictureXl() {
+        return pictureXl;
     }
 
-    public void setPicture_xl(String picture_xl) {
-        this.picture_xl = picture_xl;
+    public void setPictureXl(String pictureXl) {
+        this.pictureXl = pictureXl;
     }
 
     @Override
@@ -200,10 +200,10 @@ public class Podcast extends ChartMember {
                 ", link='" + link + '\'' +
                 ", share='" + share + '\'' +
                 ", picture='" + picture + '\'' +
-                ", picture_small='" + picture_small + '\'' +
-                ", picture_medium='" + picture_medium + '\'' +
-                ", picture_big='" + picture_big + '\'' +
-                ", picture_xl='" + picture_xl + '\'' +
+                ", pictureSmall='" + pictureSmall + '\'' +
+                ", pictureMedium='" + pictureMedium + '\'' +
+                ", pictureBig='" + pictureBig + '\'' +
+                ", pictureXl='" + pictureXl + '\'' +
                 "} " + super.toString();
     }
 }

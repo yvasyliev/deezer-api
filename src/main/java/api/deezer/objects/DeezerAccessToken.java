@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Deezer access_token. Returned by {@link api.deezer.requests.AuthRequests#getAccessToken(long, String, String)}
  */
-public class AccessToken {
+public class DeezerAccessToken {
     /**
      * Access token string.
      */
@@ -22,7 +22,7 @@ public class AccessToken {
         return accessToken;
     }
 
-    public AccessToken setAccessToken(String accessToken) {
+    public DeezerAccessToken setAccessToken(String accessToken) {
         this.accessToken = accessToken;
         return this;
     }
@@ -31,14 +31,14 @@ public class AccessToken {
         return expires;
     }
 
-    public AccessToken setExpires(Integer expires) {
+    public DeezerAccessToken setExpires(Integer expires) {
         this.expires = expires;
         return this;
     }
 
     @Override
     public String toString() {
-        return "AccessToken{" +
+        return "DeezerAccessToken{" +
                 "accessToken='" + accessToken + '\'' +
                 ", expires=" + expires +
                 '}';
