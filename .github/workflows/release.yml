@@ -60,7 +60,7 @@ jobs:
   #        uses: actions/setup-java@v3
   #        with:
   #          java-version: '8'
-  #          distribution: 'corretto'
+  #          distribution: 'adopt'
   #          cache: maven
   #      - name: Build with Maven
   #        run: mvn package
@@ -97,7 +97,7 @@ jobs:
 #        uses: actions/setup-java@v3
 #        with:
 #          java-version: '8'
-#          distribution: 'corretto'
+#          distribution: 'adopt'
 #          cache: maven
 #          server-id: ossrh
 #          server-username: MAVEN_USERNAME
