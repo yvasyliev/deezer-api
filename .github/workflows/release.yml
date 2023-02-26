@@ -9,6 +9,7 @@ on:
 
 env:
   TAG: v${{ github.event.inputs.version }}
+  JAR_NAME_TEMPLATE: deezer-api-*-jar-with-dependencies.jar
 
 jobs:
   check-input:
