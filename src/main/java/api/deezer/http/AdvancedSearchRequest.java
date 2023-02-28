@@ -1,5 +1,7 @@
 package api.deezer.http;
 
+import api.deezer.utils.ParamUtils;
+
 /**
  * Executes Deezer API advanced search request.
  *
@@ -32,7 +34,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> artist(String artist) {
-        return mergeQ("artist", str(artist));
+        return mergeQ(ParamUtils.ARTIST, str(artist));
     }
 
     /**
@@ -42,7 +44,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> album(String album) {
-        return mergeQ("album", str(album));
+        return mergeQ(ParamUtils.ALBUM, str(album));
     }
 
     /**
@@ -52,7 +54,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> track(String track) {
-        return mergeQ("track", str(track));
+        return mergeQ(ParamUtils.TRACK, str(track));
     }
 
     /**
@@ -62,7 +64,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> label(String label) {
-        return mergeQ("label", str(label));
+        return mergeQ(ParamUtils.LABEL, str(label));
     }
 
     /**
@@ -72,7 +74,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> durMin(int durMin) {
-        return mergeQ("dur_min", String.valueOf(durMin));
+        return mergeQ(ParamUtils.DUR_MIN, String.valueOf(durMin));
     }
 
     /**
@@ -82,7 +84,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> durMax(int durMax) {
-        return mergeQ("dur_max", String.valueOf(durMax));
+        return mergeQ(ParamUtils.DUR_MAX, String.valueOf(durMax));
     }
 
     /**
@@ -92,7 +94,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> bpmMin(int bpmMin) {
-        return mergeQ("bpm_min", String.valueOf(bpmMin));
+        return mergeQ(ParamUtils.BPM_MIN, String.valueOf(bpmMin));
     }
 
     /**
@@ -102,7 +104,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     public AdvancedSearchRequest<T> bpmMax(int bpmMax) {
-        return mergeQ("bpm_max", String.valueOf(bpmMax));
+        return mergeQ(ParamUtils.BPM_MAX, String.valueOf(bpmMax));
     }
 
     /**
@@ -112,7 +114,7 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return double-quoted string.
      */
     private String str(String string) {
-        return "\"" + string + "\"";
+        return ParamUtils.QUOTE + string + ParamUtils.QUOTE;
     }
 
     /**
@@ -123,12 +125,12 @@ public class AdvancedSearchRequest<T> extends SearchRequest<T> {
      * @return current instance.
      */
     private AdvancedSearchRequest<T> mergeQ(String key, String val) {
-        String newQ = key + ":" + val;
-        String existingQ = this.urlBuilder.build().queryParameter("q");
+        String newQ = key + ParamUtils.COLON + val;
+        String existingQ = this.urlBuilder.build().queryParameter(ParamUtils.Q);
         if (existingQ != null && !existingQ.isEmpty()) {
-            newQ = existingQ + " " + newQ;
+            newQ = existingQ + ParamUtils.SPACE + newQ;
         }
-        this.urlBuilder.setQueryParameter("q", newQ);
+        this.urlBuilder.setQueryParameter(ParamUtils.Q, newQ);
         return this;
     }
 }

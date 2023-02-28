@@ -1,11 +1,10 @@
 package api.deezer.requests;
 
-import api.deezer.exceptions.DeezerException;
 import api.deezer.http.DeezerGetRequest;
 import api.deezer.http.DeezerRequest;
 import api.deezer.objects.DeezerAccessToken;
 import api.deezer.objects.Permission;
-import api.deezer.utils.DeezerProperties;
+import api.deezer.utils.DeezerPropertyKeys;
 import api.deezer.utils.ParamUtils;
 
 import java.util.Arrays;
@@ -23,9 +22,8 @@ public class AuthRequests extends DeezerRequests {
      * @param redirectUri redirect URI.
      * @param perms       permissions.
      * @return full login URL.
-     * @throws DeezerException if errors occur.
      */
-    public String getLoginUrl(long appId, String redirectUri, Permission... perms) throws DeezerException {
+    public String getLoginUrl(long appId, String redirectUri, Permission... perms) {
         return getLoginUrl(appId, redirectUri, Arrays.asList(perms));
     }
 
@@ -36,11 +34,10 @@ public class AuthRequests extends DeezerRequests {
      * @param redirectUri redirect URI.
      * @param perms       permissions.
      * @return full login URL.
-     * @throws DeezerException if errors occur.
      */
-    public String getLoginUrl(long appId, String redirectUri, List<Permission> perms) throws DeezerException {
+    public String getLoginUrl(long appId, String redirectUri, List<Permission> perms) {
         return property(
-                "auth.url",
+                DeezerPropertyKeys.AUTH_URL,
                 appId,
                 ParamUtils.encode(redirectUri),
                 ParamUtils.encode(perms)
@@ -56,10 +53,10 @@ public class AuthRequests extends DeezerRequests {
      * @return Deezer <i>access_token</i>.
      */
     public DeezerRequest<DeezerAccessToken> getAccessToken(long appId, String secret, String code) {
-        return new DeezerGetRequest<>(DeezerProperties.getProperty("auth.access_token"), DeezerAccessToken.class)
-                .addParam("app_id", String.valueOf(appId))
-                .addParam("secret", secret)
-                .addParam("code", code)
-                .addParam("output", "json");
+        return new DeezerGetRequest<>(property(DeezerPropertyKeys.AUTH_ACCESS_TOKEN), DeezerAccessToken.class)
+                .addParam(ParamUtils.APP_ID, String.valueOf(appId))
+                .addParam(ParamUtils.SECRET, secret)
+                .addParam(ParamUtils.CODE, code)
+                .addParam(ParamUtils.OUTPUT, ParamUtils.JSON);
     }
 }

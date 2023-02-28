@@ -6,7 +6,7 @@ import api.deezer.http.PagingRequest;
 import api.deezer.objects.data.ArtistData;
 import api.deezer.objects.data.GenreData;
 import api.deezer.objects.data.RadioData;
-import api.deezer.utils.DeezerProperties;
+import api.deezer.utils.DeezerPropertyKeys;
 
 /**
  * Requests related to genres.
@@ -18,7 +18,7 @@ public class GenreRequests extends DeezerRequests {
      * @return all genres.
      */
     public DeezerRequest<GenreData> getAll() {
-        return new DeezerGetRequest<>(DeezerProperties.getProperty("genre.all"), GenreData.class);
+        return new DeezerGetRequest<>(property(DeezerPropertyKeys.GENRE_ALL), GenreData.class);
     }
 
     /**
@@ -28,7 +28,7 @@ public class GenreRequests extends DeezerRequests {
      * @return list of artists.
      */
     public PagingRequest<ArtistData> getArtistsByGenreId(long genreId) {
-        return new PagingRequest<>(property("genre.artists", genreId), ArtistData.class);
+        return new PagingRequest<>(property(DeezerPropertyKeys.GENRE_ARTISTS, genreId), ArtistData.class);
     }
 
     /**
@@ -38,6 +38,6 @@ public class GenreRequests extends DeezerRequests {
      * @return list of radios.
      */
     public PagingRequest<RadioData> getRadiosByGenreId(long genreId) {
-        return new PagingRequest<>(property("genre.radios", genreId), RadioData.class);
+        return new PagingRequest<>(property(DeezerPropertyKeys.GENRE_RADIOS, genreId), RadioData.class);
     }
 }

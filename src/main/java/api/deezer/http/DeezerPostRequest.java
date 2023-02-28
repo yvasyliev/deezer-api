@@ -1,6 +1,7 @@
 package api.deezer.http;
 
 import api.deezer.utils.HttpBodies;
+import api.deezer.utils.ParamUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
@@ -41,7 +42,7 @@ public class DeezerPostRequest<T> extends DeezerRequest<T> {
         super(url, answerClass);
         this.requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", filename, file)
+                .addFormDataPart(ParamUtils.FILE, filename, file)
                 .build();
     }
 

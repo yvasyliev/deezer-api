@@ -1,6 +1,7 @@
 package api.deezer.http;
 
 import api.deezer.objects.SearchOrder;
+import api.deezer.utils.ParamUtils;
 
 /**
  * Executes Deezer API search request.
@@ -10,7 +11,7 @@ import api.deezer.objects.SearchOrder;
 public class SearchRequest<T> extends PagingRequest<T> {
     public SearchRequest(String url, String q, Class<T> answerClass) {
         super(url, answerClass);
-        addParam("q", q);
+        addParam(ParamUtils.Q, q);
     }
 
     public SearchRequest(String url, Class<T> answerClass) {
@@ -38,7 +39,7 @@ public class SearchRequest<T> extends PagingRequest<T> {
      * @return current instance.
      */
     public SearchRequest<T> strict() {
-        return addParam("strict", "on");
+        return addParam(ParamUtils.STRICT, ParamUtils.ON);
     }
 
     /**
@@ -48,6 +49,6 @@ public class SearchRequest<T> extends PagingRequest<T> {
      * @return current instance.
      */
     public SearchRequest<T> order(SearchOrder searchOrder) {
-        return addParam("order", searchOrder.name());
+        return addParam(ParamUtils.ORDER, searchOrder.name());
     }
 }

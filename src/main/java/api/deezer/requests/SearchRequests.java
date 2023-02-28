@@ -8,7 +8,7 @@ import api.deezer.objects.data.PlaylistData;
 import api.deezer.objects.data.RadioData;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
-import api.deezer.utils.DeezerProperties;
+import api.deezer.utils.DeezerPropertyKeys;
 
 /**
  * Requests related to search.
@@ -21,7 +21,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of albums.
      */
     public SearchRequest<AlbumData> searchAlbum(String q) {
-        return new SearchRequest<>(DeezerProperties.getProperty("search.album"), q, AlbumData.class);
+        return new SearchRequest<>(DeezerPropertyKeys.SEARCH_ALBUM, q, AlbumData.class);
     }
 
     /**
@@ -30,7 +30,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of albums.
      */
     public AdvancedSearchRequest<AlbumData> searchAlbum() {
-        return new AdvancedSearchRequest<>(DeezerProperties.getProperty("search.album"), AlbumData.class);
+        return new AdvancedSearchRequest<>(DeezerPropertyKeys.SEARCH_ALBUM, AlbumData.class);
     }
 
     /**
@@ -40,7 +40,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of artists.
      */
     public SearchRequest<ArtistData> searchArtist(String q) {
-        return new SearchRequest<>(DeezerProperties.getProperty("search.artist"), q, ArtistData.class);
+        return new SearchRequest<>(DeezerPropertyKeys.SEARCH_ARTIST, q, ArtistData.class);
     }
 
     /**
@@ -49,7 +49,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of artists.
      */
     public AdvancedSearchRequest<ArtistData> searchArtist() {
-        return new AdvancedSearchRequest<>(DeezerProperties.getProperty("search.artist"), ArtistData.class);
+        return new AdvancedSearchRequest<>(DeezerPropertyKeys.SEARCH_ARTIST, ArtistData.class);
     }
 
     /**
@@ -59,7 +59,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of playlists.
      */
     public SearchRequest<PlaylistData> searchPlaylist(String q) {
-        return new SearchRequest<>(DeezerProperties.getProperty("search.playlist"), q, PlaylistData.class);
+        return new SearchRequest<>(DeezerPropertyKeys.SEARCH_PLAYLIST, q, PlaylistData.class);
     }
 
     /**
@@ -68,7 +68,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of playlists.
      */
     public AdvancedSearchRequest<PlaylistData> searchPlaylist() {
-        return new AdvancedSearchRequest<>(DeezerProperties.getProperty("search.playlist"), PlaylistData.class);
+        return new AdvancedSearchRequest<>(DeezerPropertyKeys.SEARCH_PLAYLIST, PlaylistData.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of radios.
      */
     public SearchRequest<RadioData> searchRadio(String q) {
-        return new SearchRequest<>(DeezerProperties.getProperty("search.radio"), q, RadioData.class);
+        return new SearchRequest<>(DeezerPropertyKeys.SEARCH_RADIO, q, RadioData.class);
     }
 
     /**
@@ -87,7 +87,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of radios.
      */
     public AdvancedSearchRequest<RadioData> searchRadio() {
-        return new AdvancedSearchRequest<>(DeezerProperties.getProperty("search.radio"), RadioData.class);
+        return new AdvancedSearchRequest<>(DeezerPropertyKeys.SEARCH_RADIO, RadioData.class);
     }
 
     /**
@@ -97,7 +97,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of tracks.
      */
     public SearchRequest<TrackData> searchTrack(String q) {
-        return new SearchRequest<>(DeezerProperties.getProperty("search.track"), q, TrackData.class);
+        return new SearchRequest<>(DeezerPropertyKeys.SEARCH_TRACK, q, TrackData.class);
     }
 
     /**
@@ -106,7 +106,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of tracks.
      */
     public AdvancedSearchRequest<TrackData> searchTrack() {
-        return new AdvancedSearchRequest<>(DeezerProperties.getProperty("search.track"), TrackData.class);
+        return new AdvancedSearchRequest<>(DeezerPropertyKeys.SEARCH_TRACK, TrackData.class);
     }
 
     /**
@@ -116,7 +116,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of users.
      */
     public SearchRequest<UserData> searchUser(String q) {
-        return new SearchRequest<>(DeezerProperties.getProperty("search.user"), q, UserData.class);
+        return new SearchRequest<>(DeezerPropertyKeys.SEARCH_USER, q, UserData.class);
     }
 
     /**
@@ -125,7 +125,7 @@ public class SearchRequests extends DeezerRequests {
      * @return list of users.
      */
     public AdvancedSearchRequest<UserData> searchUser() {
-        return new AdvancedSearchRequest<>(DeezerProperties.getProperty("search.user"), UserData.class);
+        return new AdvancedSearchRequest<>(DeezerPropertyKeys.SEARCH_USER, UserData.class);
     }
     // TODO: 01.11.2021 search.history
 }

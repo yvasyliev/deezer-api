@@ -1,5 +1,7 @@
 package api.deezer.http;
 
+import api.deezer.utils.ParamUtils;
+
 /**
  * Executes Deezer API request with pagination.
  *
@@ -22,7 +24,7 @@ public class PagingRequest<T> extends DeezerGetRequest<T> {
      * @return current instance.
      */
     public PagingRequest<T> limit(int limit) {
-        return addParam("limit", String.valueOf(limit));
+        return addParam(ParamUtils.LIMIT, String.valueOf(limit));
     }
 
     /**
@@ -32,6 +34,6 @@ public class PagingRequest<T> extends DeezerGetRequest<T> {
      * @return current instance.
      */
     public PagingRequest<T> index(int index) {
-        return addParam("index", String.valueOf(index));
+        return addParam(ParamUtils.INDEX, String.valueOf(index));
     }
 }

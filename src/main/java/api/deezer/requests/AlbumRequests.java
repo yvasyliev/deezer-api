@@ -6,6 +6,7 @@ import api.deezer.http.PagingRequest;
 import api.deezer.objects.Album;
 import api.deezer.objects.data.TrackData;
 import api.deezer.objects.data.UserData;
+import api.deezer.utils.DeezerPropertyKeys;
 
 /**
  * Requests related to albums.
@@ -18,7 +19,7 @@ public class AlbumRequests extends DeezerRequests {
      * @return {@link Album} object.
      */
     public DeezerRequest<Album> getById(long albumId) {
-        return new DeezerGetRequest<>(property("album.get", albumId), Album.class);
+        return new DeezerGetRequest<>(property(DeezerPropertyKeys.ALBUM_GET, albumId), Album.class);
     }
 
     /**
@@ -28,7 +29,7 @@ public class AlbumRequests extends DeezerRequests {
      * @return album fans.
      */
     public PagingRequest<UserData> getFans(long albumId) {
-        return new PagingRequest<>(property("album.fans", albumId), UserData.class);
+        return new PagingRequest<>(property(DeezerPropertyKeys.ALBUM_FANS, albumId), UserData.class);
     }
 
     /**
@@ -38,6 +39,6 @@ public class AlbumRequests extends DeezerRequests {
      * @return album tracks.
      */
     public PagingRequest<TrackData> getTracks(long albumId) {
-        return new PagingRequest<>(property("album.tracks", albumId), TrackData.class);
+        return new PagingRequest<>(property(DeezerPropertyKeys.ALBUM_TRACKS, albumId), TrackData.class);
     }
 }
