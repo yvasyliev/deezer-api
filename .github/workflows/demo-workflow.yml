@@ -16,7 +16,6 @@ jobs:
   run-demo:
     runs-on: ubuntu-latest
     steps:
-      name: Demo run
-      run: |
-        echo "JAR_NAME=${{ JAR_NAME }}"
-        echo "JAR_PATH=${{ JAR_PATH }}"
+      - run: |
+          echo "JAR_NAME=${{ JAR_NAME }}"
+          echo "JAR_PATH=${{ JAR_PATH }}"
