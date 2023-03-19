@@ -9,8 +9,8 @@ on:
 
 env:
   TAG: v${{ github.event.inputs.version }}
-  JAR_NAME: format('deezer-api-{0}-jar-with-dependencies.jar', ${{ github.event.inputs.version }})
-  JAR_PATH: target/JAR_NAME
+  JAR_NAME: ${{ format('deezer-api-{0}-jar-with-dependencies.jar', ${{ github.event.inputs.version }}) }}
+  JAR_PATH: target/${{ env.JAR_NAME }}
 
 jobs:
   run-demo:
