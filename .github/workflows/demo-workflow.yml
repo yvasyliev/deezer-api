@@ -17,5 +17,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "JAR_NAME=${{ JAR_NAME }}"
-          echo "JAR_PATH=${{ JAR_PATH }}"
+          echo "JAR_NAME=${{ env.JAR_NAME }}"
+          echo "JAR_PATH=${{ env.JAR_PATH }}"
