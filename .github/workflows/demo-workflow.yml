@@ -1,0 +1,21 @@
+name: Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version"
+        required: true
+
+env:
+  TAG: v${{ github.event.inputs.version }}
+  JAR_NAME: format('deezer-api-{0}-jar-with-dependencies.jar', ${{ github.event.inputs.version }})
+  JAR_PATH: target/${{ JAR_NAME }}
+
+jobs:
+  run-demo:
+    runs-on: ubuntu-latest
+    steps:
+      run: |
+        echo "JAR_NAME=${{ JAR_NAME }}"
+        echo "JAR_PATH=${{ JAR_PATH }}"
