@@ -8,7 +8,6 @@ on:
         required: true
 
 env:
-  RELEASE_VERSION: ${{ github.event.inputs.version }}
   TAG: v${{ github.event.inputs.version }}
   JAR_NAME: format('deezer-api-{0}-jar-with-dependencies.jar', ${{ github.event.inputs.version }})
   JAR_PATH: target/JAR_NAME
@@ -18,6 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "JAR_NAME=${{ JAR_NAME }}"
-          echo "JAR_PATH=${{ JAR_PATH }}"
+          echo "JAR_NAME=${{ env.JAR_NAME }}"
+          echo "JAR_PATH=${{ env.JAR_PATH }}"
           echo [[ $RELEASE_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-alfa|-beta)$ ]] || echo "::error::Incorrect release version: $RELEASE_VERSION." && exit 1
