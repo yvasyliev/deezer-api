@@ -21,7 +21,9 @@ public class TrackDataDeserializer implements JsonDeserializer<TrackData> {
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         TrackData trackData = new TrackData();
-        trackData.setNext(jsonObject.get("next").getAsString());
+        if (jsonObject.has("next")) {
+            trackData.setNext(jsonObject.get("next").getAsString());
+        }
         trackData.setTotal(jsonObject.get("total").getAsInt());
         trackData.setData(jsonDeserializationContext.deserialize(jsonObject.get("data"), TypeToken.getParameterized(List.class, Track.class).getType()));
         return trackData;
