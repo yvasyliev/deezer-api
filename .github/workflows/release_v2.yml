@@ -11,6 +11,7 @@ on:
           - patch
           - minor
           - major
+          -
 
 jobs:
   release_v2:
@@ -21,4 +22,4 @@ jobs:
       - name: Install XMLStarlet
         run: sudo apt-get install xmlstarlet
       - name: Get current version
-        run: xmlstarlet sel -t -v "/project/version" pom.xml
+        run: echo current_version=$(xmlstarlet sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v "/pom:project/pom:version" pom.xml) >> $GITHUB_OUTPUT
