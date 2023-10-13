@@ -46,6 +46,6 @@ jobs:
           echo "minor_version=$minor_version"
           incremented_minor_version=$((minor_version + 1))
           echo "incremented_minor_version=$incremented_minor_version"
-          echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.\d+\.')$incremented_minor_version" >> $GITHUB_ENV
+          echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.')$incremented_minor_version.0" >> $GITHUB_ENV
       - name: Print new version
         run: echo "new_version=${{ env.VERSION }}"
