@@ -26,7 +26,7 @@ jobs:
         run: |
           current_version=$(xmlstarlet sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v "/pom:project/pom:version" pom.xml)
           echo "current_version=$current_version"
-          echo "VERSION=$current_version" >> GITHUB_ENV
+          echo "VERSION=$current_version" >> $GITHUB_ENV
       - name: Validate current version
         if: github.event.inputs.release_type != 'provided'
         run: |
@@ -38,6 +38,6 @@ jobs:
           echo "patch_version=$patch_version"
           incremented_patch_version=$((patch_version + 1))
           echo "incremented_patch_version=$incremented_patch_version"
-          echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.\d+\.')$incremented_patch_version" >> GITHUB_ENV
+          echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.\d+\.')$incremented_patch_version" >> $GITHUB_ENV
       - name: Print new version
         run: echo "new_version=${{ env.VERSION }}"
