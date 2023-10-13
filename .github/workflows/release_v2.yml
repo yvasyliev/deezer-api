@@ -1,0 +1,23 @@
+name: Release V2
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release_v2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get current version
+        run: |
+          sudo apt-get install xmlstarlet
+          xmlstarlet sel -v "/project/version" pom.xml
