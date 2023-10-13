@@ -20,4 +20,4 @@ jobs:
       - name: Get current version
         run: |
           sudo apt-get install xmlstarlet
-          xmlstarlet sel -v "/project/version" pom.xml
+          xmlstarlet sel -t -v "/project/version" pom.xml
