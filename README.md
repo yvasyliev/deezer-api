@@ -37,7 +37,7 @@ A Java implementation of [Deezer API](https://developers.deezer.com/api).
     <dependency>
         <groupId>com.github.yvasyliev</groupId>
         <artifactId>deezer-api</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.2</version>
     </dependency>
     ```
 2. Use `DeezerApi` instance to execute Deezer API requests:
