@@ -31,7 +31,7 @@ jobs:
         if: github.event.inputs.release_type != 'provided'
         run: |
           echo ${{ env.VERSION }} | grep -qoP "^\d+\.\d+\.\d+((\.|-).+)?$" || (echo "::error::Unexpected artifact version found in pom.xml: ${{ env.VERSION }}. Expected format: x.y.z*" && exit 1)
-      - name: Increment patch
+      - name: Increment patch version
         if: github.event.inputs.release_type == 'patch'
         run: |
           patch_version=$(echo ${{ env.VERSION }} | grep -oP "^\d+\.\d+\.\K\d+")
@@ -39,5 +39,13 @@ jobs:
           incremented_patch_version=$((patch_version + 1))
           echo "incremented_patch_version=$incremented_patch_version"
           echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.\d+\.')$incremented_patch_version" >> $GITHUB_ENV
+      - name: Increment minor version
+        if: github.event.inputs.release_type == 'minor'
+        run: |
+          minor_version=$(echo ${{ env.VERSION }} | grep -oP "^\d+\.\K\d+")
+          echo "minor_version=$minor_version"
+          incremented_minor_version=$((minor_version + 1))
+          echo "incremented_minor_version=$incremented_minor_version"
+          echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.\d+\.')$incremented_minor_version" >> $GITHUB_ENV
       - name: Print new version
         run: echo "new_version=${{ env.VERSION }}"
