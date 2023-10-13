@@ -71,7 +71,7 @@ jobs:
       - name: Update pom.xml version
         run: xmlstarlet ed -P -L -N pom=http://maven.apache.org/POM/4.0.0 -u "/pom:project/pom:version" -v ${{ env.VERSION }} pom.xml
       - name: Update REAMDE.md version
-        run: sed -i -E "s/<version>.*<\/version>/<version>2.1.4<\/version>/g" README.md
+        run: sed -i -E "s/<version>.*<\/version>/<version>${{ env.VERSION }}<\/version>/g" README.md
       - name: Set Tag name
         run: echo "TAG=v${{ env.VERSION }}" >> $GITHUB_ENV
       - name: Commit & Push changes
