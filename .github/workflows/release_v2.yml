@@ -47,5 +47,13 @@ jobs:
           incremented_minor_version=$((minor_version + 1))
           echo "incremented_minor_version=$incremented_minor_version"
           echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.')$incremented_minor_version.0" >> $GITHUB_ENV
+      - name: Increment major version
+        if: github.event.inputs.release_type == 'major'
+        run: |
+          major_version=$(echo ${{ env.VERSION }} | grep -oP "^\d+")
+          echo "major_version=$major_version"
+          incremented_major_version=$((major_version + 1))
+          echo "incremented_major_version=$incremented_major_version"
+          echo "VERSION=$incremented_major_version.0.0" >> $GITHUB_ENV
       - name: Print new version
         run: echo "new_version=${{ env.VERSION }}"
