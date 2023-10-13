@@ -25,5 +25,5 @@ jobs:
         run: |
           current_version=$(xmlstarlet sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v "/pom:project/pom:version" pom.xml)
           current_version_entry="current_version=$current_version"
-          echo current_version_entry
+          echo $current_version_entry
           echo current_version_entry = >> $GITHUB_OUTPUT
