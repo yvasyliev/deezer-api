@@ -29,10 +29,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ check_input ]
     steps:
-      - name: Install gpg secret key
-        run: |
-          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
+#      - name: Install gpg secret key
+#        run: |
+#          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+#          gpg --list-secret-keys --keyid-format LONG
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up JDK 8
