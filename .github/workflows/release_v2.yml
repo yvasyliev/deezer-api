@@ -3,15 +3,15 @@ name: Release V2
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: "Release version"
+      release_type:
+        description: "Release type"
         type: choice
         required: false
         options:
           - patch
           - minor
           - major
-          -
+          - provided
 
 jobs:
   release_v2:
@@ -22,8 +22,22 @@ jobs:
       - name: Install XMLStarlet
         run: sudo apt-get install xmlstarlet
       - name: Get current version
+        id: get_current_version
         run: |
           current_version=$(xmlstarlet sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v "/pom:project/pom:version" pom.xml)
-          current_version_entry="current_version=$current_version"
-          echo $current_version_entry
-          echo current_version_entry = >> $GITHUB_OUTPUT
+          echo "current_version=$current_version"
+          echo "VERSION=$current_version" >> GITHUB_ENV
+      - name: Validate current version
+        if: github.event.inputs.release_type != 'provided'
+        run: |
+          echo ${{ env.VERSION }} | grep -qoP "^\d+\.\d+\.\d+((\.|-).+)?$" || (echo "::error::Unexpected artifact version found in pom.xml: ${{ env.VERSION }}. Expected format: x.y.z*" && exit 1)
+      - name: Increment patch
+        if: github.event.inputs.release_type == 'patch'
+        run: |
+          patch_version=$(echo ${{ env.VERSION }} | grep -oP "^\d+\.\d+\.\K\d+")
+          echo "patch_version=$patch_version"
+          incremented_patch_version=$((patch_version + 1))
+          echo "incremented_patch_version=$incremented_patch_version"
+          echo "VERSION=$(echo ${{ env.VERSION }} | grep -oP '^\d+\.\d+\.')$incremented_patch_version" >> GITHUB_ENV
+      - name: Print new version
+        run: echo "new_version=${{ env.VERSION }}"
