@@ -6,7 +6,6 @@ on:
       release_type:
         description: "Release type"
         type: choice
-        required: false
         options:
           - patch
           - minor
