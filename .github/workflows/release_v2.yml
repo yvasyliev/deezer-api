@@ -6,6 +6,7 @@ on:
       version:
         description: "Release version"
         type: choice
+        required: false
         options:
           - patch
           - minor
@@ -17,7 +18,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install XMLStarlet
+        run: sudo apt-get install xmlstarlet
       - name: Get current version
-        run: |
-          sudo apt-get install xmlstarlet
-          xmlstarlet sel -t -v "/project/version" pom.xml
+        run: xmlstarlet sel -t -v "/project/version" pom.xml
