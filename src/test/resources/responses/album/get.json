@@ -1,0 +1,238 @@
+{
+  "id": 326060237,
+  "title": "Blue Lullaby",
+  "upc": "196589133120",
+  "link": "https://www.deezer.com/album/326060237",
+  "share": "https://www.deezer.com/album/326060237?utm_source=deezer&utm_content=album-326060237&utm_term=0_1695643773&utm_medium=web",
+  "cover": "https://api.deezer.com/album/326060237/image",
+  "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/56x56-000000-80-0-0.jpg",
+  "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/250x250-000000-80-0-0.jpg",
+  "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/500x500-000000-80-0-0.jpg",
+  "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/1000x1000-000000-80-0-0.jpg",
+  "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+  "genre_id": 85,
+  "genres": {
+    "data": [
+      {
+        "id": 85,
+        "name": "Alternative",
+        "picture": "https://api.deezer.com/genre/85/image",
+        "type": "genre"
+      }
+    ]
+  },
+  "label": "Dirty Hit",
+  "nb_tracks": 5,
+  "duration": 1135,
+  "fans": 421,
+  "release_date": "2022-06-24",
+  "record_type": "ep",
+  "available": true,
+  "tracklist": "https://api.deezer.com/album/326060237/tracks",
+  "explicit_lyrics": false,
+  "explicit_content_lyrics": 0,
+  "explicit_content_cover": 0,
+  "contributors": [
+    {
+      "id": 4710481,
+      "name": "Wolf Alice",
+      "link": "https://www.deezer.com/artist/4710481",
+      "share": "https://www.deezer.com/artist/4710481?utm_source=deezer&utm_content=artist-4710481&utm_term=0_1695643773&utm_medium=web",
+      "picture": "https://api.deezer.com/artist/4710481/image",
+      "picture_small": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/56x56-000000-80-0-0.jpg",
+      "picture_medium": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/250x250-000000-80-0-0.jpg",
+      "picture_big": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/500x500-000000-80-0-0.jpg",
+      "picture_xl": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/1000x1000-000000-80-0-0.jpg",
+      "radio": true,
+      "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+      "type": "artist",
+      "role": "Main"
+    }
+  ],
+  "artist": {
+    "id": 4710481,
+    "name": "Wolf Alice",
+    "picture": "https://api.deezer.com/artist/4710481/image",
+    "picture_small": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/56x56-000000-80-0-0.jpg",
+    "picture_medium": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/250x250-000000-80-0-0.jpg",
+    "picture_big": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/500x500-000000-80-0-0.jpg",
+    "picture_xl": "https://e-cdns-images.dzcdn.net/images/artist/e3d1c21164c3005b0c0b15cc4160cab4/1000x1000-000000-80-0-0.jpg",
+    "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+    "type": "artist"
+  },
+  "type": "album",
+  "tracks": {
+    "data": [
+      {
+        "id": 1785318497,
+        "readable": true,
+        "title": "Lipstick on the Glass (Lullaby Version)",
+        "title_short": "Lipstick on the Glass (Lullaby Version)",
+        "title_version": "",
+        "link": "https://www.deezer.com/track/1785318497",
+        "duration": 246,
+        "rank": 161033,
+        "explicit_lyrics": false,
+        "explicit_content_lyrics": 0,
+        "explicit_content_cover": 0,
+        "preview": "https://cdns-preview-0.dzcdn.net/stream/c-0067483c97b74f66de5b0bfd9d76dd83-4.mp3",
+        "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+        "artist": {
+          "id": 4710481,
+          "name": "Wolf Alice",
+          "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+          "type": "artist"
+        },
+        "album": {
+          "id": 326060237,
+          "title": "Blue Lullaby",
+          "cover": "https://api.deezer.com/album/326060237/image",
+          "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/250x250-000000-80-0-0.jpg",
+          "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/500x500-000000-80-0-0.jpg",
+          "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/1000x1000-000000-80-0-0.jpg",
+          "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+          "tracklist": "https://api.deezer.com/album/326060237/tracks",
+          "type": "album"
+        },
+        "type": "track"
+      },
+      {
+        "id": 1785318507,
+        "readable": true,
+        "title": "How Can I Make It OK? (Lullaby Version)",
+        "title_short": "How Can I Make It OK? (Lullaby Version)",
+        "title_version": "",
+        "link": "https://www.deezer.com/track/1785318507",
+        "duration": 222,
+        "rank": 170550,
+        "explicit_lyrics": false,
+        "explicit_content_lyrics": 0,
+        "explicit_content_cover": 0,
+        "preview": "https://cdns-preview-c.dzcdn.net/stream/c-c70358308747d34290751e0881dd4468-3.mp3",
+        "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+        "artist": {
+          "id": 4710481,
+          "name": "Wolf Alice",
+          "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+          "type": "artist"
+        },
+        "album": {
+          "id": 326060237,
+          "title": "Blue Lullaby",
+          "cover": "https://api.deezer.com/album/326060237/image",
+          "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/250x250-000000-80-0-0.jpg",
+          "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/500x500-000000-80-0-0.jpg",
+          "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/1000x1000-000000-80-0-0.jpg",
+          "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+          "tracklist": "https://api.deezer.com/album/326060237/tracks",
+          "type": "album"
+        },
+        "type": "track"
+      },
+      {
+        "id": 1785318517,
+        "readable": true,
+        "title": "No Hard Feelings (Lullaby Versions)",
+        "title_short": "No Hard Feelings (Lullaby Versions)",
+        "title_version": "",
+        "link": "https://www.deezer.com/track/1785318517",
+        "duration": 158,
+        "rank": 137967,
+        "explicit_lyrics": false,
+        "explicit_content_lyrics": 0,
+        "explicit_content_cover": 0,
+        "preview": "https://cdns-preview-f.dzcdn.net/stream/c-fcf1ac4f465a98ba327c9f141895c803-3.mp3",
+        "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+        "artist": {
+          "id": 4710481,
+          "name": "Wolf Alice",
+          "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+          "type": "artist"
+        },
+        "album": {
+          "id": 326060237,
+          "title": "Blue Lullaby",
+          "cover": "https://api.deezer.com/album/326060237/image",
+          "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/250x250-000000-80-0-0.jpg",
+          "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/500x500-000000-80-0-0.jpg",
+          "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/1000x1000-000000-80-0-0.jpg",
+          "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+          "tracklist": "https://api.deezer.com/album/326060237/tracks",
+          "type": "album"
+        },
+        "type": "track"
+      },
+      {
+        "id": 1785318527,
+        "readable": true,
+        "title": "Feeling Myself (Lullaby Version)",
+        "title_short": "Feeling Myself (Lullaby Version)",
+        "title_version": "",
+        "link": "https://www.deezer.com/track/1785318527",
+        "duration": 252,
+        "rank": 141243,
+        "explicit_lyrics": false,
+        "explicit_content_lyrics": 0,
+        "explicit_content_cover": 0,
+        "preview": "https://cdns-preview-b.dzcdn.net/stream/c-bd61d3a4788329efd8c933cf6e5bd582-4.mp3",
+        "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+        "artist": {
+          "id": 4710481,
+          "name": "Wolf Alice",
+          "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+          "type": "artist"
+        },
+        "album": {
+          "id": 326060237,
+          "title": "Blue Lullaby",
+          "cover": "https://api.deezer.com/album/326060237/image",
+          "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/250x250-000000-80-0-0.jpg",
+          "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/500x500-000000-80-0-0.jpg",
+          "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/1000x1000-000000-80-0-0.jpg",
+          "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+          "tracklist": "https://api.deezer.com/album/326060237/tracks",
+          "type": "album"
+        },
+        "type": "track"
+      },
+      {
+        "id": 1785318537,
+        "readable": true,
+        "title": "The Last Man on Earth (Lullaby Version)",
+        "title_short": "The Last Man on Earth (Lullaby Version)",
+        "title_version": "",
+        "link": "https://www.deezer.com/track/1785318537",
+        "duration": 257,
+        "rank": 181303,
+        "explicit_lyrics": false,
+        "explicit_content_lyrics": 0,
+        "explicit_content_cover": 0,
+        "preview": "https://cdns-preview-a.dzcdn.net/stream/c-a548a74598c85c4630882124ea05238a-4.mp3",
+        "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+        "artist": {
+          "id": 4710481,
+          "name": "Wolf Alice",
+          "tracklist": "https://api.deezer.com/artist/4710481/top?limit=50",
+          "type": "artist"
+        },
+        "album": {
+          "id": 326060237,
+          "title": "Blue Lullaby",
+          "cover": "https://api.deezer.com/album/326060237/image",
+          "cover_small": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/56x56-000000-80-0-0.jpg",
+          "cover_medium": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/250x250-000000-80-0-0.jpg",
+          "cover_big": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/500x500-000000-80-0-0.jpg",
+          "cover_xl": "https://e-cdns-images.dzcdn.net/images/cover/a22ac557760820340e1ac5ba9fee496a/1000x1000-000000-80-0-0.jpg",
+          "md5_image": "a22ac557760820340e1ac5ba9fee496a",
+          "tracklist": "https://api.deezer.com/album/326060237/tracks",
+          "type": "album"
+        },
+        "type": "track"
+      }
+    ]
+  }
+}

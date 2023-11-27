@@ -1,0 +1,16 @@
+{
+  "id": 9834474,
+  "name": "YONAKA",
+  "link": "https://www.deezer.com/artist/9834474",
+  "share": "https://www.deezer.com/artist/9834474?utm_source=deezer&utm_content=artist-9834474&utm_term=0_1701021314&utm_medium=web",
+  "picture": "https://api.deezer.com/artist/9834474/image",
+  "picture_small": "https://e-cdns-images.dzcdn.net/images/artist/9e77a3d8704aa53f0de712795d3c7c62/56x56-000000-80-0-0.jpg",
+  "picture_medium": "https://e-cdns-images.dzcdn.net/images/artist/9e77a3d8704aa53f0de712795d3c7c62/250x250-000000-80-0-0.jpg",
+  "picture_big": "https://e-cdns-images.dzcdn.net/images/artist/9e77a3d8704aa53f0de712795d3c7c62/500x500-000000-80-0-0.jpg",
+  "picture_xl": "https://e-cdns-images.dzcdn.net/images/artist/9e77a3d8704aa53f0de712795d3c7c62/1000x1000-000000-80-0-0.jpg",
+  "nb_album": 28,
+  "nb_fan": 8624,
+  "radio": true,
+  "tracklist": "https://api.deezer.com/artist/9834474/top?limit=50",
+  "type": "artist"
+}
