@@ -1,6 +1,7 @@
 package api.deezer.objects;
 
 import api.deezer.objects.data.DeezerData;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * An album object
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Album extends ChartMember {
     /**
      * The Deezer album id
