@@ -6,15 +6,10 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 public final class URLHelper {
     private URLHelper() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
-
-    public static String decode(String s) {
-        return decode(s, StandardCharsets.UTF_8);
     }
 
     public static String decode(String s, Charset charset) {
@@ -25,10 +20,6 @@ public final class URLHelper {
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e);
         }
-    }
-
-    public static String encode(String s) {
-        return encode(s, StandardCharsets.UTF_8);
     }
 
     public static String encode(String s, Charset charset) {

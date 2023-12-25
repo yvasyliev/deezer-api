@@ -1,15 +1,11 @@
 package io.github.yvasyliev.deezer.methods;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.yvasyliev.deezer.DeezerContext;
-import io.github.yvasyliev.deezer.exceptions.DeezerResponseException;
-import io.github.yvasyliev.deezer.exceptions.UnsupportedHttpResponseException;
 import io.github.yvasyliev.deezer.helpers.QueryParams;
-import io.github.yvasyliev.deezer.http.DeezerHttpResponse;
+import io.github.yvasyliev.deezer.http.HttpClient;
+import io.github.yvasyliev.deezer.http.HttpResponse;
 
 import java.io.IOException;
 
@@ -20,24 +16,7 @@ public class GetMethod<T> extends Method<T> {
     }
 
     @Override
-    public T execute() throws IOException {
-        DeezerContext context = getContext();
-        DeezerHttpResponse response = context
-                .getHttpClient()
-                .get(context.getDeezerApiHost() + getPath(), getQueryParams());
-        if (!response.isOk()) {
-            throw new UnsupportedHttpResponseException(response);
-        }
-        ObjectMapper mapper = context.getObjectMapper();
-        JsonNode jsonResponse = mapper.readTree(response.getContent());
-        if (!context.getResponseValidator().validate(jsonResponse)) {
-            throw new DeezerResponseException(jsonResponse);
-        }
-        return mapper.treeToValue(jsonResponse, getResponseType());
-    }
-
-    @JsonIgnore
-    public QueryParams getQueryParams() {
-        return getContext().getObjectMapper().convertValue(this, QueryParams.class);
+    protected HttpResponse fetch(HttpClient httpClient, String url, QueryParams queryParams) throws IOException {
+        return httpClient.get(url, queryParams);
     }
 }

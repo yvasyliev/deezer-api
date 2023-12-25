@@ -4,21 +4,22 @@ import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.yvasyliev.deezer.DeezerContext;
+import io.github.yvasyliev.deezer.exceptions.DeezerResponseException;
+import io.github.yvasyliev.deezer.exceptions.UnsupportedHttpResponseException;
+import io.github.yvasyliev.deezer.helpers.QueryParams;
+import io.github.yvasyliev.deezer.http.HttpClient;
+import io.github.yvasyliev.deezer.http.HttpResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.IOException;
 
-
-//@JsonSerialize(converter = MethodToURLConverter.class)
-
 @Data
 @AllArgsConstructor
 public abstract class Method<T> {
-//    @JacksonInject(useInput = OptBoolean.FALSE)
-//    @JsonProperty(value = "io.github.yvasyliev.deezer.DeezerContext", access = JsonProperty.Access.WRITE_ONLY)
-//    @JsonIgnore
     @JacksonInject
     @JsonIgnore
     private DeezerContext context;
@@ -26,19 +27,23 @@ public abstract class Method<T> {
     @JsonProperty("path")
     private String path;
 
-//    @JacksonInject(useInput = OptBoolean.FALSE)
-//    @JsonIgnore
-//    @JsonProperty(value = "io.github.yvasyliev.deezer.DeezerContext", access = JsonProperty.Access.WRITE_ONLY)
     @JacksonInject
     @JsonIgnore
     private TypeReference<T> responseType;
 
-    //    @ConstructorProperties({"io.github.yvasyliev.deezer.DeezerContext", "path", "responseType"})
-//    public Method(@JacksonInject(useInput = OptBoolean.FALSE) @JsonProperty("io.github.yvasyliev.deezer.DeezerContext") @NonNull DeezerContext context, @NonNull String path, @NonNull TypeReference<T> responseType) {
-//        this.context = context;
-//        this.path = path;
-//        this.responseType = responseType;
-//    }
+    public T execute() throws IOException {
+        ObjectMapper mapper = context.getObjectMapper();
+        QueryParams queryParams = mapper.convertValue(this, QueryParams.class);
+        HttpResponse response = fetch(context.getHttpClient(), context.getDeezerApiHost() + path, queryParams);
+        if (!response.isOk()) {
+            throw new UnsupportedHttpResponseException(response);
+        }
+        JsonNode jsonResponse = mapper.readTree(response.getContent());
+        if (!context.getResponseValidator().validate(jsonResponse)) {
+            throw new DeezerResponseException(jsonResponse);
+        }
+        return mapper.treeToValue(jsonResponse, getResponseType());
+    }
 
-    public abstract T execute() throws IOException;
+    protected abstract HttpResponse fetch(HttpClient httpClient, String url, QueryParams queryParams) throws IOException;
 }

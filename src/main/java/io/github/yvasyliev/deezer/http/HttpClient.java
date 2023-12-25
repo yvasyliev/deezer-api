@@ -1,10 +1,9 @@
 package io.github.yvasyliev.deezer.http;
 
-import lombok.NonNull;
+import io.github.yvasyliev.deezer.helpers.QueryParams;
 
-import java.util.concurrent.CompletableFuture;
+import java.io.IOException;
 
 public interface HttpClient {
-
-    CompletableFuture<DeezerHttpResponse> executeAsync(@NonNull HttpRequest request);
+    HttpResponse get(String url, QueryParams queryParams) throws IOException;
 }
