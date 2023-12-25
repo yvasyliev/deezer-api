@@ -1,8 +1,8 @@
 package io.github.yvasyliev.deezer.methods;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.OptBoolean;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.yvasyliev.deezer.DeezerContext;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,8 @@ public abstract class Method<T> {
 //    @JacksonInject(useInput = OptBoolean.FALSE)
 //    @JsonProperty(value = "io.github.yvasyliev.deezer.DeezerContext", access = JsonProperty.Access.WRITE_ONLY)
 //    @JsonIgnore
-    @JacksonInject(useInput = OptBoolean.FALSE)
+    @JacksonInject
+    @JsonIgnore
     private DeezerContext context;
 
     @JsonProperty("path")
@@ -28,7 +29,8 @@ public abstract class Method<T> {
 //    @JacksonInject(useInput = OptBoolean.FALSE)
 //    @JsonIgnore
 //    @JsonProperty(value = "io.github.yvasyliev.deezer.DeezerContext", access = JsonProperty.Access.WRITE_ONLY)
-    @JacksonInject(useInput = OptBoolean.FALSE)
+    @JacksonInject
+    @JsonIgnore
     private TypeReference<T> responseType;
 
     //    @ConstructorProperties({"io.github.yvasyliev.deezer.DeezerContext", "path", "responseType"})

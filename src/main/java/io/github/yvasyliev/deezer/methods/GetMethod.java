@@ -1,17 +1,19 @@
 package io.github.yvasyliev.deezer.methods;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.yvasyliev.deezer.DeezerContext;
 import io.github.yvasyliev.deezer.exceptions.DeezerResponseException;
 import io.github.yvasyliev.deezer.exceptions.UnsupportedHttpResponseException;
+import io.github.yvasyliev.deezer.helpers.QueryParams;
 import io.github.yvasyliev.deezer.http.DeezerHttpResponse;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetMethod<T> extends Method<T> {
     public GetMethod(DeezerContext context, String path, TypeReference<T> responseType) {
         super(context, path, responseType);
@@ -34,7 +36,8 @@ public class GetMethod<T> extends Method<T> {
         return mapper.treeToValue(jsonResponse, getResponseType());
     }
 
-    protected Map<String, String> getQueryParams() {
-        return new HashMap<>();
+    @JsonIgnore
+    public QueryParams getQueryParams() {
+        return getContext().getObjectMapper().convertValue(this, QueryParams.class);
     }
 }

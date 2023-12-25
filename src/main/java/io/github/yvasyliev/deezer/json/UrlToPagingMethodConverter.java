@@ -1,27 +1,28 @@
 package io.github.yvasyliev.deezer.json;
 
-import io.github.yvasyliev.deezer.exceptions.ConverterException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.StdConverter;
 import io.github.yvasyliev.deezer.helpers.URLHelper;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
 import io.github.yvasyliev.deezer.objects.Pageable;
+import lombok.Setter;
 
 import java.net.URL;
 
-public class UrlToPagingMethodConverter<R extends Pageable> extends UrlToMethodConverter<PagingMethod<R>, R> {
-    @Override
-    public PagingMethod<R> convert(URL url) throws ConverterException {
-        PagingMethod<R> pagingMethod = super.convert(url);
-        URLHelper.getQueryParams(url).forEach((name, value) -> {
-            switch (name) {
-                case "index":
-                    pagingMethod.setIndex(Integer.parseInt(value));
-                    break;
+@Setter
+public class UrlToPagingMethodConverter<T extends Pageable> extends StdConverter<URL, PagingMethod<T>> {
+    private ObjectMapper objectMapper;
 
-                case "limit":
-                    pagingMethod.setLimit(Integer.parseInt(value));
-                    break;
-            }
-        });
-        return pagingMethod;
+    @Override
+    public PagingMethod<T> convert(URL value) {
+        return objectMapper.convertValue(
+                objectMapper
+                        .convertValue(URLHelper.getQueryParams(value), ObjectNode.class)
+                        .put("path", value.getPath()),
+                new TypeReference<PagingMethod<T>>() {
+                }
+        );
     }
 }

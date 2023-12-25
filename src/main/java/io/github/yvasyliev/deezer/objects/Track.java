@@ -3,6 +3,7 @@ package io.github.yvasyliev.deezer.objects;
 import api.deezer.objects.Album;
 import api.deezer.objects.ChartMember;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(value = "type", allowGetters = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Track extends ChartMember implements Pageable { //TODO: do something with ChartMember
     /**
      * The track's Deezer id.

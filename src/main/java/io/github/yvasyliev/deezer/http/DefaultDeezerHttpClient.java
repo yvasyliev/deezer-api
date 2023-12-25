@@ -1,6 +1,7 @@
 package io.github.yvasyliev.deezer.http;
 
 import io.github.yvasyliev.deezer.helpers.DeezerUtils;
+import io.github.yvasyliev.deezer.helpers.QueryParams;
 import io.github.yvasyliev.deezer.helpers.URLHelper;
 import lombok.Cleanup;
 import lombok.NonNull;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class DefaultDeezerHttpClient implements DeezerHttpClient {
     @Override
-    public DeezerHttpResponse get(@NonNull String url, @NonNull Map<String, String> queryParams) throws IOException {
+    public DeezerHttpResponse get(String url, QueryParams queryParams) throws IOException {
         @Cleanup("disconnect") HttpURLConnection connection = (HttpURLConnection) URLHelper.newUrl(url, queryParams).openConnection();
         InputStream content = connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST
                 ? connection.getInputStream()

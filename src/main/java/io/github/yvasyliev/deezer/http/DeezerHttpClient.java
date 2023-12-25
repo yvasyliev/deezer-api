@@ -1,10 +1,9 @@
 package io.github.yvasyliev.deezer.http;
 
-import lombok.NonNull;
+import io.github.yvasyliev.deezer.helpers.QueryParams;
 
 import java.io.IOException;
-import java.util.Map;
 
 public interface DeezerHttpClient {
-    DeezerHttpResponse get(@NonNull String url, @NonNull Map<String, String> queryParams) throws IOException;
+    DeezerHttpResponse get(String url, QueryParams queryParams) throws IOException;
 }

@@ -1,7 +1,9 @@
 package io.github.yvasyliev.deezer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
 import io.github.yvasyliev.deezer.http.DeezerHttpClient;
 import io.github.yvasyliev.deezer.http.DefaultDeezerHttpClient;
 import io.github.yvasyliev.deezer.methods.validators.AbstractResponseValidator;
@@ -23,6 +25,7 @@ public class DeezerContext {
     @NonNull
     private DeezerHttpClient httpClient;
     @NonNull
+    @JsonIgnore
     private ObjectMapper objectMapper;
     @NonNull
     private ResponseValidator responseValidator;
@@ -38,5 +41,10 @@ public class DeezerContext {
                 DeezerContext.class,
                 this
         ));
+        SerializationConfig serializationConfig = this.objectMapper.getSerializationConfig();
+        this.objectMapper.setConfig(serializationConfig.with(serializationConfig.getAttributes().withSharedAttribute(
+                DeezerContext.class,
+                this
+        )));
     }
 }

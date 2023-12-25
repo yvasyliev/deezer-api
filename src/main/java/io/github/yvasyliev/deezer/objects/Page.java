@@ -1,8 +1,11 @@
 package io.github.yvasyliev.deezer.objects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.github.yvasyliev.deezer.json.PagingMethodDeserializerV2;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.github.yvasyliev.deezer.json.PagingMethodDeserializer;
+import io.github.yvasyliev.deezer.json.PagingMethodSerializer;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Page<T extends Pageable> {
     /**
      * List of objects.
@@ -37,14 +41,16 @@ public class Page<T extends Pageable> {
      * Next page.
      */
     @JsonProperty("next")
-    @JsonDeserialize(using = PagingMethodDeserializerV2.class)
+    @JsonDeserialize(using = PagingMethodDeserializer.class)
+    @JsonSerialize(using = PagingMethodSerializer.class)
     private PagingMethod<T> next;
 
     /**
      * Previous page.
      */
     @JsonProperty("prev")
-    @JsonDeserialize(using = PagingMethodDeserializerV2.class)
+    @JsonDeserialize(using = PagingMethodDeserializer.class)
+    @JsonSerialize(using = PagingMethodSerializer.class)
     private PagingMethod<T> prev;
 
     public boolean hasNext() {
