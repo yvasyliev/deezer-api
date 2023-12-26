@@ -19,4 +19,9 @@ public class GetMethod<T> extends Method<T> {
     protected HttpResponse fetch(HttpClient httpClient, String url, QueryParams queryParams) throws IOException {
         return httpClient.get(url, queryParams);
     }
+
+    @Override
+    public String toString() {
+        return "GET " + super.toString();
+    }
 }

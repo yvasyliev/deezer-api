@@ -46,4 +46,14 @@ public abstract class Method<T> {
     }
 
     protected abstract HttpResponse fetch(HttpClient httpClient, String url, QueryParams queryParams) throws IOException;
+
+    @Override
+    public String toString() {
+        String endpoint = context.getDeezerApiHost() + path;
+        QueryParams queryParams = context.getObjectMapper().convertValue(this, QueryParams.class);
+        if (!queryParams.isEmpty()) {
+            endpoint += "?" + queryParams.toQuery();
+        }
+        return endpoint;
+    }
 }
