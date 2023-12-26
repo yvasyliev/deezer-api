@@ -5,11 +5,8 @@ import api.deezer.objects.ChartMember;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,9 +16,6 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @JsonIgnoreProperties(value = "type", allowGetters = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Track extends ChartMember implements Pageable { //TODO: do something with ChartMember

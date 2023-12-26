@@ -1,11 +1,18 @@
 package io.github.yvasyliev.deezer.helpers;
 
+import lombok.NoArgsConstructor;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 public class QueryParams extends HashMap<String, String> {
+    public QueryParams(String name, String value) {
+        put(name, value);
+    }
+
     public static QueryParams fromQuery(String s) {
         return fromQuery(s, StandardCharsets.UTF_8);
     }

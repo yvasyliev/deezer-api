@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.yvasyliev.deezer.json.PagingMethodDeserializer;
 import io.github.yvasyliev.deezer.json.PagingMethodSerializer;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -20,9 +17,6 @@ import java.util.List;
  * @param <T> type of objects.
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Page<T extends Pageable> {
     /**

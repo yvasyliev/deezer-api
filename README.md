@@ -117,3 +117,7 @@ public class DeezerApp {
     }
 }
 ```
+
+## Features
+1. Interceptors
+2. `Artist#picture`

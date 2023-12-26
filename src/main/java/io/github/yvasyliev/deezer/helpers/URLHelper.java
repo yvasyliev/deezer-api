@@ -42,4 +42,8 @@ public final class URLHelper {
         }
         return new URL(url);
     }
+
+    public static URL setQueryParams(URL url, QueryParams queryParams) throws MalformedURLException {
+        return newUrl(url.getProtocol() + "://" + url.getAuthority() + url.getPath(), queryParams);
+    }
 }

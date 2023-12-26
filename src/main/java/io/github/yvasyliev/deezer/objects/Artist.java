@@ -3,10 +3,7 @@ package io.github.yvasyliev.deezer.objects;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.net.URL;
 
@@ -14,9 +11,6 @@ import java.net.URL;
  * An artist object.
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @JsonIgnoreProperties(value = "type", allowGetters = true, ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Artist {
@@ -48,7 +42,7 @@ public class Artist {
      * The url of the artist picture. Add 'size' parameter to the url to change size. Can be 'small', 'medium', 'big', 'xl'.
      */
     @JsonProperty("picture")
-    private URL picture;
+    private Picture picture;
 
     /**
      * The url of the artist picture in size small.

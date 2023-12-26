@@ -3,7 +3,10 @@ package io.github.yvasyliev.deezer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import io.github.yvasyliev.deezer.helpers.QueryParams;
+import io.github.yvasyliev.deezer.helpers.URLHelper;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
+import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Track;
 
@@ -13,6 +16,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        URLHelper.setQueryParams(new URL("https://deezer.com/test?a=b"), new QueryParams());
         DeezerClient deezerClient = new DeezerClient();
         ObjectMapper objectMapper = deezerClient.getContext().getObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         System.out.println(objectMapper.convertValue("https://google.com", URL.class));
@@ -20,6 +24,8 @@ public class Main {
         Map<String, String> map = deezerClient.getContext().getObjectMapper().convertValue(artistTop, new TypeReference<Map<String, String>>() {
         });
         System.out.println(map);
+        Artist artist = deezerClient.getArtist(27).execute();
+        System.out.println(artist);
         Page<Track> page1 = deezerClient.getArtistTop(27).execute();
         System.out.println(objectMapper.writeValueAsString(page1));
         Page<Track> page2 = page1.getNext().execute();
