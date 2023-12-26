@@ -10,16 +10,18 @@ import io.github.yvasyliev.deezer.DeezerContext;
 import io.github.yvasyliev.deezer.exceptions.DeezerResponseException;
 import io.github.yvasyliev.deezer.exceptions.UnsupportedHttpResponseException;
 import io.github.yvasyliev.deezer.helpers.QueryParams;
-import io.github.yvasyliev.deezer.http.HttpClient;
+import io.github.yvasyliev.deezer.http.HttpMethod;
+import io.github.yvasyliev.deezer.http.HttpRequest;
 import io.github.yvasyliev.deezer.http.HttpResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.IOException;
+import java.net.URL;
 
 @Data
 @AllArgsConstructor
-public abstract class Method<T> {
+public abstract class Method<T> implements HttpRequest {
     @JacksonInject
     @JsonIgnore
     private DeezerContext context;
@@ -32,12 +34,11 @@ public abstract class Method<T> {
     private TypeReference<T> responseType;
 
     public T execute() throws IOException {
-        ObjectMapper mapper = context.getObjectMapper();
-        QueryParams queryParams = mapper.convertValue(this, QueryParams.class);
-        HttpResponse response = fetch(context.getHttpClient(), context.getDeezerApiHost() + path, queryParams);
+        HttpResponse response = context.getHttpClient().send(this);
         if (!response.isOk()) {
             throw new UnsupportedHttpResponseException(response);
         }
+        ObjectMapper mapper = context.getObjectMapper();
         JsonNode jsonResponse = mapper.readTree(response.getContent());
         if (!context.getResponseValidator().validate(jsonResponse)) {
             throw new DeezerResponseException(jsonResponse);
@@ -45,15 +46,24 @@ public abstract class Method<T> {
         return mapper.treeToValue(jsonResponse, getResponseType());
     }
 
-    protected abstract HttpResponse fetch(HttpClient httpClient, String url, QueryParams queryParams) throws IOException;
-
+    @JsonIgnore
     @Override
-    public String toString() {
+    public URL getUrl() {
+        ObjectMapper mapper = context.getObjectMapper();
         String endpoint = context.getDeezerApiHost() + path;
-        QueryParams queryParams = context.getObjectMapper().convertValue(this, QueryParams.class);
+        QueryParams queryParams = mapper.convertValue(this, QueryParams.class);
         if (!queryParams.isEmpty()) {
             endpoint += "?" + queryParams.toQuery();
         }
-        return endpoint;
+        return mapper.convertValue(endpoint, URL.class);
+    }
+
+    @JsonIgnore
+    @Override
+    public abstract HttpMethod getMethod();
+
+    @Override
+    public String toString() {
+        return getMethod() + " " + getUrl();
     }
 }

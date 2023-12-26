@@ -3,11 +3,7 @@ package io.github.yvasyliev.deezer.methods;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.yvasyliev.deezer.DeezerContext;
-import io.github.yvasyliev.deezer.helpers.QueryParams;
-import io.github.yvasyliev.deezer.http.HttpClient;
-import io.github.yvasyliev.deezer.http.HttpResponse;
-
-import java.io.IOException;
+import io.github.yvasyliev.deezer.http.HttpMethod;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetMethod<T> extends Method<T> {
@@ -16,12 +12,7 @@ public class GetMethod<T> extends Method<T> {
     }
 
     @Override
-    protected HttpResponse fetch(HttpClient httpClient, String url, QueryParams queryParams) throws IOException {
-        return httpClient.get(url, queryParams);
-    }
-
-    @Override
-    public String toString() {
-        return "GET " + super.toString();
+    public HttpMethod getMethod() {
+        return HttpMethod.GET;
     }
 }

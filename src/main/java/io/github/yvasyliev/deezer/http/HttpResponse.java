@@ -8,10 +8,15 @@ import java.net.HttpURLConnection;
 @Data
 @AllArgsConstructor
 public class HttpResponse {
-    private String content;
     private int statusCode;
+    private String content;
 
     public boolean isOk() {
         return statusCode == HttpURLConnection.HTTP_OK;
+    }
+
+    @Override
+    public String toString() {
+        return statusCode + ": " + content;
     }
 }

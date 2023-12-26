@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationConfig;
-import io.github.yvasyliev.deezer.http.DefaultHttpClient;
 import io.github.yvasyliev.deezer.http.HttpClient;
+import io.github.yvasyliev.deezer.http.InterceptingHttpClient;
 import io.github.yvasyliev.deezer.methods.validators.AbstractResponseValidator;
 import io.github.yvasyliev.deezer.methods.validators.ErrorValidator;
 import io.github.yvasyliev.deezer.methods.validators.ResponseValidator;
@@ -26,7 +26,7 @@ public class DeezerContext {
     public DeezerContext() {
         this(
                 DEEZER_API_HOST,
-                new DefaultHttpClient(),
+                new InterceptingHttpClient(),
                 new ObjectMapper(),
                 AbstractResponseValidator.createChain(new WrongCodeValidator(), new ErrorValidator())
         );
