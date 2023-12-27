@@ -26,7 +26,7 @@ public abstract class Method<T> implements HttpRequest {
     @JsonIgnore
     private DeezerContext context;
 
-    @JsonProperty("path")
+    @JsonProperty(value = "path", access = JsonProperty.Access.WRITE_ONLY)
     private String path;
 
     @JacksonInject

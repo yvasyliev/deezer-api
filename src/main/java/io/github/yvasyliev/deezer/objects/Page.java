@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.yvasyliev.deezer.json.PagingMethodDeserializer;
-import io.github.yvasyliev.deezer.json.PagingMethodSerializer;
+import io.github.yvasyliev.deezer.json.MethodDeserializer;
+import io.github.yvasyliev.deezer.json.MethodToUrlConverter;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
 import lombok.Data;
 
@@ -35,16 +35,16 @@ public class Page<T extends Pageable> {
      * Next page.
      */
     @JsonProperty("next")
-    @JsonDeserialize(using = PagingMethodDeserializer.class)
-    @JsonSerialize(using = PagingMethodSerializer.class)
+    @JsonDeserialize(using = MethodDeserializer.class)
+    @JsonSerialize(converter = MethodToUrlConverter.class)
     private PagingMethod<T> next;
 
     /**
      * Previous page.
      */
     @JsonProperty("prev")
-    @JsonDeserialize(using = PagingMethodDeserializer.class)
-    @JsonSerialize(using = PagingMethodSerializer.class)
+    @JsonDeserialize(using = MethodDeserializer.class)
+    @JsonSerialize(converter = MethodToUrlConverter.class)
     private PagingMethod<T> prev;
 
     public boolean hasNext() {
