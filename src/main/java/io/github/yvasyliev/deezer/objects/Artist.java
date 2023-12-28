@@ -99,6 +99,12 @@ public class Artist {
     @JsonSerialize(converter = MethodToUrlConverter.class)
     private PagingMethod<Track> trackList;
 
+    /**
+     * Contributor's role.
+     */
+    @JsonProperty("role")
+    private String role;
+
     @JsonProperty("type")
     public ObjectType getType() {
         return ObjectType.ARTIST;
