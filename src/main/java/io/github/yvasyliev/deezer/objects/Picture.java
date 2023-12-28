@@ -26,20 +26,44 @@ public class Picture {
     private static final String MEDIUM = "medium";
     private static final String BIG = "big";
     private static final String XL = "xl";
+
+    /**
+     * Base picture URL.
+     */
     private URL url;
 
+    /**
+     * Gets small picture URL.
+     *
+     * @return small picture URL.
+     */
     public URL getSmallPictureUrl() {
         return getPictureUrl(SMALL);
     }
 
+    /**
+     * Gets medium picture URL.
+     *
+     * @return medium picture URL.
+     */
     public URL getMediumPictureUrl() {
         return getPictureUrl(MEDIUM);
     }
 
+    /**
+     * Gets big picture URL.
+     *
+     * @return big picture URL.
+     */
     public URL getBigPictureUrl() {
         return getPictureUrl(BIG);
     }
 
+    /**
+     * Gets xl picture URL.
+     *
+     * @return xl picture URL.
+     */
     public URL getXlPictureUrl() {
         return getPictureUrl(XL);
     }

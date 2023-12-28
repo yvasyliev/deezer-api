@@ -113,13 +113,13 @@ public class Track extends ChartMember implements Pageable { //TODO: do somethin
      * The explicit content lyrics values (0:Not Explicit; 1:Explicit; 2:Unknown; 3:Edited; 6:No Advice Available).
      */
     @JsonProperty("explicit_content_lyrics")
-    private Integer explicitContentLyrics;
+    private ExplicitContent explicitContentLyrics;
 
     /**
      * The explicit cover value (0:Not Explicit; 1:Explicit; 2:Unknown; 3:Edited; 6:No Advice Available).
      */
     @JsonProperty("explicit_content_cover")
-    private Integer explicitContentCover;
+    private ExplicitContent explicitContentCover;
 
     /**
      * The url of track's preview file. This file contains the first 30 seconds of the track.
@@ -143,7 +143,7 @@ public class Track extends ChartMember implements Pageable { //TODO: do somethin
      * List of countries where the track is available.
      */
     @JsonProperty("available_countries")
-    private List<String> availableCountries;
+    private List<Country> availableCountries;
 
     /**
      * Return an alternative readable track if the current track is not readable.
