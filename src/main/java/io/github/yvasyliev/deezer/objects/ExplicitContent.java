@@ -1,11 +1,22 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ExplicitContent {
-    @JsonProperty("0") NOT_EXPLICIT,
-    @JsonProperty("1") EXPLICIT,
-    @JsonProperty("2") UNKNOWN,
-    @JsonProperty("3") EDITED,
-    @JsonProperty("6") NO_ADVICE_AVAILABLE
+    NOT_EXPLICIT(0),
+    EXPLICIT(1),
+    UNKNOWN(2),
+    EDITED(3),
+    NO_ADVICE_AVAILABLE(6);
+
+    private final int id;
+
+    ExplicitContent(int id) {
+        this.id = id;
+    }
+
+    @JsonValue
+    public int getId() {
+        return id;
+    }
 }
