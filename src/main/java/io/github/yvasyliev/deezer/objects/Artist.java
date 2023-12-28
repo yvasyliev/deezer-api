@@ -3,6 +3,11 @@ package io.github.yvasyliev.deezer.objects;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.github.yvasyliev.deezer.json.MethodDeserializer;
+import io.github.yvasyliev.deezer.json.MethodToUrlConverter;
+import io.github.yvasyliev.deezer.methods.PagingMethod;
 import lombok.Data;
 
 import java.net.URL;
@@ -90,7 +95,9 @@ public class Artist {
      * API Link to the top of this artist.
      */
     @JsonProperty("tracklist")
-    private String trackList;
+    @JsonDeserialize(using = MethodDeserializer.class)
+    @JsonSerialize(converter = MethodToUrlConverter.class)
+    private PagingMethod<Track> trackList;
 
     @JsonProperty("type")
     public ObjectType getType() {
