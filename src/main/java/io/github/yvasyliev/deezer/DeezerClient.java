@@ -22,10 +22,15 @@ public class DeezerClient {
     private static final String GET_ARTIST_TOP_TEMPLATE = GET_ARTIST_TEMPLATE + TOP;
     private static final String GET_GENRE_TEMPLATE = "/genre/%d";
 
+    private String accessToken;
     private DeezerContext context;
 
     public DeezerClient() {
-        this.context = new DeezerContext();
+        this(null);
+    }
+
+    public DeezerClient(String accessToken) {
+        this(accessToken, new DeezerContext());
     }
 
     public GetMethod<Album> getAlbum(long albumId) {
