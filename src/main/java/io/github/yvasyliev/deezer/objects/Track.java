@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -65,13 +66,13 @@ public class Track extends ChartMember implements Pageable, BaseObject { //TODO:
      * The url of the track on Deezer.
      */
     @JsonProperty("link")
-    private String link;
+    private URL link;
 
     /**
      * The share link of the track on Deezer.
      */
     @JsonProperty("share")
-    private String share;
+    private URL share;
 
     /**
      * The track's duration in seconds.
@@ -125,7 +126,7 @@ public class Track extends ChartMember implements Pageable, BaseObject { //TODO:
      * The url of track's preview file. This file contains the first 30 seconds of the track.
      */
     @JsonProperty("preview")
-    private String preview;
+    private URL preview;
 
     /**
      * Beats per minute.
