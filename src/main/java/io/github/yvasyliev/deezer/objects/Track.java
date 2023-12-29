@@ -155,7 +155,7 @@ public class Track extends ChartMember implements Pageable { //TODO: do somethin
      * Return a list of contributors on the track.
      */
     @JsonProperty("contributors")
-    private List<Artist> contributors;
+    private List<Contributor> contributors;
 
     /**
      * Image hash.
