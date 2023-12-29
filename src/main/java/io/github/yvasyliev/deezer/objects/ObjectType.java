@@ -4,5 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum ObjectType {
     @JsonProperty("artist") ARTIST,
-    @JsonProperty("track") TRACK
+    @JsonProperty("track") TRACK,
+    @JsonProperty("genre") GENRE
 }
