@@ -1,7 +1,5 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -11,9 +9,7 @@ import java.net.URL;
  * A genre object.
  */
 @Data
-@JsonIgnoreProperties(value = "type", allowGetters = true, ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Genre {
+public class Genre implements Pageable, BaseObject {
     /**
      * The editorial's Deezer id.
      */
@@ -56,7 +52,7 @@ public class Genre {
     @JsonProperty("picture_xl")
     private URL pictureXl;
 
-    @JsonProperty("type")
+    @Override
     public ObjectType getType() {
         return ObjectType.GENRE;
     }

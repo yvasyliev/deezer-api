@@ -1,14 +1,19 @@
 package io.github.yvasyliev.deezer.objects;
 
-import api.deezer.objects.Album;
 import api.deezer.objects.ChartMember;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.github.yvasyliev.deezer.json.DateToLocalDateConverter;
+import io.github.yvasyliev.deezer.json.DurationToLongConverter;
+import io.github.yvasyliev.deezer.json.LocalDateToDateConverter;
+import io.github.yvasyliev.deezer.json.LongToDurationConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,8 +22,6 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@JsonIgnoreProperties(value = "type", allowGetters = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Track extends ChartMember implements Pageable, BaseObject { //TODO: do something with ChartMember
     /**
      * The track's Deezer id.
@@ -78,7 +81,9 @@ public class Track extends ChartMember implements Pageable, BaseObject { //TODO:
      * The track's duration in seconds.
      */
     @JsonProperty("duration")
-    private Integer duration;
+    @JsonDeserialize(converter = LongToDurationConverter.class)
+    @JsonSerialize(converter = DurationToLongConverter.class)
+    private Duration duration;
 
     /**
      * The position of the track in its album.
@@ -102,6 +107,9 @@ public class Track extends ChartMember implements Pageable, BaseObject { //TODO:
      * The track's release date.
      */
     @JsonProperty("release_date")
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+    @JsonSerialize(converter = LocalDateToDateConverter.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
     /**

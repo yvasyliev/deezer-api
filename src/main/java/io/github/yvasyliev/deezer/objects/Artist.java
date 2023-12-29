@@ -1,7 +1,5 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,8 +14,6 @@ import java.net.URL;
  * An artist object.
  */
 @Data
-@JsonIgnoreProperties(value = "type", allowGetters = true, ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Artist implements BaseObject {
     /**
      * The artist's Deezer id.
