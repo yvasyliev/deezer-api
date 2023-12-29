@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(value = "type", allowGetters = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Track extends ChartMember implements Pageable { //TODO: do something with ChartMember
+public class Track extends ChartMember implements Pageable, BaseObject { //TODO: do something with ChartMember
     /**
      * The track's Deezer id.
      */
@@ -175,7 +175,7 @@ public class Track extends ChartMember implements Pageable { //TODO: do somethin
     @JsonProperty("album")
     private Album album;
 
-    @JsonProperty("type")
+    @Override
     public ObjectType getType() {
         return ObjectType.TRACK;
     }

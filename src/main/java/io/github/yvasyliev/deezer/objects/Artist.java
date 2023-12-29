@@ -18,7 +18,7 @@ import java.net.URL;
 @Data
 @JsonIgnoreProperties(value = "type", allowGetters = true, ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Artist {
+public class Artist implements BaseObject {
     /**
      * The artist's Deezer id.
      */
@@ -99,7 +99,7 @@ public class Artist {
     @JsonSerialize(converter = MethodToUrlConverter.class)
     private PagingMethod<Track> trackList;
 
-    @JsonProperty("type")
+    @Override
     public ObjectType getType() {
         return ObjectType.ARTIST;
     }

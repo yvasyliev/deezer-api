@@ -120,6 +120,6 @@ public class DeezerApp {
 
 ## Features
 1. Interceptors
-2. `Artist#picture`
+2. `Artist#picture`, `Genre#picture`
 3. `Artist#trackList`
 4. `Page#next`, `Page#prev`
