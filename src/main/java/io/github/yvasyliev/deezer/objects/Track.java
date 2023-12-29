@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 /**
  * A track object.
@@ -152,7 +152,7 @@ public class Track extends ChartMember implements Pageable, BaseObject { //TODO:
      * List of countries where the track is available.
      */
     @JsonProperty("available_countries")
-    private List<Country> availableCountries;
+    private Set<Country> availableCountries;
 
     /**
      * Return an alternative readable track if the current track is not readable.
@@ -164,7 +164,7 @@ public class Track extends ChartMember implements Pageable, BaseObject { //TODO:
      * Return a list of contributors on the track.
      */
     @JsonProperty("contributors")
-    private List<Contributor> contributors;
+    private Set<Contributor> contributors;
 
     /**
      * Image hash.

@@ -123,3 +123,6 @@ public class DeezerApp {
 2. `Artist#picture`, `Genre#picture`
 3. `Artist#trackList`
 4. `Page#next`, `Page#prev`
+
+## To improve
+1. Migrate `User#status` to enum.

@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 /**
  * An album object.
@@ -193,7 +193,7 @@ public class Album extends ChartMember implements BaseObject {
      * Return a list of contributors on the album.
      */
     @JsonProperty("contributors")
-    private List<Contributor> contributors;
+    private Set<Contributor> contributors;
 
     /**
      * {@link Artist} object containing : id, name, picture, picture_small, picture_medium, picture_big, picture_xl.
