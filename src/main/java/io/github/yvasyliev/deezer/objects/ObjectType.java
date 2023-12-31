@@ -6,5 +6,6 @@ public enum ObjectType {
     @JsonProperty("album") ALBUM,
     @JsonProperty("artist") ARTIST,
     @JsonProperty("track") TRACK,
-    @JsonProperty("genre") GENRE
+    @JsonProperty("genre") GENRE,
+    @JsonProperty("user") USER;
 }

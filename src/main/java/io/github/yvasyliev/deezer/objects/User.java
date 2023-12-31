@@ -19,7 +19,7 @@ import java.util.Set;
  * A user object.
  */
 @Data
-public class User {
+public class User implements BaseObject, Pageable {
     /**
      * The user's Deezer ID.
      */
@@ -153,4 +153,9 @@ public class User {
     @JsonDeserialize(using = MethodDeserializer.class)
     @JsonSerialize(converter = MethodToUrlConverter.class)
     private PagingMethod<Track> trackList;
+
+    @Override
+    public ObjectType getType() {
+        return ObjectType.USER;
+    }
 }

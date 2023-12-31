@@ -14,7 +14,7 @@ import java.net.URL;
  * An artist object.
  */
 @Data
-public class Artist implements BaseObject {
+public class Artist implements BaseObject, Pageable {
     /**
      * The artist's Deezer id.
      */

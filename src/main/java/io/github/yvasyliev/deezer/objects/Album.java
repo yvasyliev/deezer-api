@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Album extends ChartMember implements BaseObject {
+public class Album extends ChartMember implements BaseObject, Pageable {
     /**
      * The Deezer album id.
      */
