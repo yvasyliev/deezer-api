@@ -1,6 +1,5 @@
 package io.github.yvasyliev.deezer.objects;
 
-import api.deezer.objects.ChartMember;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -10,7 +9,6 @@ import io.github.yvasyliev.deezer.json.DurationToLongConverter;
 import io.github.yvasyliev.deezer.json.LocalDateToDateConverter;
 import io.github.yvasyliev.deezer.json.LongToDurationConverter;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.net.URL;
 import java.time.Duration;
@@ -20,9 +18,8 @@ import java.util.Set;
 /**
  * A track object.
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class Track extends ChartMember implements Pageable, BaseObject { //TODO: do something with ChartMember
+public class Track implements Pageable, BaseObject {
     /**
      * The track's Deezer id.
      */

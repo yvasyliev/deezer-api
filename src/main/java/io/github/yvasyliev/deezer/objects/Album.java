@@ -1,6 +1,5 @@
 package io.github.yvasyliev.deezer.objects;
 
-import api.deezer.objects.ChartMember;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -13,7 +12,6 @@ import io.github.yvasyliev.deezer.json.MethodDeserializer;
 import io.github.yvasyliev.deezer.json.MethodToUrlConverter;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.net.URL;
 import java.time.Duration;
@@ -23,9 +21,8 @@ import java.util.Set;
 /**
  * An album object.
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class Album extends ChartMember implements BaseObject, Pageable {
+public class Album implements BaseObject, Pageable {
     /**
      * The Deezer album id.
      */
