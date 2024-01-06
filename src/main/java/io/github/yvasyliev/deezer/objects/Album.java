@@ -202,7 +202,7 @@ public class Album extends ChartMember implements BaseObject, Pageable {
     private Artist artist;
 
     /**
-     * list of {@link Track}
+     * list of {@link Track}.
      */
     @JsonProperty("tracks")
     private Page<Track> tracks;

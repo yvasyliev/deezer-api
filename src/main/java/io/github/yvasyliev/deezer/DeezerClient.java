@@ -8,6 +8,7 @@ import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Genre;
 import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Pageable;
+import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.objects.User;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.Data;
 public class DeezerClient {
     private static final String ALBUMS = "/albums";
     private static final String FANS = "/fans";
+    private static final String PLAYLISTS = "/playlists";
     private static final String RADIO = "/radio";
     private static final String RELATED = "/related";
     private static final String TOP = "/top";
@@ -31,7 +33,8 @@ public class DeezerClient {
     private static final String GET_ALBUM_TRACKS_TEMPLATE = GET_ALBUM_TEMPLATE + TRACKS;
     private static final String GET_ARTIST_ALBUMS_TEMPLATE = GET_ARTIST_TEMPLATE + ALBUMS;
     private static final String GET_ARTIST_FANS_TEMPLATE = GET_ARTIST_TEMPLATE + FANS;
-    private static final String GET_ARTIST_RADIO = GET_ARTIST_TEMPLATE + RADIO;
+    private static final String GET_ARTIST_PLAYLISTS_TEMPLATE = GET_ARTIST_TEMPLATE + PLAYLISTS;
+    private static final String GET_ARTIST_RADIO_TEMPLATE = GET_ARTIST_TEMPLATE + RADIO;
     private static final String GET_ARTIST_RELATED_TEMPLATE = GET_ARTIST_TEMPLATE + RELATED;
     private static final String GET_ARTIST_TOP_TEMPLATE = GET_ARTIST_TEMPLATE + TOP;
 
@@ -44,6 +47,8 @@ public class DeezerClient {
     private static final TypeReference<Artist> ARTIST_TYPE = new TypeReference<Artist>() {
     };
     private static final TypeReference<Genre> GENRE_TYPE = new TypeReference<Genre>() {
+    };
+    private static final TypeReference<Page<Playlist>> PLAYLIST_PAGE_TYPE = new TypeReference<Page<Playlist>>() {
     };
     private static final TypeReference<Page<Track>> TRACK_PAGE_TYPE = new TypeReference<Page<Track>>() {
     };
@@ -148,7 +153,17 @@ public class DeezerClient {
      * @return a list of tracks.
      */
     public PagingMethod<Track> getArtistRadio(long artistId) {
-        return pagingMethod(GET_ARTIST_RADIO, artistId, TRACK_PAGE_TYPE);
+        return pagingMethod(GET_ARTIST_RADIO_TEMPLATE, artistId, TRACK_PAGE_TYPE);
+    }
+
+    /**
+     * Return a list of artist's playlists. Represented by an array of Playlist object.
+     *
+     * @param artistId artist ID.
+     * @return list of playlists.
+     */
+    public PagingMethod<Playlist> getArtistPlaylists(long artistId) {
+        return pagingMethod(GET_ARTIST_PLAYLISTS_TEMPLATE, artistId, PLAYLIST_PAGE_TYPE);
     }
 
     public GetMethod<Genre> getGenre(long genreId) {
