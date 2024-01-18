@@ -8,8 +8,12 @@ import io.github.yvasyliev.deezer.DeezerContext;
 import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Pageable;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
+@Setter
+@Accessors(fluent = true)
 public class PagingMethod<T extends Pageable> extends GetMethod<Page<T>> {
     @JsonProperty("index")
     private Integer index;
@@ -18,17 +22,7 @@ public class PagingMethod<T extends Pageable> extends GetMethod<Page<T>> {
     private Integer limit;
 
     @JsonCreator
-    public PagingMethod(@JacksonInject DeezerContext context, @JsonProperty(value = "path", access = JsonProperty.Access.WRITE_ONLY) String path, @JacksonInject TypeReference<Page<T>> responseType) {
-        super(context, path, responseType);
-    }
-
-    public PagingMethod<T> setIndex(Integer index) {
-        this.index = index;
-        return this;
-    }
-
-    public PagingMethod<T> setLimit(Integer limit) {
-        this.limit = limit;
-        return this;
+    public PagingMethod(@JacksonInject DeezerContext context, @JsonProperty(value = "endpoint", access = JsonProperty.Access.WRITE_ONLY) String endpoint, @JacksonInject TypeReference<Page<T>> responseType) {
+        super(context, endpoint, responseType);
     }
 }
