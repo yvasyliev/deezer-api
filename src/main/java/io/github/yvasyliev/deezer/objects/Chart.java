@@ -1,41 +1,40 @@
 package io.github.yvasyliev.deezer.objects;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 /**
- * Charts of a specified genre
+ * Charts of a specified genre.
  */
 @Data
 public class Chart {
     /**
-     * list of {@link Track}.
+     * List of {@link Track}.
      */
-    @JsonProperty("tracks")
+    @SerializedName("tracks")
     private Page<Track> tracks;
 
     /**
-     * list of {@link Album}.
+     * List of {@link Album}.
      */
-//    @JsonProperty("albums")
-//    private Page<Album> albums;
+    @SerializedName("albums")
+    private Page<Album> albums;
 
     /**
-     * list of {@link Artist}.
+     * List of {@link Artist}.
      */
-    @JsonProperty("artists")
+    @SerializedName("artists")
     private Page<Artist> artists;
 
     /**
-     * list of {@link Playlist}.
+     * List of {@link Playlist}.
      */
-    @JsonProperty("playlists")
+    @SerializedName("playlists")
     private Page<Playlist> playlists;
 
     /**
-     * list of {@link Podcast}.
+     * List of {@link Podcast}.
      */
-    @JsonProperty("podcasts")
+    @SerializedName("podcasts")
     private Page<Playlist> podcasts;
 }
