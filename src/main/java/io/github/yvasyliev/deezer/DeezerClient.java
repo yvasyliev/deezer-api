@@ -14,6 +14,7 @@ import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.json.DurationDeserializer;
 import io.github.yvasyliev.deezer.json.LocalDateDeserializer;
 import io.github.yvasyliev.deezer.json.PagingMethodDeserializer;
+import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
 import io.github.yvasyliev.deezer.methods.Method;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
@@ -77,6 +78,10 @@ public class DeezerClient {
         artistService = asyncBuilder.target(ArtistService.class, API_HOST);
         genreService = asyncBuilder.target(GenreService.class, API_HOST);
 
+        pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
+                albumService::getAlbumFans,
+                albumService::getAlbumFansAsync
+        ));
         pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/tracks"), pagingMethodFactory(
                 albumService::getAlbumTracks,
                 albumService::getAlbumTracksAsync
@@ -91,9 +96,21 @@ public class DeezerClient {
         ));
     }
 
+    // ALBUM METHODS
+
     public Method<Album> getAlbum(long albumId) {
         return method(albumService::getAlbum, albumService::getAlbumAsync, albumId);
     }
+
+    public PagingMethod<User> getAlbumFans(long albumId) {
+        return pagingMethod(albumService::getAlbumFans, albumService::getAlbumFansAsync, albumId);
+    }
+
+    public PagingMethod<Track> getAlbumTracks(long albumId) {
+        return pagingMethod(albumService::getAlbumTracks, albumService::getAlbumTracksAsync, albumId);
+    }
+
+    // ARTIST METHODS
 
     public Method<Artist> getArtist(long artistId) {
         return method(artistService::getArtist, artistService::getArtistAsync, artistId);
@@ -107,6 +124,8 @@ public class DeezerClient {
         return pagingMethod(artistService::getArtistTop, artistService::getArtistTopAsync, artistId);
     }
 
+    // GENRE METHODS
+
     public Method<Genre> getGenre(long genreId) {
         return method(genreService::getGenre, genreService::getGenreAsync, genreId);
     }
@@ -114,6 +133,8 @@ public class DeezerClient {
     public Method<Page<Genre>> getAllGenres() {
         return method(genreService::getAllGenres, genreService::getAllGenresAsync);
     }
+
+    // METHOD CREATORS
 
     private <T> Method<T> method(Supplier<T> invoker, Supplier<CompletableFuture<T>> asyncInvoker) {
         return new Method<>(

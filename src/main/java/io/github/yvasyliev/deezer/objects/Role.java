@@ -1,13 +1,13 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public enum Role {
-    @JsonProperty("Main") MAIN,
-    @JsonProperty("Featured") FEATURED,
-    @JsonProperty("Remixer") REMIXER,
-    @JsonProperty("Composer") COMPOSER,
-    @JsonProperty("Author") AUTHOR,
-    @JsonProperty("Producer") PRODUCER,
-    @JsonProperty("Guest") GUEST
+    @SerializedName("Main") MAIN,
+    @SerializedName("Featured") FEATURED,
+    @SerializedName("Remixer") REMIXER,
+    @SerializedName("Composer") COMPOSER,
+    @SerializedName("Author") AUTHOR,
+    @SerializedName("Producer") PRODUCER,
+    @SerializedName("Guest") GUEST
 }

@@ -1,8 +1,8 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public enum Gender {
-    @JsonProperty("F") FEMALE,
-    @JsonProperty("M") MALE
+    @SerializedName("F") FEMALE,
+    @SerializedName("M") MALE
 }

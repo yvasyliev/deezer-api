@@ -1,7 +1,6 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
 import lombok.Data;
 
@@ -13,143 +12,130 @@ import java.util.Set;
  * A user object.
  */
 @Data
-public class User implements BaseObject, Pageable {
+public class User implements Pageable {
     /**
      * The user's Deezer ID.
      */
-    @JsonProperty("id")
+    @SerializedName("id")
     private Long id;
 
     /**
      * The user's Deezer nickname.
      */
-    @JsonProperty("name")
+    @SerializedName("name")
     private String name;
 
     /**
      * The user's last name.
      */
-    @JsonProperty("lastname")
+    @SerializedName("lastname")
     private String lastName;
 
     /**
      * The user's first name.
      */
-    @JsonProperty("firstname")
+    @SerializedName("firstname")
     private String firstName;
 
     /**
      * The user's email.
      */
-    @JsonProperty("email")
+    @SerializedName("email")
     private String email;
 
     /**
      * The user's status.
      */
-    @JsonProperty("status")
+    @SerializedName("status")
     private Integer status;
 
     /**
      * The user's birthday.
      */
-    @JsonProperty("birthday")
-//    @JsonDeserialize(converter = DateToLocalDateConverter.class)
-//    @JsonSerialize(converter = LocalDateToDateConverter.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate birthday;
+    @SerializedName("birthday")
+    private LocalDate birthday; // TODO: handle 0000-00-00 date
 
     /**
      * The user's inscription date.
      */
-    @JsonProperty("inscription_date")
-//    @JsonDeserialize(converter = DateToLocalDateConverter.class)
-//    @JsonSerialize(converter = LocalDateToDateConverter.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @SerializedName("inscription_date")
     private LocalDate inscriptionDate;
 
     /**
      * The user's gender : F or M.
      */
-    @JsonProperty("gender")
+    @SerializedName("gender")
     private Gender gender;
 
     /**
      * The url of the profile for the user on Deezer.
      */
-    @JsonProperty("link")
+    @SerializedName("link")
     private URL link;
 
     /**
      * The url of the user's profile picture. Add 'size' parameter to the url to change size. Can be 'small', 'medium', 'big', 'xl'.
      */
-    @JsonProperty("picture")
+    @SerializedName("picture")
     private Picture picture;
 
     /**
      * The url of the user's profile picture in size small.
      */
-    @JsonProperty("picture_small")
+    @SerializedName("picture_small")
     private URL pictureSmall;
 
     /**
      * The url of the user's profile picture in size medium.
      */
-    @JsonProperty("picture_medium")
+    @SerializedName("picture_medium")
     private URL pictureMedium;
 
     /**
      * The url of the user's profile picture in size big.
      */
-    @JsonProperty("picture_big")
+    @SerializedName("picture_big")
     private URL pictureBig;
 
     /**
      * The url of the user's profile picture in size xl.
      */
-    @JsonProperty("picture_xl")
+    @SerializedName("picture_xl")
     private URL pictureXl;
 
     /**
      * The user's country.
      */
-    @JsonProperty("country")
+    @SerializedName("country")
     private Country country;
 
     /**
      * The user's language.
      */
-    @JsonProperty("lang")
+    @SerializedName("lang")
     private String lang;
 
     /**
      * If the user is a kid or not.
      */
-    @JsonProperty("is_kid")
+    @SerializedName("is_kid")
     private Boolean isKid;
 
     /**
      * The user's explicit content level according to his country.
      */
-    @JsonProperty("explicit_content_level")
+    @SerializedName("explicit_content_level")
     private ExplicitContentLevel explicitContentLevel;
 
     /**
      * The user's available explicit content levels according to his country. Possible values are: explicit_display, explicit_no_recommendation and explicit_hide.
      */
-    @JsonProperty("explicit_content_levels_available")
+    @SerializedName("explicit_content_levels_available")
     private Set<ExplicitContentLevel> explicitContentLevelsAvailable;
 
     /**
      * API Link to the flow of this user.
      */
-    @JsonProperty("tracklist")
-//    @JsonDeserialize(using = MethodDeserializer.class)
-//    @JsonSerialize(converter = MethodToUrlConverter.class)
+    @SerializedName("tracklist")
     private PagingMethod<Track> trackList;
-
-    @Override
-    public ObjectType getType() {
-        return ObjectType.USER;
-    }
 }

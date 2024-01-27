@@ -1,8 +1,6 @@
 package io.github.yvasyliev.deezer.methods.params;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.yvasyliev.deezer.json.AdvancedSearchQuerySerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonSerialize(using = AdvancedSearchQuerySerializer.class)
+//@JsonSerialize(using = AdvancedSearchQuerySerializer.class)
 public class AdvancedSearchQuery implements SearchQuery {
     /**
      * The artist name.

@@ -7,6 +7,7 @@ import lombok.Data;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * An album object.
@@ -172,14 +173,14 @@ public class Album implements Pageable {
     /**
      * Return a list of contributors on the album.
      */
-//    @SerializedName("contributors")
-//    private Set<Contributor> contributors;
+    @SerializedName("contributors")
+    private Set<Contributor> contributors;
 
     /**
      * {@link Artist} object containing : id, name, picture, picture_small, picture_medium, picture_big, picture_xl.
      */
-//    @SerializedName("artist")
-//    private Artist artist;
+    @SerializedName("artist")
+    private Artist artist;
 
     /**
      * list of {@link Track}.

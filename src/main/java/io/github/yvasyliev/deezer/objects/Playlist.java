@@ -1,10 +1,6 @@
 package io.github.yvasyliev.deezer.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.yvasyliev.deezer.json.DurationToLongConverter;
-import io.github.yvasyliev.deezer.json.LongToDurationConverter;
 import lombok.Data;
 
 import java.net.URL;
@@ -37,8 +33,8 @@ public class Playlist implements BaseObject, Pageable {
      * The playlist's duration (seconds).
      */
     @JsonProperty("duration")
-    @JsonDeserialize(converter = LongToDurationConverter.class)
-    @JsonSerialize(converter = DurationToLongConverter.class)
+//    @JsonDeserialize(converter = LongToDurationConverter.class)
+//    @JsonSerialize(converter = DurationToLongConverter.class)
     private Duration duration;
 
     /**
