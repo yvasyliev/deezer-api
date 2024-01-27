@@ -1,6 +1,6 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +13,6 @@ public class Contributor extends Artist {
     /**
      * Contributor's role.
      */
-    @JsonProperty("role")
+    @SerializedName("role")
     private Role role;
 }

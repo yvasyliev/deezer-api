@@ -1,10 +1,10 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public enum RecordType {
-    @JsonProperty("album") ALBUM,
-    @JsonProperty("compilation") COMPILATION,
-    @JsonProperty("ep") EP,
-    @JsonProperty("single") SINGLE
+    @SerializedName("album") ALBUM,
+    @SerializedName("compilation") COMPILATION,
+    @SerializedName("ep") EP,
+    @SerializedName("single") SINGLE
 }

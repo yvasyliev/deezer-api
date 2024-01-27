@@ -2,12 +2,6 @@ package io.github.yvasyliev.deezer.objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.github.yvasyliev.deezer.json.DateToLocalDateConverter;
-import io.github.yvasyliev.deezer.json.LocalDateToDateConverter;
-import io.github.yvasyliev.deezer.json.MethodDeserializer;
-import io.github.yvasyliev.deezer.json.MethodToUrlConverter;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
 import lombok.Data;
 
@@ -60,8 +54,8 @@ public class User implements BaseObject, Pageable {
      * The user's birthday.
      */
     @JsonProperty("birthday")
-    @JsonDeserialize(converter = DateToLocalDateConverter.class)
-    @JsonSerialize(converter = LocalDateToDateConverter.class)
+//    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+//    @JsonSerialize(converter = LocalDateToDateConverter.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
@@ -69,8 +63,8 @@ public class User implements BaseObject, Pageable {
      * The user's inscription date.
      */
     @JsonProperty("inscription_date")
-    @JsonDeserialize(converter = DateToLocalDateConverter.class)
-    @JsonSerialize(converter = LocalDateToDateConverter.class)
+//    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+//    @JsonSerialize(converter = LocalDateToDateConverter.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate inscriptionDate;
 
@@ -150,8 +144,8 @@ public class User implements BaseObject, Pageable {
      * API Link to the flow of this user.
      */
     @JsonProperty("tracklist")
-    @JsonDeserialize(using = MethodDeserializer.class)
-    @JsonSerialize(converter = MethodToUrlConverter.class)
+//    @JsonDeserialize(using = MethodDeserializer.class)
+//    @JsonSerialize(converter = MethodToUrlConverter.class)
     private PagingMethod<Track> trackList;
 
     @Override

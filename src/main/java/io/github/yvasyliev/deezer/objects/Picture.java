@@ -1,11 +1,9 @@
 package io.github.yvasyliev.deezer.objects;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.gson.annotations.JsonAdapter;
 import io.github.yvasyliev.deezer.helpers.QueryParams;
 import io.github.yvasyliev.deezer.helpers.URLHelper;
-import io.github.yvasyliev.deezer.json.PictureToUrlConverter;
-import io.github.yvasyliev.deezer.json.UrlToPictureConverter;
+import io.github.yvasyliev.deezer.json.PictureDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,8 +16,7 @@ import java.net.URL;
  */
 @Data
 @AllArgsConstructor
-@JsonDeserialize(converter = UrlToPictureConverter.class)
-@JsonSerialize(converter = PictureToUrlConverter.class)
+@JsonAdapter(PictureDeserializer.class)
 public class Picture {
     private static final String SIZE = "size";
     private static final String SMALL = "small";

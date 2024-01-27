@@ -18,8 +18,8 @@ public class Chart {
     /**
      * list of {@link Album}.
      */
-    @JsonProperty("albums")
-    private Page<Album> albums;
+//    @JsonProperty("albums")
+//    private Page<Album> albums;
 
     /**
      * list of {@link Artist}.
