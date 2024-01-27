@@ -23,10 +23,10 @@ public class PagingMethodDeserializer implements JsonDeserializer<PagingMethod<?
     @Override
     public PagingMethod<? extends Pageable> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         URL url = context.deserialize(json, URL.class);
-        Map<String, String> queryParams = UrlUtil.getQueryParams(url);
-        return createPagingMethod(url.getPath())
-                .index(integer(queryParams.get(PagingMethod.INDEX)))
-                .limit(integer(queryParams.get(PagingMethod.LIMIT)));
+        return setMethodParams(
+                createPagingMethod(url.getPath()),
+                UrlUtil.getQueryParams(url)
+        );
     }
 
     protected PagingMethod<? extends Pageable> createPagingMethod(String path) {
@@ -42,5 +42,11 @@ public class PagingMethodDeserializer implements JsonDeserializer<PagingMethod<?
 
     protected Integer integer(String value) {
         return value != null ? Integer.parseInt(value) : null;
+    }
+
+    protected PagingMethod<? extends Pageable> setMethodParams(PagingMethod<? extends Pageable> pagingMethod, Map<String, String> queryParams) {
+        return pagingMethod
+                .index(integer(queryParams.get(PagingMethod.INDEX)))
+                .limit(integer(queryParams.get(PagingMethod.LIMIT)));
     }
 }
