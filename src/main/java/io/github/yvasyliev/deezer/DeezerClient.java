@@ -10,6 +10,7 @@ import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Genre;
 import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Pageable;
+import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.json.DurationDeserializer;
 import io.github.yvasyliev.deezer.json.LocalDateDeserializer;
@@ -21,6 +22,8 @@ import io.github.yvasyliev.deezer.methods.PagingMethod;
 import io.github.yvasyliev.deezer.service.AlbumService;
 import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.GenreService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 import java.time.Duration;
@@ -33,18 +36,19 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DeezerClient {
     private static final String API_HOST = "https://api.deezer.com";
     private final AlbumService albumService;
     private final ArtistService artistService;
     private final GenreService genreService;
 
-    public DeezerClient() {
-        this(null, null, null);
+    public static DeezerClient create() {
+        return create(null, null, null);
     }
 
-    @Builder
-    private DeezerClient(
+    @Builder(builderMethodName = "custom", buildMethodName = "create")
+    private static DeezerClient create(
             Function<GsonBuilder, GsonBuilder> gsonBuilderCustomizer,
             Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCustomizer,
             Function<Gson, GsonDecoder> gsonDecoderCreator
@@ -74,9 +78,9 @@ public class DeezerClient {
 
         asyncBuilder = asyncFeignBuilderCustomizer.apply(asyncBuilder);
 
-        albumService = asyncBuilder.target(AlbumService.class, API_HOST);
-        artistService = asyncBuilder.target(ArtistService.class, API_HOST);
-        genreService = asyncBuilder.target(GenreService.class, API_HOST);
+        AlbumService albumService = asyncBuilder.target(AlbumService.class, API_HOST);
+        ArtistService artistService = asyncBuilder.target(ArtistService.class, API_HOST);
+        GenreService genreService = asyncBuilder.target(GenreService.class, API_HOST);
 
         pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
                 albumService::getAlbumFans,
@@ -90,10 +94,28 @@ public class DeezerClient {
                 artistService::getArtistAlbums,
                 artistService::getArtistAlbumsAsync
         ));
+        pagingMethodFactories.put(Pattern.compile("/artist/(\\d+)/fans"), pagingMethodFactory(
+                artistService::getArtistFans,
+                artistService::getArtistFansAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/artist/(\\d+)/playlists"), pagingMethodFactory(
+                artistService::getArtistPlaylists,
+                artistService::getArtistPlaylistsAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/artist/(\\d+)/radio"), pagingMethodFactory(
+                artistService::getArtistRadio,
+                artistService::getArtistRadioAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/artist/(\\d+)/related"), pagingMethodFactory(
+                artistService::getArtistRelated,
+                artistService::getArtistRelatedAsync
+        ));
         pagingMethodFactories.put(Pattern.compile("/artist/(\\d+)/top"), pagingMethodFactory(
                 artistService::getArtistTop,
                 artistService::getArtistTopAsync
         ));
+
+        return new DeezerClient(albumService, artistService, genreService);
     }
 
     // ALBUM METHODS
@@ -118,6 +140,22 @@ public class DeezerClient {
 
     public PagingMethod<Album> getArtistAlbums(long artistId) {
         return pagingMethod(artistService::getArtistAlbums, artistService::getArtistAlbumsAsync, artistId);
+    }
+
+    public PagingMethod<User> getArtistFans(long artistId) {
+        return pagingMethod(artistService::getArtistFans, artistService::getArtistFansAsync, artistId);
+    }
+
+    public PagingMethod<Playlist> getArtistPlaylists(long artistId) {
+        return pagingMethod(artistService::getArtistPlaylists, artistService::getArtistPlaylistsAsync, artistId);
+    }
+
+    public PagingMethod<Track> getArtistRadio(long artistId) {
+        return pagingMethod(artistService::getArtistRadio, artistService::getArtistRadioAsync, artistId);
+    }
+
+    public PagingMethod<Artist> getArtistRelated(long artistId) {
+        return pagingMethod(artistService::getArtistRelated, artistService::getArtistRelatedAsync, artistId);
     }
 
     public PagingMethod<Track> getArtistTop(long artistId) {
@@ -158,7 +196,7 @@ public class DeezerClient {
         return pagingMethodFactory(invoker, asyncInvoker).apply(objectId);
     }
 
-    private <T extends Pageable> Function<Long, PagingMethod<T>> pagingMethodFactory(
+    private static <T extends Pageable> Function<Long, PagingMethod<T>> pagingMethodFactory(
             BiFunction<Long, Map<String, Object>, Page<T>> invoker,
             BiFunction<Long, Map<String, Object>, CompletableFuture<Page<T>>> asyncInvoker
     ) {

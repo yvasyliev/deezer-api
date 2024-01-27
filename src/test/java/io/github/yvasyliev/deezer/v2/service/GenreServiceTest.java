@@ -6,7 +6,7 @@ import io.github.yvasyliev.deezer.DeezerClient;
 import org.junit.jupiter.api.Test;
 
 class GenreServiceTest {
-    DeezerClient deezerClient = new DeezerClient();
+    DeezerClient deezerClient = DeezerClient.create();
 
     @Test
     void getGenre() {

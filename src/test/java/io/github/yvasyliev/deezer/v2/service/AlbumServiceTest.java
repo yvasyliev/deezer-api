@@ -8,7 +8,7 @@ import io.github.yvasyliev.deezer.objects.User;
 import org.junit.jupiter.api.Test;
 
 class AlbumServiceTest {
-    DeezerClient deezerClient = new DeezerClient();
+    DeezerClient deezerClient = DeezerClient.create();
 
     @Test
     void getAlbum() {
@@ -26,7 +26,7 @@ class AlbumServiceTest {
 
     @Test
     void getAlbumTracks() {
-        Page<User> fans = deezerClient.getAlbumFans(302127).execute();
-        System.out.println(fans);
+        Page<Track> trackPage = deezerClient.getAlbumTracks(302127).limit(1).execute();
+        System.out.println(trackPage);
     }
 }

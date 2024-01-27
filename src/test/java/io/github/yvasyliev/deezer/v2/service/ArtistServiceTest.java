@@ -1,13 +1,14 @@
 package io.github.yvasyliev.deezer.v2.service;
 
+import io.github.yvasyliev.deezer.DeezerClient;
 import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Page;
-import io.github.yvasyliev.deezer.DeezerClient;
+import io.github.yvasyliev.deezer.objects.Track;
 import org.junit.jupiter.api.Test;
 
 class ArtistServiceTest {
-    DeezerClient deezerClient = new DeezerClient();
+    DeezerClient deezerClient = DeezerClient.create();
 
     @Test
     void getArtist() {
@@ -21,6 +22,31 @@ class ArtistServiceTest {
         System.out.println(albumPage);
         albumPage = albumPage.getNext().execute();
         System.out.println(albumPage);
-        DeezerClient.builder().build();
+    }
+
+    @Test
+    void getArtistFans() {
+
+    }
+
+    @Test
+    void getArtistPlaylists() {
+
+    }
+
+    @Test
+    void getArtistRadio() {
+
+    }
+
+    @Test
+    void getArtistRelated() {
+
+    }
+
+    @Test
+    void getArtistTop() {
+        Page<Track> trackPage = deezerClient.getArtistTop(27).limit(1).execute();
+        System.out.println(trackPage);
     }
 }
