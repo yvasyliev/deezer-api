@@ -12,23 +12,23 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public interface EditorialService extends DeezerService {
-    String EDITORIAL = "/editorial";
-    String EDITORIAL_ID = "/editorial/{editorialId}";
+    String EDITORIAL = "/editorial/{editorialId}";
+    String EDITORIALS = "/editorial";
     String EDITORIAL_CHARTS = "/editorial/{editorialId}/charts";
     String EDITORIAL_RELEASES = "/editorial/{editorialId}/releases";
     String EDITORIAL_SELECTION = "/editorial/{editorialId}/selection";
 
     @RequestLine(GET + EDITORIAL)
-    Page<Editorial> getEditorial(@QueryMap Map<String, Object> queryParams);
-
-    @RequestLine(GET + EDITORIAL)
-    CompletableFuture<Page<Editorial>> getEditorialAsync(@QueryMap Map<String, Object> queryParams);
-
-    @RequestLine(GET + EDITORIAL_ID)
     Editorial getEditorial(@Param("editorialId") long editorialId);
 
-    @RequestLine(GET + EDITORIAL_ID)
+    @RequestLine(GET + EDITORIAL)
     CompletableFuture<Editorial> getEditorialAsync(@Param("editorialId") long editorialId);
+
+    @RequestLine(GET + EDITORIALS)
+    Page<Editorial> getAllEditorials(@QueryMap Map<String, Object> queryParams);
+
+    @RequestLine(GET + EDITORIALS)
+    CompletableFuture<Page<Editorial>> getAllEditorialsAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + EDITORIAL_CHARTS)
     Chart getEditorialCharts(@Param("editorialId") long editorialId);

@@ -14,6 +14,7 @@ import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Pageable;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Podcast;
+import io.github.yvasyliev.deezer.objects.Radio;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.json.DurationDeserializer;
 import io.github.yvasyliev.deezer.json.LocalDateDeserializer;
@@ -144,8 +145,8 @@ public class DeezerClient {
                 chartService::getChartTracksAsync
         ));
         pagingMethodFactories.put(Pattern.compile("/editorial"), pagingMethodFactory(
-                editorialService::getEditorial,
-                editorialService::getEditorialAsync
+                editorialService::getAllEditorials,
+                editorialService::getAllEditorialsAsync
         ));
         pagingMethodFactories.put(Pattern.compile("/editorial/(\\d+)/releases"), pagingMethodFactory(
                 editorialService::getEditorialReleases,
@@ -154,6 +155,18 @@ public class DeezerClient {
         pagingMethodFactories.put(Pattern.compile("/editorial/(\\d+)/selection"), pagingMethodFactory(
                 editorialService::getEditorialSelection,
                 editorialService::getEditorialSelectionAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/genre"), pagingMethodFactory(
+                genreService::getAllGenres,
+                genreService::getAllGenresAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/genre/(\\d+)/artists"), pagingMethodFactory(
+                genreService::getGenreArtists,
+                genreService::getGenreArtistsAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/genre/(\\d+)/radios"), pagingMethodFactory(
+                genreService::getGenreRadios,
+                genreService::getGenreRadiosAsync
         ));
 
         return new DeezerClient(albumService, artistService, chartService, editorialService, genreService);
@@ -236,7 +249,7 @@ public class DeezerClient {
     // EDITORIAL METHODS
 
     public PagingMethod<Editorial> getEditorial() {
-        return pagingMethod(editorialService::getEditorial, editorialService::getEditorialAsync);
+        return pagingMethod(editorialService::getAllEditorials, editorialService::getAllEditorialsAsync);
     }
 
     public Method<Editorial> getEditorial(long editorialId) {
@@ -261,8 +274,16 @@ public class DeezerClient {
         return method(genreService::getGenre, genreService::getGenreAsync, genreId);
     }
 
-    public Method<Page<Genre>> getAllGenres() {
-        return method(genreService::getAllGenres, genreService::getAllGenresAsync);
+    public PagingMethod<Genre> getAllGenres() {
+        return pagingMethod(genreService::getAllGenres, genreService::getAllGenresAsync);
+    }
+
+    public PagingMethod<Artist> getGenreArtists(long genreId) {
+        return pagingMethod(genreService::getGenreArtists, genreService::getGenreArtistsAsync, genreId);
+    }
+
+    public PagingMethod<Radio> getGenreRadios(long genreId) {
+        return pagingMethod(genreService::getGenreRadios, genreService::getGenreRadiosAsync, genreId);
     }
 
     // METHOD CREATORS

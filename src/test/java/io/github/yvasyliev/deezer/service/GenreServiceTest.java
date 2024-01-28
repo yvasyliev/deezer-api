@@ -1,8 +1,7 @@
 package io.github.yvasyliev.deezer.service;
 
-import io.github.yvasyliev.deezer.objects.Genre;
-import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.DeezerClient;
+import io.github.yvasyliev.deezer.objects.Genre;
 import org.junit.jupiter.api.Test;
 
 class GenreServiceTest {
@@ -16,7 +15,13 @@ class GenreServiceTest {
 
     @Test
     void getAllGenres() {
-        Page<Genre> genrePage = deezerClient.getAllGenres().execute();
-        System.out.println(genrePage);
+    }
+
+    @Test
+    void getGenreArtists() {
+    }
+
+    @Test
+    void getGenreRadios() {
     }
 }
