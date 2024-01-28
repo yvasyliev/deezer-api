@@ -126,3 +126,5 @@ public class DeezerApp {
 
 ## To improve
 1. Migrate `User#status` to enum.
+2. `Infos` is not fully populated.
+3. Migrate `Offer#tryAndBuy` to `enum` or `boolean`.

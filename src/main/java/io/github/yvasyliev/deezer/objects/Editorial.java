@@ -1,12 +1,14 @@
 package io.github.yvasyliev.deezer.objects;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.net.URL;
 
 /**
  * An editorial object.
  */
+@Data
 public class Editorial implements Pageable {
     /**
      * The editorial's Deezer id.

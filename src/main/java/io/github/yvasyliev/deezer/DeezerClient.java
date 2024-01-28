@@ -10,6 +10,7 @@ import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Chart;
 import io.github.yvasyliev.deezer.objects.Editorial;
 import io.github.yvasyliev.deezer.objects.Genre;
+import io.github.yvasyliev.deezer.objects.Infos;
 import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Pageable;
 import io.github.yvasyliev.deezer.objects.Playlist;
@@ -22,6 +23,7 @@ import io.github.yvasyliev.deezer.json.PagingMethodDeserializer;
 import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.ChartService;
 import io.github.yvasyliev.deezer.service.EditorialService;
+import io.github.yvasyliev.deezer.service.InfosService;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
 import io.github.yvasyliev.deezer.methods.Method;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
@@ -50,6 +52,7 @@ public class DeezerClient {
     private final ChartService chartService;
     private final EditorialService editorialService;
     private final GenreService genreService;
+    private final InfosService infosService;
 
     public static DeezerClient create() {
         return create(null, null, null);
@@ -91,6 +94,7 @@ public class DeezerClient {
         ChartService chartService = asyncBuilder.target(ChartService.class, API_HOST);
         EditorialService editorialService = asyncBuilder.target(EditorialService.class, API_HOST);
         GenreService genreService = asyncBuilder.target(GenreService.class, API_HOST);
+        InfosService infosService = asyncBuilder.target(InfosService.class, API_HOST);
 
         pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
                 albumService::getAlbumFans,
@@ -169,7 +173,14 @@ public class DeezerClient {
                 genreService::getGenreRadiosAsync
         ));
 
-        return new DeezerClient(albumService, artistService, chartService, editorialService, genreService);
+        return new DeezerClient(
+                albumService,
+                artistService,
+                chartService,
+                editorialService,
+                genreService,
+                infosService
+        );
     }
 
     // ALBUM METHODS
@@ -284,6 +295,12 @@ public class DeezerClient {
 
     public PagingMethod<Radio> getGenreRadios(long genreId) {
         return pagingMethod(genreService::getGenreRadios, genreService::getGenreRadiosAsync, genreId);
+    }
+
+    // INFOS METHODS
+
+    public Method<Infos> getInfos() {
+        return method(infosService::getInfos, infosService::getInfosAsync);
     }
 
     // METHOD CREATORS

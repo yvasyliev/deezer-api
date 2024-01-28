@@ -2,12 +2,14 @@ package io.github.yvasyliev.deezer.objects;
 
 import com.google.gson.annotations.SerializedName;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
+import lombok.Data;
 
 import java.net.URL;
 
 /**
  * A radio object.
  */
+@Data
 public class Radio implements Pageable {
     /**
      * The radio deezer ID.
