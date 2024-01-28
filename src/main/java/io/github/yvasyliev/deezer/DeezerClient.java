@@ -11,6 +11,7 @@ import io.github.yvasyliev.deezer.objects.Chart;
 import io.github.yvasyliev.deezer.objects.Editorial;
 import io.github.yvasyliev.deezer.objects.Genre;
 import io.github.yvasyliev.deezer.objects.Infos;
+import io.github.yvasyliev.deezer.objects.Options;
 import io.github.yvasyliev.deezer.objects.Page;
 import io.github.yvasyliev.deezer.objects.Pageable;
 import io.github.yvasyliev.deezer.objects.Playlist;
@@ -24,6 +25,7 @@ import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.ChartService;
 import io.github.yvasyliev.deezer.service.EditorialService;
 import io.github.yvasyliev.deezer.service.InfosService;
+import io.github.yvasyliev.deezer.service.OptionsService;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
 import io.github.yvasyliev.deezer.methods.Method;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
@@ -53,6 +55,7 @@ public class DeezerClient {
     private final EditorialService editorialService;
     private final GenreService genreService;
     private final InfosService infosService;
+    private final OptionsService optionsService;
 
     public static DeezerClient create() {
         return create(null, null, null);
@@ -95,6 +98,7 @@ public class DeezerClient {
         EditorialService editorialService = asyncBuilder.target(EditorialService.class, API_HOST);
         GenreService genreService = asyncBuilder.target(GenreService.class, API_HOST);
         InfosService infosService = asyncBuilder.target(InfosService.class, API_HOST);
+        OptionsService optionsService = asyncBuilder.target(OptionsService.class, API_HOST);
 
         pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
                 albumService::getAlbumFans,
@@ -179,7 +183,8 @@ public class DeezerClient {
                 chartService,
                 editorialService,
                 genreService,
-                infosService
+                infosService,
+                optionsService
         );
     }
 
@@ -301,6 +306,12 @@ public class DeezerClient {
 
     public Method<Infos> getInfos() {
         return method(infosService::getInfos, infosService::getInfosAsync);
+    }
+
+    // OPTIONS METHODS
+
+    public Method<Options> getOptions() {
+        return method(optionsService::getOptions, optionsService::getOptionsAsync);
     }
 
     // METHOD CREATORS
