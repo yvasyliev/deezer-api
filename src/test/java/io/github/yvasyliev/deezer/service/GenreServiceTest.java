@@ -1,4 +1,4 @@
-package io.github.yvasyliev.deezer.v2.service;
+package io.github.yvasyliev.deezer.service;
 
 import io.github.yvasyliev.deezer.objects.Genre;
 import io.github.yvasyliev.deezer.objects.Page;

@@ -33,7 +33,7 @@ public class PagingMethodDeserializer implements JsonDeserializer<PagingMethod<?
         for (Map.Entry<Pattern, Function<Long, ? extends PagingMethod<? extends Pageable>>> pagingMethodFactory : pagingMethodFactories.entrySet()) {
             Matcher matcher = pagingMethodFactory.getKey().matcher(path);
             if (matcher.matches()) {
-                long objectId = Long.parseLong(matcher.group(1));
+                Long objectId = matcher.groupCount() > 0 ? Long.parseLong(matcher.group(1)) : null;
                 return pagingMethodFactory.getValue().apply(objectId);
             }
         }
