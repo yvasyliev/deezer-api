@@ -26,6 +26,7 @@ import io.github.yvasyliev.deezer.service.ChartService;
 import io.github.yvasyliev.deezer.service.EditorialService;
 import io.github.yvasyliev.deezer.service.InfosService;
 import io.github.yvasyliev.deezer.service.OptionsService;
+import io.github.yvasyliev.deezer.service.PlaylistService;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
 import io.github.yvasyliev.deezer.methods.Method;
 import io.github.yvasyliev.deezer.methods.PagingMethod;
@@ -56,6 +57,7 @@ public class DeezerClient {
     private final GenreService genreService;
     private final InfosService infosService;
     private final OptionsService optionsService;
+    private final PlaylistService playlistService;
 
     public static DeezerClient create() {
         return create(null, null, null);
@@ -99,6 +101,7 @@ public class DeezerClient {
         GenreService genreService = asyncBuilder.target(GenreService.class, API_HOST);
         InfosService infosService = asyncBuilder.target(InfosService.class, API_HOST);
         OptionsService optionsService = asyncBuilder.target(OptionsService.class, API_HOST);
+        PlaylistService playlistService = asyncBuilder.target(PlaylistService.class, API_HOST);
 
         pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
                 albumService::getAlbumFans,
@@ -176,6 +179,18 @@ public class DeezerClient {
                 genreService::getGenreRadios,
                 genreService::getGenreRadiosAsync
         ));
+        pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/fans"), pagingMethodFactory(
+                playlistService::getPlaylistFans,
+                playlistService::getPlaylistFansAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/radio"), pagingMethodFactory(
+                playlistService::getPlaylistFans,
+                playlistService::getPlaylistFansAsync
+        ));
+        pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/tracks"), pagingMethodFactory(
+                playlistService::getPlaylistTracks,
+                playlistService::getPlaylistTracksAsync
+        ));
 
         return new DeezerClient(
                 albumService,
@@ -184,7 +199,8 @@ public class DeezerClient {
                 editorialService,
                 genreService,
                 infosService,
-                optionsService
+                optionsService,
+                playlistService
         );
     }
 
@@ -312,6 +328,24 @@ public class DeezerClient {
 
     public Method<Options> getOptions() {
         return method(optionsService::getOptions, optionsService::getOptionsAsync);
+    }
+
+    // PLAYLIST METHODS
+
+    public Method<Playlist> getPlaylist(long playlistId) {
+        return method(playlistService::getPlaylist, playlistService::getPlaylistAsync, playlistId);
+    }
+
+    public PagingMethod<User> getPlaylistFans(long playlistId) {
+        return pagingMethod(playlistService::getPlaylistFans, playlistService::getPlaylistFansAsync, playlistId);
+    }
+
+    public PagingMethod<Track> getPlaylistRadio(long playlistId) {
+        return pagingMethod(playlistService::getPlaylistRadio, playlistService::getPlaylistRadioAsync, playlistId);
+    }
+
+    public PagingMethod<Track> getPlaylistTracks(long playlistId) {
+        return pagingMethod(playlistService::getPlaylistTracks, playlistService::getPlaylistTracksAsync, playlistId);
     }
 
     // METHOD CREATORS
