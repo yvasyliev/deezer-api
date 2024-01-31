@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.net.URL;
+import java.util.List;
 
 /**
  * A genre object.
@@ -19,7 +20,7 @@ public class Genre implements Pageable {
     /**
      * The editorial's name.
      */
-    @SerializedName("name")
+    @SerializedName(value = "name", alternate = "title")
     private String name;
 
     /**
@@ -51,4 +52,10 @@ public class Genre implements Pageable {
      */
     @SerializedName("picture_xl")
     private URL pictureXl;
+
+    /**
+     * A list of radios for current genre.
+     */
+    @SerializedName("radios")
+    private List<Radio> radios;
 }
