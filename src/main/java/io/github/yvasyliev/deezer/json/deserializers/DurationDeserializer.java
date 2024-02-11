@@ -1,4 +1,4 @@
-package io.github.yvasyliev.deezer.json;
+package io.github.yvasyliev.deezer.json.deserializers;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

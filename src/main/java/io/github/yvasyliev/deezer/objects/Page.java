@@ -7,5 +7,5 @@ import io.github.yvasyliev.deezer.methods.PagingMethod;
  *
  * @param <T> type of objects.
  */
-public class Page<T extends Pageable> extends AbstractPage<T, PagingMethod<T>> {
+public class Page<T extends Pageable> extends AbstractPage<T, PagingMethod<T>, Page<T>> {
 }

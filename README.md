@@ -128,3 +128,5 @@ public class DeezerApp {
 1. Migrate `User#status` to enum.
 2. `Infos` is not fully populated.
 3. Migrate `Offer#tryAndBuy` to `enum` or `boolean`.
+4. `SearchHistory#result` - it's unclear what structure `result` may have.
+5. Does `search / history` return `prev`/`next` links? If so, need to add deserializer.

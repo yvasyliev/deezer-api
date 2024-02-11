@@ -3,7 +3,7 @@ package io.github.yvasyliev.deezer.objects;
 import com.google.gson.annotations.JsonAdapter;
 import io.github.yvasyliev.deezer.helpers.QueryParams;
 import io.github.yvasyliev.deezer.helpers.URLHelper;
-import io.github.yvasyliev.deezer.json.PictureDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.PictureDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

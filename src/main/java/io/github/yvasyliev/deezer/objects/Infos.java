@@ -2,7 +2,7 @@ package io.github.yvasyliev.deezer.objects;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import io.github.yvasyliev.deezer.json.UploadTokenExpiresAtDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.UploadTokenExpiresAtDeserializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;

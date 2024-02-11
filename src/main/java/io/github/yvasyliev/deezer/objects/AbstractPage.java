@@ -1,7 +1,7 @@
 package io.github.yvasyliev.deezer.objects;
 
 import com.google.gson.annotations.SerializedName;
-import io.github.yvasyliev.deezer.methods.PagingMethod;
+import io.github.yvasyliev.deezer.methods.AbstractPagingMethod;
 import lombok.Data;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @param <M> navigation method.
  */
 @Data
-public class AbstractPage<T extends Pageable, M extends PagingMethod<T>> {
+public class AbstractPage<T extends Pageable, M extends AbstractPagingMethod<T, M, P>, P extends AbstractPage<T, M, P>> {
     /**
      * List of objects.
      */

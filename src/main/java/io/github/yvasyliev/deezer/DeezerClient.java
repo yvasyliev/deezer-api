@@ -5,6 +5,18 @@ import com.google.gson.GsonBuilder;
 import feign.AsyncFeign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
+import io.github.yvasyliev.deezer.json.deserializers.AdvancedSearchMethodDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.DurationDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.LocalDateDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.PagingMethodDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.SearchHistoryMethodDeserializer;
+import io.github.yvasyliev.deezer.json.deserializers.SearchMethodDeserializer;
+import io.github.yvasyliev.deezer.methods.AdvancedSearchMethod;
+import io.github.yvasyliev.deezer.methods.Method;
+import io.github.yvasyliev.deezer.methods.PagingMethod;
+import io.github.yvasyliev.deezer.methods.SearchHistoryMethod;
+import io.github.yvasyliev.deezer.methods.SearchMethod;
+import io.github.yvasyliev.deezer.objects.AdvancedSearchPage;
 import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Chart;
@@ -17,23 +29,21 @@ import io.github.yvasyliev.deezer.objects.Pageable;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Podcast;
 import io.github.yvasyliev.deezer.objects.Radio;
+import io.github.yvasyliev.deezer.objects.SearchHistoryPage;
+import io.github.yvasyliev.deezer.objects.SearchPage;
 import io.github.yvasyliev.deezer.objects.Track;
-import io.github.yvasyliev.deezer.json.DurationDeserializer;
-import io.github.yvasyliev.deezer.json.LocalDateDeserializer;
-import io.github.yvasyliev.deezer.json.PagingMethodDeserializer;
 import io.github.yvasyliev.deezer.objects.User;
+import io.github.yvasyliev.deezer.service.AlbumService;
+import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.ChartService;
 import io.github.yvasyliev.deezer.service.EditorialService;
+import io.github.yvasyliev.deezer.service.GenreService;
 import io.github.yvasyliev.deezer.service.InfosService;
 import io.github.yvasyliev.deezer.service.OptionsService;
 import io.github.yvasyliev.deezer.service.PlaylistService;
 import io.github.yvasyliev.deezer.service.RadioService;
+import io.github.yvasyliev.deezer.service.SearchService;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
-import io.github.yvasyliev.deezer.methods.Method;
-import io.github.yvasyliev.deezer.methods.PagingMethod;
-import io.github.yvasyliev.deezer.service.AlbumService;
-import io.github.yvasyliev.deezer.service.ArtistService;
-import io.github.yvasyliev.deezer.service.GenreService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,41 +70,56 @@ public class DeezerClient {
     private final OptionsService optionsService;
     private final PlaylistService playlistService;
     private final RadioService radioService;
+    private final SearchService searchService;
+    private String accessToken;
 
     public static DeezerClient create() {
-        return create(null, null, null);
+        return create(null);
+    }
+
+    public static DeezerClient create(String accessToken) {
+        return create(null, null, null, accessToken);
     }
 
     @Builder(builderMethodName = "custom", buildMethodName = "create")
     private static DeezerClient create(
             Function<GsonBuilder, GsonBuilder> gsonBuilderCustomizer,
             Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCustomizer,
-            Function<Gson, GsonDecoder> gsonDecoderCreator
+            Function<Gson, GsonDecoder> gsonDecoderCreator,
+            String accessToken
     ) {
-        if (gsonBuilderCustomizer == null) {
-            gsonBuilderCustomizer = gsonBuilder -> gsonBuilder;
-        }
-        if (asyncFeignBuilderCustomizer == null) {
-            asyncFeignBuilderCustomizer = feignBuilder -> feignBuilder;
-        }
-        if (gsonDecoderCreator == null) {
-            gsonDecoderCreator = GsonDecoder::new;
-        }
-
         Map<Pattern, Function<Long, ? extends PagingMethod<? extends Pageable>>> pagingMethodFactories = new HashMap<>();
+        Map<String, Function<String, ? extends SearchMethod<? extends Pageable>>> searchMethodFactories = new HashMap<>();
+        Map<String, Supplier<? extends AdvancedSearchMethod<? extends Pageable>>> advancedSearchMethodFactories = new HashMap<>();
+        SearchHistoryMethodDeserializer searchHistoryMethodDeserializer = new SearchHistoryMethodDeserializer();
+
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(Duration.class, new DurationDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
-                .registerTypeAdapter(PagingMethod.class, new PagingMethodDeserializer(pagingMethodFactories));
+                .registerTypeAdapter(PagingMethod.class, new PagingMethodDeserializer<>(pagingMethodFactories))
+                .registerTypeAdapter(SearchMethod.class, new SearchMethodDeserializer<>(searchMethodFactories))
+                .registerTypeAdapter(AdvancedSearchMethod.class, new AdvancedSearchMethodDeserializer<>(advancedSearchMethodFactories))
+                .registerTypeAdapter(SearchHistoryMethod.class, searchHistoryMethodDeserializer);
 
-        Gson gson = gsonBuilderCustomizer.apply(gsonBuilder).create();
+        if (gsonBuilderCustomizer != null) {
+            gsonBuilder = gsonBuilderCustomizer.apply(gsonBuilder);
+        }
+
+        Gson gson = gsonBuilder.create();
+
+        GsonDecoder gsonDecoder = gsonDecoderCreator != null
+                ? gsonDecoderCreator.apply(gson)
+                : new GsonDecoder(gson);
+
         AsyncFeign.AsyncBuilder<Object> asyncBuilder = AsyncFeign
                 .builder()
                 .logger(new DeezerLogger()) // TODO: remove
                 .logLevel(Logger.Level.FULL) // TODO: remove
-                .decoder(gsonDecoderCreator.apply(gson));
+                .decoder(gsonDecoder);
 
-        asyncBuilder = asyncFeignBuilderCustomizer.apply(asyncBuilder);
+        if (asyncFeignBuilderCustomizer != null) {
+            asyncBuilder = asyncFeignBuilderCustomizer.apply(asyncBuilder);
+        }
 
         AlbumService albumService = asyncBuilder.target(AlbumService.class, API_HOST);
         ArtistService artistService = asyncBuilder.target(ArtistService.class, API_HOST);
@@ -105,6 +130,7 @@ public class DeezerClient {
         OptionsService optionsService = asyncBuilder.target(OptionsService.class, API_HOST);
         PlaylistService playlistService = asyncBuilder.target(PlaylistService.class, API_HOST);
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
+        SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
         pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
                 albumService::getAlbumFans,
@@ -158,7 +184,7 @@ public class DeezerClient {
                 chartService::getChartTracks,
                 chartService::getChartTracksAsync
         ));
-        pagingMethodFactories.put(Pattern.compile("/editorial"), pagingMethodFactory(
+        pagingMethodFactories.put(Pattern.compile(EditorialService.EDITORIALS), pagingMethodFactory(
                 editorialService::getAllEditorials,
                 editorialService::getAllEditorialsAsync
         ));
@@ -170,7 +196,7 @@ public class DeezerClient {
                 editorialService::getEditorialSelection,
                 editorialService::getEditorialSelectionAsync
         ));
-        pagingMethodFactories.put(Pattern.compile("/genre"), pagingMethodFactory(
+        pagingMethodFactories.put(Pattern.compile(GenreService.GENRES), pagingMethodFactory(
                 genreService::getAllGenres,
                 genreService::getAllGenresAsync
         ));
@@ -194,19 +220,19 @@ public class DeezerClient {
                 playlistService::getPlaylistTracks,
                 playlistService::getPlaylistTracksAsync
         ));
-        pagingMethodFactories.put(Pattern.compile("/radio"), pagingMethodFactory(
+        pagingMethodFactories.put(Pattern.compile(RadioService.RADIOS), pagingMethodFactory(
                 radioService::getAllRadios,
                 radioService::getAllRadiosAsync
         ));
-        pagingMethodFactories.put(Pattern.compile("/radio/genres"), pagingMethodFactory(
+        pagingMethodFactories.put(Pattern.compile(RadioService.RADIO_GENRES), pagingMethodFactory(
                 radioService::getGenresRadio,
                 radioService::getGenresRadioAsync
         ));
-        pagingMethodFactories.put(Pattern.compile("/radio/lists"), pagingMethodFactory(
+        pagingMethodFactories.put(Pattern.compile(RadioService.RADIO_LISTS), pagingMethodFactory(
                 radioService::getRadioLists,
                 radioService::getRadioListsAsync
         ));
-        pagingMethodFactories.put(Pattern.compile("/radio/top"), pagingMethodFactory(
+        pagingMethodFactories.put(Pattern.compile(RadioService.RADIO_TOP), pagingMethodFactory(
                 radioService::getRadioTop,
                 radioService::getRadioTopAsync
         ));
@@ -214,6 +240,71 @@ public class DeezerClient {
                 radioService::getRadioTracks,
                 radioService::getRadioTracksAsync
         ));
+
+        searchMethodFactories.put(SearchService.SEARCH, searchMethodFactory(
+                searchService::search,
+                searchService::searchAsync
+        ));
+        searchMethodFactories.put(SearchService.SEARCH_ALBUM, searchMethodFactory(
+                searchService::searchAlbum,
+                searchService::searchAlbumAsync
+        ));
+        searchMethodFactories.put(SearchService.SEARCH_ARTIST, searchMethodFactory(
+                searchService::searchArtist,
+                searchService::searchArtistAsync
+        ));
+        searchMethodFactories.put(SearchService.SEARCH_PLAYLIST, searchMethodFactory(
+                searchService::searchPlaylist,
+                searchService::searchPlaylistAsync
+        ));
+        searchMethodFactories.put(SearchService.SEARCH_RADIO, searchMethodFactory(
+                searchService::searchRadio,
+                searchService::searchRadioAsync
+        ));
+        searchMethodFactories.put(SearchService.SEARCH_TRACK, searchMethodFactory(
+                searchService::searchTrack,
+                searchService::searchTrackAsync
+        ));
+        searchMethodFactories.put(SearchService.SEARCH_USER, searchMethodFactory(
+                searchService::searchUser,
+                searchService::searchUserAsync
+        ));
+
+        advancedSearchMethodFactories.put(SearchService.SEARCH, advancedSearchMethodFactory(
+                searchService::advancedSearch,
+                searchService::advancedSearchAsync
+        ));
+        advancedSearchMethodFactories.put(SearchService.SEARCH_ALBUM, advancedSearchMethodFactory(
+                searchService::advancedSearchAlbum,
+                searchService::advancedSearchAlbumAsync
+        ));
+        advancedSearchMethodFactories.put(SearchService.SEARCH_ARTIST, advancedSearchMethodFactory(
+                searchService::advancedSearchArtist,
+                searchService::advancedSearchArtistAsync
+        ));
+        advancedSearchMethodFactories.put(SearchService.SEARCH_PLAYLIST, advancedSearchMethodFactory(
+                searchService::advancedSearchPlaylist,
+                searchService::advancedSearchPlaylistAsync
+        ));
+        advancedSearchMethodFactories.put(SearchService.SEARCH_RADIO, advancedSearchMethodFactory(
+                searchService::advancedSearchRadio,
+                searchService::advancedSearchRadioAsync
+        ));
+        advancedSearchMethodFactories.put(SearchService.SEARCH_TRACK, advancedSearchMethodFactory(
+                searchService::advancedSearchTrack,
+                searchService::advancedSearchTrackAsync
+        ));
+        advancedSearchMethodFactories.put(SearchService.SEARCH_USER, advancedSearchMethodFactory(
+                searchService::advancedSearchUser,
+                searchService::advancedSearchUserAsync
+        ));
+
+        searchHistoryMethodDeserializer.setSearchHistoryMethodFactory(token -> searchHistoryMethodFactory(
+                        searchService::searchHistory,
+                        searchService::searchHistoryAsync,
+                        token
+                ).get()
+        );
 
         return new DeezerClient(
                 albumService,
@@ -224,7 +315,9 @@ public class DeezerClient {
                 infosService,
                 optionsService,
                 playlistService,
-                radioService
+                radioService,
+                searchService,
+                accessToken
         );
     }
 
@@ -398,6 +491,64 @@ public class DeezerClient {
         return pagingMethod(radioService::getRadioTracks, radioService::getRadioTracksAsync, radioId);
     }
 
+    // SEARCH METHODS
+
+    public SearchMethod<Track> search(String q) {
+        return searchMethod(searchService::search, searchService::searchAsync, q);
+    }
+
+    public AdvancedSearchMethod<Track> search() {
+        return advancedSearchMethod(searchService::advancedSearch, searchService::advancedSearchAsync);
+    }
+
+    public SearchMethod<Album> searchAlbum(String q) {
+        return searchMethod(searchService::searchAlbum, searchService::searchAlbumAsync, q);
+    }
+
+    public AdvancedSearchMethod<Album> searchAlbum() {
+        return advancedSearchMethod(searchService::advancedSearchAlbum, searchService::advancedSearchAlbumAsync);
+    }
+
+    public SearchMethod<Artist> searchArtist(String q) {
+        return searchMethod(searchService::searchArtist, searchService::searchArtistAsync, q);
+    }
+
+    public AdvancedSearchMethod<Artist> searchArtist() {
+        return advancedSearchMethod(searchService::advancedSearchArtist, searchService::advancedSearchArtistAsync);
+    }
+
+    public SearchHistoryMethod searchHistory() {
+        return searchHistoryMethod(searchService::searchHistory, searchService::searchHistoryAsync);
+    }
+
+    public SearchMethod<Playlist> searchPlaylist(String q) {
+        return searchMethod(searchService::searchPlaylist, searchService::searchPlaylistAsync, q);
+    }
+
+    public AdvancedSearchMethod<Playlist> searchPlaylist() {
+        return advancedSearchMethod(searchService::advancedSearchPlaylist, searchService::advancedSearchPlaylistAsync);
+    }
+
+    public SearchMethod<Radio> searchRadio(String q) {
+        return searchMethod(searchService::searchRadio, searchService::searchRadioAsync, q);
+    }
+
+    public AdvancedSearchMethod<Radio> searchRadio() {
+        return advancedSearchMethod(searchService::advancedSearchRadio, searchService::advancedSearchRadioAsync);
+    }
+
+    public SearchMethod<Track> searchTrack(String q) {
+        return searchMethod(searchService::searchTrack, searchService::searchTrackAsync, q);
+    }
+
+    public AdvancedSearchMethod<Track> searchTrack() {
+        return advancedSearchMethod(searchService::advancedSearchTrack, searchService::advancedSearchTrackAsync);
+    }
+
+    public AdvancedSearchMethod<User> searchUser() {
+        return advancedSearchMethod(searchService::advancedSearchUser, searchService::advancedSearchUserAsync);
+    }
+
     // METHOD CREATORS
 
     private <T> Method<T> method(Supplier<T> invoker, Supplier<CompletableFuture<T>> asyncInvoker) {
@@ -433,6 +584,28 @@ public class DeezerClient {
         return pagingMethodFactory(invoker, asyncInvoker).apply(objectId);
     }
 
+    private <T extends Pageable> SearchMethod<T> searchMethod(
+            Function<Map<String, Object>, SearchPage<T>> invoker,
+            Function<Map<String, Object>, CompletableFuture<SearchPage<T>>> asyncInvoker,
+            String q
+    ) {
+        return searchMethodFactory(invoker, asyncInvoker).apply(q);
+    }
+
+    private <T extends Pageable> AdvancedSearchMethod<T> advancedSearchMethod(
+            Function<Map<String, Object>, AdvancedSearchPage<T>> invoker,
+            Function<Map<String, Object>, CompletableFuture<AdvancedSearchPage<T>>> asyncInvoker
+    ) {
+        return advancedSearchMethodFactory(invoker, asyncInvoker).get();
+    }
+
+    private SearchHistoryMethod searchHistoryMethod(
+            Function<Map<String, Object>, SearchHistoryPage> invoker,
+            Function<Map<String, Object>, CompletableFuture<SearchHistoryPage>> asyncInvoker
+    ) {
+        return searchHistoryMethodFactory(invoker, asyncInvoker, accessToken).get();
+    }
+
     private static <T extends Pageable> Function<Long, PagingMethod<T>> pagingMethodFactory(
             BiFunction<Long, Map<String, Object>, Page<T>> invoker,
             BiFunction<Long, Map<String, Object>, CompletableFuture<Page<T>>> asyncInvoker
@@ -451,5 +624,27 @@ public class DeezerClient {
                 (objectId, queryParams) -> invoker.apply(queryParams),
                 (objectId, queryParams) -> asyncInvoker.apply(queryParams)
         );
+    }
+
+    private static <T extends Pageable> Function<String, SearchMethod<T>> searchMethodFactory(
+            Function<Map<String, Object>, SearchPage<T>> invoker,
+            Function<Map<String, Object>, CompletableFuture<SearchPage<T>>> asyncInvoker
+    ) {
+        return q -> new SearchMethod<>(invoker, asyncInvoker, q);
+    }
+
+    private static <T extends Pageable> Supplier<AdvancedSearchMethod<T>> advancedSearchMethodFactory(
+            Function<Map<String, Object>, AdvancedSearchPage<T>> invoker,
+            Function<Map<String, Object>, CompletableFuture<AdvancedSearchPage<T>>> asyncInvoker
+    ) {
+        return () -> new AdvancedSearchMethod<>(invoker, asyncInvoker);
+    }
+
+    private static Supplier<SearchHistoryMethod> searchHistoryMethodFactory(
+            Function<Map<String, Object>, SearchHistoryPage> invoker,
+            Function<Map<String, Object>, CompletableFuture<SearchHistoryPage>> asyncInvoker,
+            String accessToken
+    ) {
+        return () -> new SearchHistoryMethod(invoker, asyncInvoker, accessToken);
     }
 }
