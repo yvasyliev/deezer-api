@@ -132,14 +132,14 @@ public class DeezerClient {
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
-        pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
-                albumService::getAlbumFans,
-                albumService::getAlbumFansAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/tracks"), pagingMethodFactory(
-                albumService::getAlbumTracks,
-                albumService::getAlbumTracksAsync
-        ));
+//        pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/fans"), pagingMethodFactory(
+//                albumService::getAlbumFans,
+//                albumService::getAlbumFansAsync
+//        ));
+//        pagingMethodFactories.put(Pattern.compile("/album/(\\d+)/tracks"), pagingMethodFactory(
+//                albumService::getAlbumTracks,
+//                albumService::getAlbumTracksAsync
+//        ));
         pagingMethodFactories.put(Pattern.compile("/artist/(\\d+)/albums"), pagingMethodFactory(
                 artistService::getArtistAlbums,
                 artistService::getArtistAlbumsAsync
@@ -245,10 +245,10 @@ public class DeezerClient {
                 searchService::search,
                 searchService::searchAsync
         ));
-        searchMethodFactories.put(SearchService.SEARCH_ALBUM, searchMethodFactory(
-                searchService::searchAlbum,
-                searchService::searchAlbumAsync
-        ));
+//        searchMethodFactories.put(SearchService.SEARCH_ALBUM, searchMethodFactory(
+//                searchService::searchAlbum,
+//                searchService::searchAlbumAsync
+//        ));
         searchMethodFactories.put(SearchService.SEARCH_ARTIST, searchMethodFactory(
                 searchService::searchArtist,
                 searchService::searchArtistAsync
@@ -327,13 +327,13 @@ public class DeezerClient {
         return method(albumService::getAlbum, albumService::getAlbumAsync, albumId);
     }
 
-    public PagingMethod<User> getAlbumFans(long albumId) {
-        return pagingMethod(albumService::getAlbumFans, albumService::getAlbumFansAsync, albumId);
-    }
-
-    public PagingMethod<Track> getAlbumTracks(long albumId) {
-        return pagingMethod(albumService::getAlbumTracks, albumService::getAlbumTracksAsync, albumId);
-    }
+//    public PagingMethod<User> getAlbumFans(long albumId) {
+//        return pagingMethod(albumService::getAlbumFans, albumService::getAlbumFansAsync, albumId);
+//    }
+//
+//    public PagingMethod<Track> getAlbumTracks(long albumId) {
+//        return pagingMethod(albumService::getAlbumTracks, albumService::getAlbumTracksAsync, albumId);
+//    }
 
     // ARTIST METHODS
 
@@ -501,9 +501,9 @@ public class DeezerClient {
         return advancedSearchMethod(searchService::advancedSearch, searchService::advancedSearchAsync);
     }
 
-    public SearchMethod<Album> searchAlbum(String q) {
-        return searchMethod(searchService::searchAlbum, searchService::searchAlbumAsync, q);
-    }
+//    public SearchMethod<Album> searchAlbum(String q) {
+//        return searchMethod(searchService::searchAlbum, searchService::searchAlbumAsync, q);
+//    }
 
     public AdvancedSearchMethod<Album> searchAlbum() {
         return advancedSearchMethod(searchService::advancedSearchAlbum, searchService::advancedSearchAlbumAsync);

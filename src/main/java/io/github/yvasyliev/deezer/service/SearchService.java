@@ -11,6 +11,8 @@ import io.github.yvasyliev.deezer.objects.SearchHistoryPage;
 import io.github.yvasyliev.deezer.objects.SearchPage;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.objects.User;
+import io.github.yvasyliev.deezer.v2.methods.search.SearchMethod;
+import io.github.yvasyliev.deezer.v2.objects.Page;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -74,10 +76,10 @@ public interface SearchService extends DeezerService {
     CompletableFuture<SearchPage<Track>> searchAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ALBUM)
-    SearchPage<Album> searchAlbum(@QueryMap Map<String, Object> queryParams);
+    Page<Album, SearchMethod<Album>> searchAlbum(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ALBUM)
-    CompletableFuture<SearchPage<Album>> searchAlbumAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Album, SearchMethod<Album>>> searchAlbumAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ARTIST)
     SearchPage<Artist> searchArtist(@QueryMap Map<String, Object> queryParams);
