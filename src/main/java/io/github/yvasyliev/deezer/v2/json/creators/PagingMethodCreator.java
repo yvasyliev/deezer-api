@@ -1,14 +1,17 @@
 package io.github.yvasyliev.deezer.v2.json.creators;
 
 import com.google.gson.Gson;
-import com.google.gson.InstanceCreator;
-import io.github.yvasyliev.deezer.objects.Pageable;
-import io.github.yvasyliev.deezer.v2.methods.PagingMethod;
+import io.github.yvasyliev.deezer.service.DeezerService;
 import lombok.Setter;
 
+import java.lang.reflect.InvocationTargetException;
+
 @Setter
-public abstract class PagingMethodCreator<T extends Pageable, S> implements InstanceCreator<PagingMethod<T>> {
+public class PagingMethodCreator<S extends DeezerService> extends AbstractPagingMethodCreator<S> {
     protected static final long DEFAULT_OBJECT_ID = 0;
-    protected Gson gson;
-    protected S service;
+
+    @Override
+    public Object createInstance(Class<?> clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        return clazz.getConstructor(Gson.class, service.getClass().getInterfaces()[0], long.class).newInstance(gson, service, DEFAULT_OBJECT_ID);
+    }
 }

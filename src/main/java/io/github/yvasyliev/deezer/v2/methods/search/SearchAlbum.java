@@ -3,6 +3,7 @@ package io.github.yvasyliev.deezer.v2.methods.search;
 import com.google.gson.Gson;
 import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.service.SearchService;
+import io.github.yvasyliev.deezer.v2.methods.SearchMethod;
 import io.github.yvasyliev.deezer.v2.objects.Page;
 
 import java.util.concurrent.CompletableFuture;

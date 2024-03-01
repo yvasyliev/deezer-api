@@ -11,16 +11,21 @@ import io.github.yvasyliev.deezer.json.deserializers.LocalDateDeserializer;
 import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.service.AlbumService;
 import io.github.yvasyliev.deezer.service.SearchService;
-import io.github.yvasyliev.deezer.v2.json.AbstractPagingMethodDeserializer;
-import io.github.yvasyliev.deezer.v2.json.creators.album.GetAlbumTracksCreator;
-import io.github.yvasyliev.deezer.v2.json.creators.search.SearchAlbumCreator;
+import io.github.yvasyliev.deezer.v2.json.deserializers.PagingMethodDeserializer;
+import io.github.yvasyliev.deezer.v2.json.deserializers.SearchMethodDeserializer;
+import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
+import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
+import io.github.yvasyliev.deezer.v2.json.creators.PagingMethodCreator;
+import io.github.yvasyliev.deezer.v2.json.creators.SearchMethodCreator;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
+import io.github.yvasyliev.deezer.v2.methods.AdvancedSearchMethod;
 import io.github.yvasyliev.deezer.v2.methods.Method;
 import io.github.yvasyliev.deezer.v2.methods.PagingMethod;
+import io.github.yvasyliev.deezer.v2.methods.SearchMethod;
 import io.github.yvasyliev.deezer.v2.methods.album.GetAlbum;
 import io.github.yvasyliev.deezer.v2.methods.album.GetAlbumTracks;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
-import io.github.yvasyliev.deezer.v2.methods.search.SearchMethod;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -46,22 +51,29 @@ public class DeezerClient {
             Function<Gson, GsonDecoder> gsonDecoderCreator,
             Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCreator
     ) {
-        AbstractPagingMethodDeserializer abstractPagingMethodDeserializer = new AbstractPagingMethodDeserializer();
-        abstractPagingMethodDeserializer.put(Pattern.compile("/album/(\\d+)/tracks"), GetAlbumTracks.class);
-        abstractPagingMethodDeserializer.put(Pattern.compile(SearchService.SEARCH_ALBUM), SearchAlbum.class);
+        PagingMethodDeserializer pagingMethodDeserializer = new PagingMethodDeserializer();
+        pagingMethodDeserializer.put(Pattern.compile("/album/(\\d+)/tracks"), GetAlbumTracks.class);
 
-        GetAlbumTracksCreator getAlbumTracksCreator = new GetAlbumTracksCreator();
-        SearchAlbumCreator searchAlbumCreator = new SearchAlbumCreator();
+        SearchMethodDeserializer searchMethodDeserializer = new SearchMethodDeserializer();
+        searchMethodDeserializer.put(SearchService.SEARCH_ALBUM, SearchAlbum.class);
+
+        AbstractPagingMethodCreator<AlbumService> pagingMethodCreator = new PagingMethodCreator<>();
+        AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
+        AbstractPagingMethodCreator<SearchService> advancedSearchMethodCreator = new AdvancedSearchMethodCreator();
 
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
+                // deserializers
                 .registerTypeAdapter(Duration.class, new DurationDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
-                .registerTypeAdapter(PagingMethod.class, abstractPagingMethodDeserializer)
-                .registerTypeAdapter(SearchMethod.class, abstractPagingMethodDeserializer)
-                .registerTypeAdapter(GetAlbumTracks.class, getAlbumTracksCreator)
-                .registerTypeAdapter(SearchAlbum.class, searchAlbumCreator);
+                .registerTypeAdapter(PagingMethod.class, pagingMethodDeserializer)
+                .registerTypeAdapter(SearchMethod.class, searchMethodDeserializer)
+                .registerTypeAdapter(AdvancedSearchMethod.class, searchMethodDeserializer)
+                // creators
+                .registerTypeAdapter(GetAlbumTracks.class, pagingMethodCreator)
+                .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator);
 
         Gson gson = gsonBuilderCreator.apply(gsonBuilder).create();
 
@@ -78,10 +90,12 @@ public class DeezerClient {
         AlbumService albumService = asyncFeignBuilder.target(AlbumService.class, API_HOST);
         SearchService searchService = asyncFeignBuilder.target(SearchService.class, API_HOST);
 
-        getAlbumTracksCreator.setGson(gson);
-        getAlbumTracksCreator.setService(albumService);
-        searchAlbumCreator.setGson(gson);
-        searchAlbumCreator.setSearchService(searchService);
+        pagingMethodCreator.setGson(gson);
+        pagingMethodCreator.setService(albumService);
+        searchMethodCreator.setGson(gson);
+        searchMethodCreator.setService(searchService);
+        advancedSearchMethodCreator.setGson(gson);
+        advancedSearchMethodCreator.setService(searchService);
 
         return new DeezerClient(gson, albumService, searchService);
     }
@@ -92,6 +106,10 @@ public class DeezerClient {
 
     public SearchMethod<Album> searchAlbums(String q) {
         return new SearchAlbum(gson, searchService, q);
+    }
+
+    public AdvancedSearchMethod<Album> searchAlbums() {
+        return new AdvancedSearchAlbum(gson, searchService);
     }
 
     public static class Builder {

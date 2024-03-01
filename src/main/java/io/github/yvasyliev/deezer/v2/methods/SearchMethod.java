@@ -1,11 +1,10 @@
-package io.github.yvasyliev.deezer.v2.methods.search;
+package io.github.yvasyliev.deezer.v2.methods;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import io.github.yvasyliev.deezer.objects.Pageable;
 import io.github.yvasyliev.deezer.service.SearchService;
-import io.github.yvasyliev.deezer.v2.methods.AbstractSearchMethod;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)

@@ -97,7 +97,7 @@ public class Album implements Pageable {
      */
     @Expose
     @SerializedName("genre_id")
-    private Integer genreId;
+    private Long genreId;
 
     /**
      * List of genre object.

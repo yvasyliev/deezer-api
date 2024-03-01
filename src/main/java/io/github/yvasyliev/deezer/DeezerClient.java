@@ -274,10 +274,10 @@ public class DeezerClient {
                 searchService::advancedSearch,
                 searchService::advancedSearchAsync
         ));
-        advancedSearchMethodFactories.put(SearchService.SEARCH_ALBUM, advancedSearchMethodFactory(
-                searchService::advancedSearchAlbum,
-                searchService::advancedSearchAlbumAsync
-        ));
+//        advancedSearchMethodFactories.put(SearchService.SEARCH_ALBUM, advancedSearchMethodFactory(
+//                searchService::advancedSearchAlbum,
+//                searchService::advancedSearchAlbumAsync
+//        ));
         advancedSearchMethodFactories.put(SearchService.SEARCH_ARTIST, advancedSearchMethodFactory(
                 searchService::advancedSearchArtist,
                 searchService::advancedSearchArtistAsync
@@ -505,9 +505,9 @@ public class DeezerClient {
 //        return searchMethod(searchService::searchAlbum, searchService::searchAlbumAsync, q);
 //    }
 
-    public AdvancedSearchMethod<Album> searchAlbum() {
-        return advancedSearchMethod(searchService::advancedSearchAlbum, searchService::advancedSearchAlbumAsync);
-    }
+//    public AdvancedSearchMethod<Album> searchAlbum() {
+//        return advancedSearchMethod(searchService::advancedSearchAlbum, searchService::advancedSearchAlbumAsync);
+//    }
 
     public SearchMethod<Artist> searchArtist(String q) {
         return searchMethod(searchService::searchArtist, searchService::searchArtistAsync, q);
