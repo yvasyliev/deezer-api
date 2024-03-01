@@ -31,18 +31,18 @@ public class Page<T extends Pageable, M extends AbstractPagingMethod<T, M>> {
     @SerializedName("next")
     private M next;
 
-//    /**
-//     * Previous page.
-//     */
-//    @Expose
-//    @SerializedName("prev")
-//    private M prev;
+    /**
+     * Previous page.
+     */
+    @Expose
+    @SerializedName("prev")
+    private M prev;
 
     public boolean hasNext() {
         return next != null;
     }
 
-//    public boolean hasPrev() {
-//        return prev != null;
-//    }
+    public boolean hasPrev() {
+        return prev != null;
+    }
 }

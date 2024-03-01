@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 @Setter
 public abstract class AbstractPagingMethodCreator<S extends DeezerService> implements InstanceCreator<Object> {
     protected Gson gson;
-    protected S service;
+    protected S deezerService;
 
     @Override
     public Object createInstance(Type type) {

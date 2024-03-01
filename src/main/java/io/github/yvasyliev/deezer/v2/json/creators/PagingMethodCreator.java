@@ -12,6 +12,6 @@ public class PagingMethodCreator<S extends DeezerService> extends AbstractPaging
 
     @Override
     public Object createInstance(Class<?> clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return clazz.getConstructor(Gson.class, service.getClass().getInterfaces()[0], long.class).newInstance(gson, service, DEFAULT_OBJECT_ID);
+        return clazz.getConstructor(Gson.class, deezerService.getClass().getInterfaces()[0], long.class).newInstance(gson, deezerService, DEFAULT_OBJECT_ID);
     }
 }

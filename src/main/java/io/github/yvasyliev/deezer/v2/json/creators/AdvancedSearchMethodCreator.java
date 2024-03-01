@@ -8,6 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 public class AdvancedSearchMethodCreator extends AbstractPagingMethodCreator<SearchService> {
     @Override
     public Object createInstance(Class<?> clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return clazz.getConstructor(Gson.class, SearchService.class).newInstance(gson, service);
+        return clazz.getConstructor(Gson.class, SearchService.class).newInstance(gson, deezerService);
     }
 }
