@@ -11,6 +11,7 @@ import io.github.yvasyliev.deezer.json.deserializers.LocalDateDeserializer;
 import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Chart;
+import io.github.yvasyliev.deezer.objects.Editorial;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Podcast;
 import io.github.yvasyliev.deezer.objects.Track;
@@ -18,6 +19,7 @@ import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.AlbumService;
 import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.ChartService;
+import io.github.yvasyliev.deezer.service.EditorialService;
 import io.github.yvasyliev.deezer.service.SearchService;
 import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
@@ -46,6 +48,11 @@ import io.github.yvasyliev.deezer.v2.methods.chart.GetChartById;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartPlaylists;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartPodcasts;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartTracks;
+import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorial;
+import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorialCharts;
+import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorialReleases;
+import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorialSelection;
+import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorials;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartAlbums;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
@@ -66,6 +73,7 @@ public class DeezerClient {
     private final AlbumService albumService;
     private final ArtistService artistService;
     private final ChartService chartService;
+    private final EditorialService editorialService;
     private final SearchService searchService;
 
     public static DeezerClient create() {
@@ -92,10 +100,14 @@ public class DeezerClient {
         pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/playlists"), GetChartPlaylists.class);
         pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/podcasts"), GetChartPodcasts.class);
         pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/tracks"), GetChartTracks.class);
+        pagingMethodDeserializer.put(Pattern.compile(EditorialService.EDITORIALS), GetEditorials.class);
+        pagingMethodDeserializer.put(Pattern.compile("/editorial/(\\d+)/releases"), GetEditorialReleases.class);
+        pagingMethodDeserializer.put(Pattern.compile("/editorial/(\\d+)/selection"), GetEditorialSelection.class);
 
         AbstractPagingMethodCreator<AlbumService> albumPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ArtistService> artistPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ChartService> chartPagingMethodCreator = new PagingMethodCreator<>();
+        AbstractPagingMethodCreator<EditorialService> editorialPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
         AbstractPagingMethodCreator<SearchService> advancedSearchMethodCreator = new AdvancedSearchMethodCreator();
 
@@ -125,6 +137,9 @@ public class DeezerClient {
                 .registerTypeAdapter(GetChartPlaylists.class, chartPagingMethodCreator)
                 .registerTypeAdapter(GetChartPodcasts.class, chartPagingMethodCreator)
                 .registerTypeAdapter(GetChartTracks.class, chartPagingMethodCreator)
+                .registerTypeAdapter(GetEditorials.class, editorialPagingMethodCreator)
+                .registerTypeAdapter(GetEditorialReleases.class, editorialPagingMethodCreator)
+                .registerTypeAdapter(GetEditorialSelection.class, editorialPagingMethodCreator)
                 .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
                 .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator);
 
@@ -143,12 +158,14 @@ public class DeezerClient {
         AlbumService albumService = asyncFeignBuilder.target(AlbumService.class, API_HOST);
         ArtistService artistService = asyncFeignBuilder.target(ArtistService.class, API_HOST);
         ChartService chartService = asyncFeignBuilder.target(ChartService.class, API_HOST);
+        EditorialService editorialService = asyncFeignBuilder.target(EditorialService.class, API_HOST);
         SearchService searchService = asyncFeignBuilder.target(SearchService.class, API_HOST);
 
         Stream.of(
                 albumPagingMethodCreator,
                 artistPagingMethodCreator,
                 chartPagingMethodCreator,
+                editorialPagingMethodCreator,
                 searchMethodCreator,
                 advancedSearchMethodCreator
         ).forEach(deezerService -> deezerService.setGson(gson));
@@ -156,10 +173,11 @@ public class DeezerClient {
         albumPagingMethodCreator.setDeezerService(albumService);
         artistPagingMethodCreator.setDeezerService(artistService);
         chartPagingMethodCreator.setDeezerService(chartService);
+        editorialPagingMethodCreator.setDeezerService(editorialService);
         searchMethodCreator.setDeezerService(searchService);
         advancedSearchMethodCreator.setDeezerService(searchService);
 
-        return new DeezerClient(gson, albumService, artistService, chartService, searchService);
+        return new DeezerClient(gson, albumService, artistService, chartService, editorialService, searchService);
     }
 
     public Method<Album> getAlbum(long albumId) {
@@ -229,6 +247,26 @@ public class DeezerClient {
 
     public PagingMethod<Track> getChartTracks(long chartId) {
         return new GetChartTracks(gson, chartService, chartId);
+    }
+
+    public Method<Editorial> getEditorial(long editorialId) {
+        return new GetEditorial(editorialService, editorialId);
+    }
+
+    public PagingMethod<Editorial> getEditorials() {
+        return new GetEditorials(gson, editorialService);
+    }
+
+    public Method<Chart> getEditorialCharts(long editorialId) {
+        return new GetEditorialCharts(editorialService, editorialId);
+    }
+
+    public PagingMethod<Album> getEditorialReleases(long editorialId) {
+        return new GetEditorialReleases(gson, editorialService, editorialId);
+    }
+
+    public PagingMethod<Album> getEditorialSelection(long editorialId) {
+        return new GetEditorialSelection(gson, editorialService, editorialId);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {

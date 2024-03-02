@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.v2.methods.PagingMethod;
-import io.github.yvasyliev.deezer.v2.methods.ServicePagingMethod;
+import io.github.yvasyliev.deezer.v2.methods.ObjectServicePagingMethod;
 import io.github.yvasyliev.deezer.v2.objects.Page;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GetArtistFans extends ServicePagingMethod<User, ArtistService> {
+public class GetArtistFans extends ObjectServicePagingMethod<User, ArtistService> {
     public GetArtistFans(Gson gson, ArtistService artistService, long artistId) {
         super(gson, artistService, artistId);
     }

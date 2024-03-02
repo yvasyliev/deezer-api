@@ -131,18 +131,6 @@ public class DeezerClient {
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
-        pagingMethodFactories.put(Pattern.compile(EditorialService.EDITORIALS), pagingMethodFactory(
-                editorialService::getAllEditorials,
-                editorialService::getAllEditorialsAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/editorial/(\\d+)/releases"), pagingMethodFactory(
-                editorialService::getEditorialReleases,
-                editorialService::getEditorialReleasesAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/editorial/(\\d+)/selection"), pagingMethodFactory(
-                editorialService::getEditorialSelection,
-                editorialService::getEditorialSelectionAsync
-        ));
         pagingMethodFactories.put(Pattern.compile(GenreService.GENRES), pagingMethodFactory(
                 genreService::getAllGenres,
                 genreService::getAllGenresAsync
@@ -285,24 +273,12 @@ public class DeezerClient {
 
     // EDITORIAL METHODS
 
-    public PagingMethod<Editorial> getEditorial() {
-        return pagingMethod(editorialService::getAllEditorials, editorialService::getAllEditorialsAsync);
-    }
-
     public Method<Editorial> getEditorial(long editorialId) {
         return method(editorialService::getEditorial, editorialService::getEditorialAsync, editorialId);
     }
 
     public Method<Chart> getEditorialCharts(long editorialId) {
         return method(editorialService::getEditorialCharts, editorialService::getEditorialChartsAsync, editorialId);
-    }
-
-    public PagingMethod<Album> getEditorialReleases(long editorialId) {
-        return pagingMethod(editorialService::getEditorialReleases, editorialService::getEditorialReleasesAsync, editorialId);
-    }
-
-    public PagingMethod<Album> getEditorialSelection(long editorialId) {
-        return pagingMethod(editorialService::getEditorialSelection, editorialService::getEditorialSelectionAsync, editorialId);
     }
 
     // GENRE METHODS
