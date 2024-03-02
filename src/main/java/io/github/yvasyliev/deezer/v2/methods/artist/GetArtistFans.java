@@ -10,8 +10,8 @@ import io.github.yvasyliev.deezer.v2.objects.Page;
 import java.util.concurrent.CompletableFuture;
 
 public class GetArtistFans extends ServicePagingMethod<User, ArtistService> {
-    public GetArtistFans(Gson gson, ArtistService deezerService, long artistId) {
-        super(gson, deezerService, artistId);
+    public GetArtistFans(Gson gson, ArtistService artistService, long artistId) {
+        super(gson, artistService, artistId);
     }
 
     @Override
