@@ -27,6 +27,7 @@ import io.github.yvasyliev.deezer.service.EditorialService;
 import io.github.yvasyliev.deezer.service.GenreService;
 import io.github.yvasyliev.deezer.service.InfosService;
 import io.github.yvasyliev.deezer.service.OptionsService;
+import io.github.yvasyliev.deezer.service.PlaylistService;
 import io.github.yvasyliev.deezer.service.SearchService;
 import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
@@ -67,6 +68,10 @@ import io.github.yvasyliev.deezer.v2.methods.genre.GetGenreRadios;
 import io.github.yvasyliev.deezer.v2.methods.genre.GetGenres;
 import io.github.yvasyliev.deezer.v2.methods.infos.GetInfos;
 import io.github.yvasyliev.deezer.v2.methods.options.GetOptions;
+import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylist;
+import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylistFans;
+import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylistRadio;
+import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylistTracks;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
 import lombok.AccessLevel;
@@ -90,6 +95,7 @@ public class DeezerClient {
     private final GenreService genreService;
     private final InfosService infosService;
     private final OptionsService optionsService;
+    private final PlaylistService playlistService;
     private final SearchService searchService;
 
     public static DeezerClient create() {
@@ -122,12 +128,16 @@ public class DeezerClient {
         pagingMethodDeserializer.put(Pattern.compile(GenreService.GENRES), GetGenres.class);
         pagingMethodDeserializer.put(Pattern.compile("/genre/(\\d+)/artists"), GetGenreArtists.class);
         pagingMethodDeserializer.put(Pattern.compile("/genre/(\\d+)/radios"), GetGenreRadios.class);
+        pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/fans"), GetPlaylistFans.class);
+        pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/radio"), GetPlaylistRadio.class);
+        pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/tracks"), GetPlaylistTracks.class);
 
         AbstractPagingMethodCreator<AlbumService> albumPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ArtistService> artistPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ChartService> chartPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<EditorialService> editorialPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<GenreService> genrePagingMethodCreator = new PagingMethodCreator<>();
+        AbstractPagingMethodCreator<PlaylistService> playlistPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
         AbstractPagingMethodCreator<SearchService> advancedSearchMethodCreator = new AdvancedSearchMethodCreator();
 
@@ -163,6 +173,9 @@ public class DeezerClient {
                 .registerTypeAdapter(GetGenres.class, genrePagingMethodCreator)
                 .registerTypeAdapter(GetGenreArtists.class, genrePagingMethodCreator)
                 .registerTypeAdapter(GetGenreRadios.class, genrePagingMethodCreator)
+                .registerTypeAdapter(GetPlaylistFans.class, playlistPagingMethodCreator)
+                .registerTypeAdapter(GetPlaylistRadio.class, playlistPagingMethodCreator)
+                .registerTypeAdapter(GetPlaylistTracks.class, playlistPagingMethodCreator)
                 .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
                 .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator);
 
@@ -185,6 +198,7 @@ public class DeezerClient {
         GenreService genreService = asyncFeignBuilder.target(GenreService.class, API_HOST);
         InfosService infosService = asyncFeignBuilder.target(InfosService.class, API_HOST);
         OptionsService optionsService = asyncFeignBuilder.target(OptionsService.class, API_HOST);
+        PlaylistService playlistService = asyncFeignBuilder.target(PlaylistService.class, API_HOST);
         SearchService searchService = asyncFeignBuilder.target(SearchService.class, API_HOST);
 
         Stream.of(
@@ -193,6 +207,7 @@ public class DeezerClient {
                 chartPagingMethodCreator,
                 editorialPagingMethodCreator,
                 genrePagingMethodCreator,
+                playlistPagingMethodCreator,
                 searchMethodCreator,
                 advancedSearchMethodCreator
         ).forEach(deezerService -> deezerService.setGson(gson));
@@ -202,6 +217,7 @@ public class DeezerClient {
         chartPagingMethodCreator.setDeezerService(chartService);
         editorialPagingMethodCreator.setDeezerService(editorialService);
         genrePagingMethodCreator.setDeezerService(genreService);
+        playlistPagingMethodCreator.setDeezerService(playlistService);
         searchMethodCreator.setDeezerService(searchService);
         advancedSearchMethodCreator.setDeezerService(searchService);
 
@@ -214,6 +230,7 @@ public class DeezerClient {
                 genreService,
                 infosService,
                 optionsService,
+                playlistService,
                 searchService
         );
     }
@@ -329,6 +346,22 @@ public class DeezerClient {
 
     public Method<Options> getOptions() {
         return new GetOptions(optionsService);
+    }
+
+    public Method<Playlist> getPlaylist(long playlistId) {
+        return new GetPlaylist(playlistService, playlistId);
+    }
+
+    public PagingMethod<User> getPlaylistFans(long playlistId) {
+        return new GetPlaylistFans(gson, playlistService, playlistId);
+    }
+
+    public PagingMethod<Track> getPlaylistRadio(long playlistId) {
+        return new GetPlaylistRadio(gson, playlistService, playlistId);
+    }
+
+    public PagingMethod<Track> getPlaylistTracks(long playlistId) {
+        return new GetPlaylistTracks(gson, playlistService, playlistId);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {

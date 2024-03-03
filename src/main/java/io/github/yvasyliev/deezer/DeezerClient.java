@@ -131,18 +131,6 @@ public class DeezerClient {
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
-        pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/fans"), pagingMethodFactory(
-                playlistService::getPlaylistFans,
-                playlistService::getPlaylistFansAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/radio"), pagingMethodFactory(
-                playlistService::getPlaylistFans,
-                playlistService::getPlaylistFansAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/tracks"), pagingMethodFactory(
-                playlistService::getPlaylistTracks,
-                playlistService::getPlaylistTracksAsync
-        ));
         pagingMethodFactories.put(Pattern.compile(RadioService.RADIOS), pagingMethodFactory(
                 radioService::getAllRadios,
                 radioService::getAllRadiosAsync
@@ -293,18 +281,6 @@ public class DeezerClient {
         return method(playlistService::getPlaylist, playlistService::getPlaylistAsync, playlistId);
     }
 
-    public PagingMethod<User> getPlaylistFans(long playlistId) {
-        return pagingMethod(playlistService::getPlaylistFans, playlistService::getPlaylistFansAsync, playlistId);
-    }
-
-    public PagingMethod<Track> getPlaylistRadio(long playlistId) {
-        return pagingMethod(playlistService::getPlaylistRadio, playlistService::getPlaylistRadioAsync, playlistId);
-    }
-
-    public PagingMethod<Track> getPlaylistTracks(long playlistId) {
-        return pagingMethod(playlistService::getPlaylistTracks, playlistService::getPlaylistTracksAsync, playlistId);
-    }
-
     // RADIO METHODS
 
     public Method<Radio> getRadio(long radioId) {
@@ -340,14 +316,6 @@ public class DeezerClient {
     public AdvancedSearchMethod<Track> search() {
         return advancedSearchMethod(searchService::advancedSearch, searchService::advancedSearchAsync);
     }
-
-//    public SearchMethod<Album> searchAlbum(String q) {
-//        return searchMethod(searchService::searchAlbum, searchService::searchAlbumAsync, q);
-//    }
-
-//    public AdvancedSearchMethod<Album> searchAlbum() {
-//        return advancedSearchMethod(searchService::advancedSearchAlbum, searchService::advancedSearchAlbumAsync);
-//    }
 
     public SearchMethod<Artist> searchArtist(String q) {
         return searchMethod(searchService::searchArtist, searchService::searchArtistAsync, q);
