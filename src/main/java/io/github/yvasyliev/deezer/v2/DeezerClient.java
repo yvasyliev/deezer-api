@@ -28,6 +28,7 @@ import io.github.yvasyliev.deezer.service.GenreService;
 import io.github.yvasyliev.deezer.service.InfosService;
 import io.github.yvasyliev.deezer.service.OptionsService;
 import io.github.yvasyliev.deezer.service.PlaylistService;
+import io.github.yvasyliev.deezer.service.RadioService;
 import io.github.yvasyliev.deezer.service.SearchService;
 import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
@@ -72,6 +73,12 @@ import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylist;
 import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylistFans;
 import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylistRadio;
 import io.github.yvasyliev.deezer.v2.methods.playlist.GetPlaylistTracks;
+import io.github.yvasyliev.deezer.v2.methods.radio.GetRadio;
+import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioGenres;
+import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioLists;
+import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioTop;
+import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioTracks;
+import io.github.yvasyliev.deezer.v2.methods.radio.GetRadios;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
 import lombok.AccessLevel;
@@ -96,6 +103,7 @@ public class DeezerClient {
     private final InfosService infosService;
     private final OptionsService optionsService;
     private final PlaylistService playlistService;
+    private final RadioService radioService;
     private final SearchService searchService;
 
     public static DeezerClient create() {
@@ -131,6 +139,14 @@ public class DeezerClient {
         pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/fans"), GetPlaylistFans.class);
         pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/radio"), GetPlaylistRadio.class);
         pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/tracks"), GetPlaylistTracks.class);
+        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIOS), GetRadios.class);
+        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIO_GENRES), GetRadioGenres.class);
+        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIO_LISTS), GetRadioLists.class);
+        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIO_TOP), GetRadioTop.class);
+        pagingMethodDeserializer.put(Pattern.compile("/radio/(\\d+)/tracks"), GetRadioTracks.class);
+
+        SearchMethodDeserializer searchMethodDeserializer = new SearchMethodDeserializer();
+        searchMethodDeserializer.put(SearchService.SEARCH_ALBUM, SearchAlbum.class);
 
         AbstractPagingMethodCreator<AlbumService> albumPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ArtistService> artistPagingMethodCreator = new PagingMethodCreator<>();
@@ -138,11 +154,9 @@ public class DeezerClient {
         AbstractPagingMethodCreator<EditorialService> editorialPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<GenreService> genrePagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<PlaylistService> playlistPagingMethodCreator = new PagingMethodCreator<>();
+        AbstractPagingMethodCreator<RadioService> radioPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
         AbstractPagingMethodCreator<SearchService> advancedSearchMethodCreator = new AdvancedSearchMethodCreator();
-
-        SearchMethodDeserializer searchMethodDeserializer = new SearchMethodDeserializer();
-        searchMethodDeserializer.put(SearchService.SEARCH_ALBUM, SearchAlbum.class);
 
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -176,6 +190,11 @@ public class DeezerClient {
                 .registerTypeAdapter(GetPlaylistFans.class, playlistPagingMethodCreator)
                 .registerTypeAdapter(GetPlaylistRadio.class, playlistPagingMethodCreator)
                 .registerTypeAdapter(GetPlaylistTracks.class, playlistPagingMethodCreator)
+                .registerTypeAdapter(GetRadios.class, radioPagingMethodCreator)
+                .registerTypeAdapter(GetRadioGenres.class, radioPagingMethodCreator)
+                .registerTypeAdapter(GetRadioLists.class, radioPagingMethodCreator)
+                .registerTypeAdapter(GetRadioTop.class, radioPagingMethodCreator)
+                .registerTypeAdapter(GetRadioTracks.class, radioPagingMethodCreator)
                 .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
                 .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator);
 
@@ -199,6 +218,7 @@ public class DeezerClient {
         InfosService infosService = asyncFeignBuilder.target(InfosService.class, API_HOST);
         OptionsService optionsService = asyncFeignBuilder.target(OptionsService.class, API_HOST);
         PlaylistService playlistService = asyncFeignBuilder.target(PlaylistService.class, API_HOST);
+        RadioService radioService = asyncFeignBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncFeignBuilder.target(SearchService.class, API_HOST);
 
         Stream.of(
@@ -208,6 +228,7 @@ public class DeezerClient {
                 editorialPagingMethodCreator,
                 genrePagingMethodCreator,
                 playlistPagingMethodCreator,
+                radioPagingMethodCreator,
                 searchMethodCreator,
                 advancedSearchMethodCreator
         ).forEach(deezerService -> deezerService.setGson(gson));
@@ -218,6 +239,7 @@ public class DeezerClient {
         editorialPagingMethodCreator.setDeezerService(editorialService);
         genrePagingMethodCreator.setDeezerService(genreService);
         playlistPagingMethodCreator.setDeezerService(playlistService);
+        radioPagingMethodCreator.setDeezerService(radioService);
         searchMethodCreator.setDeezerService(searchService);
         advancedSearchMethodCreator.setDeezerService(searchService);
 
@@ -231,6 +253,7 @@ public class DeezerClient {
                 infosService,
                 optionsService,
                 playlistService,
+                radioService,
                 searchService
         );
     }
@@ -362,6 +385,30 @@ public class DeezerClient {
 
     public PagingMethod<Track> getPlaylistTracks(long playlistId) {
         return new GetPlaylistTracks(gson, playlistService, playlistId);
+    }
+
+    public Method<Radio> getRadio(long radioId) {
+        return new GetRadio(radioService, radioId);
+    }
+
+    public PagingMethod<Radio> getRadios() {
+        return new GetRadios(gson, radioService);
+    }
+
+    public PagingMethod<Genre> getRadioGenres() {
+        return new GetRadioGenres(gson, radioService);
+    }
+
+    public PagingMethod<Radio> getRadioLists() {
+        return new GetRadioLists(gson, radioService);
+    }
+
+    public PagingMethod<Radio> getRadioTop() {
+        return new GetRadioTop(gson, radioService);
+    }
+
+    public PagingMethod<Track> getRadioTracks(long radioId) {
+        return new GetRadioTracks(gson, radioService, radioId);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {

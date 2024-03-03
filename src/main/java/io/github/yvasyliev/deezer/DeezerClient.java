@@ -131,27 +131,6 @@ public class DeezerClient {
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
-        pagingMethodFactories.put(Pattern.compile(RadioService.RADIOS), pagingMethodFactory(
-                radioService::getAllRadios,
-                radioService::getAllRadiosAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile(RadioService.RADIO_GENRES), pagingMethodFactory(
-                radioService::getGenresRadio,
-                radioService::getGenresRadioAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile(RadioService.RADIO_LISTS), pagingMethodFactory(
-                radioService::getRadioLists,
-                radioService::getRadioListsAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile(RadioService.RADIO_TOP), pagingMethodFactory(
-                radioService::getRadioTop,
-                radioService::getRadioTopAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/radio/(\\d+)/tracks"), pagingMethodFactory(
-                radioService::getRadioTracks,
-                radioService::getRadioTracksAsync
-        ));
-
         searchMethodFactories.put(SearchService.SEARCH, searchMethodFactory(
                 searchService::search,
                 searchService::searchAsync
@@ -285,26 +264,6 @@ public class DeezerClient {
 
     public Method<Radio> getRadio(long radioId) {
         return method(radioService::getRadio, radioService::getRadioAsync, radioId);
-    }
-
-    public PagingMethod<Radio> getAllRadios() {
-        return pagingMethod(radioService::getAllRadios, radioService::getAllRadiosAsync);
-    }
-
-    public PagingMethod<Genre> getGenresRadio() {
-        return pagingMethod(radioService::getGenresRadio, radioService::getGenresRadioAsync);
-    }
-
-    public PagingMethod<Radio> getRadioLists() {
-        return pagingMethod(radioService::getRadioLists, radioService::getRadioListsAsync);
-    }
-
-    public PagingMethod<Radio> getRadioTop() {
-        return pagingMethod(radioService::getRadioTop, radioService::getRadioTopAsync);
-    }
-
-    public PagingMethod<Track> getRadioTracks(long radioId) {
-        return pagingMethod(radioService::getRadioTracks, radioService::getRadioTracksAsync, radioId);
     }
 
     // SEARCH METHODS
