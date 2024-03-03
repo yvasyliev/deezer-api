@@ -131,18 +131,6 @@ public class DeezerClient {
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
-        pagingMethodFactories.put(Pattern.compile(GenreService.GENRES), pagingMethodFactory(
-                genreService::getAllGenres,
-                genreService::getAllGenresAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/genre/(\\d+)/artists"), pagingMethodFactory(
-                genreService::getGenreArtists,
-                genreService::getGenreArtistsAsync
-        ));
-        pagingMethodFactories.put(Pattern.compile("/genre/(\\d+)/radios"), pagingMethodFactory(
-                genreService::getGenreRadios,
-                genreService::getGenreRadiosAsync
-        ));
         pagingMethodFactories.put(Pattern.compile("/playlist/(\\d+)/fans"), pagingMethodFactory(
                 playlistService::getPlaylistFans,
                 playlistService::getPlaylistFansAsync
@@ -285,18 +273,6 @@ public class DeezerClient {
 
     public Method<Genre> getGenre(long genreId) {
         return method(genreService::getGenre, genreService::getGenreAsync, genreId);
-    }
-
-    public PagingMethod<Genre> getAllGenres() {
-        return pagingMethod(genreService::getAllGenres, genreService::getAllGenresAsync);
-    }
-
-    public PagingMethod<Artist> getGenreArtists(long genreId) {
-        return pagingMethod(genreService::getGenreArtists, genreService::getGenreArtistsAsync, genreId);
-    }
-
-    public PagingMethod<Radio> getGenreRadios(long genreId) {
-        return pagingMethod(genreService::getGenreRadios, genreService::getGenreRadiosAsync, genreId);
     }
 
     // INFOS METHODS

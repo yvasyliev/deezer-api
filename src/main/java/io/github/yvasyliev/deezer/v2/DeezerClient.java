@@ -12,14 +12,17 @@ import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Chart;
 import io.github.yvasyliev.deezer.objects.Editorial;
+import io.github.yvasyliev.deezer.objects.Genre;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Podcast;
+import io.github.yvasyliev.deezer.objects.Radio;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.AlbumService;
 import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.ChartService;
 import io.github.yvasyliev.deezer.service.EditorialService;
+import io.github.yvasyliev.deezer.service.GenreService;
 import io.github.yvasyliev.deezer.service.SearchService;
 import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
@@ -43,6 +46,7 @@ import io.github.yvasyliev.deezer.v2.methods.artist.GetArtistRadio;
 import io.github.yvasyliev.deezer.v2.methods.artist.GetArtistRelated;
 import io.github.yvasyliev.deezer.v2.methods.artist.GetArtistTop;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChart;
+import io.github.yvasyliev.deezer.v2.methods.chart.GetChartAlbums;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartArtists;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartById;
 import io.github.yvasyliev.deezer.v2.methods.chart.GetChartPlaylists;
@@ -53,8 +57,11 @@ import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorialCharts;
 import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorialReleases;
 import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorialSelection;
 import io.github.yvasyliev.deezer.v2.methods.editorial.GetEditorials;
+import io.github.yvasyliev.deezer.v2.methods.genre.GetGenre;
+import io.github.yvasyliev.deezer.v2.methods.genre.GetGenreArtists;
+import io.github.yvasyliev.deezer.v2.methods.genre.GetGenreRadios;
+import io.github.yvasyliev.deezer.v2.methods.genre.GetGenres;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
-import io.github.yvasyliev.deezer.v2.methods.chart.GetChartAlbums;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -74,6 +81,7 @@ public class DeezerClient {
     private final ArtistService artistService;
     private final ChartService chartService;
     private final EditorialService editorialService;
+    private final GenreService genreService;
     private final SearchService searchService;
 
     public static DeezerClient create() {
@@ -103,11 +111,15 @@ public class DeezerClient {
         pagingMethodDeserializer.put(Pattern.compile(EditorialService.EDITORIALS), GetEditorials.class);
         pagingMethodDeserializer.put(Pattern.compile("/editorial/(\\d+)/releases"), GetEditorialReleases.class);
         pagingMethodDeserializer.put(Pattern.compile("/editorial/(\\d+)/selection"), GetEditorialSelection.class);
+        pagingMethodDeserializer.put(Pattern.compile(GenreService.GENRES), GetGenres.class);
+        pagingMethodDeserializer.put(Pattern.compile("/genre/(\\d+)/artists"), GetGenreArtists.class);
+        pagingMethodDeserializer.put(Pattern.compile("/genre/(\\d+)/radios"), GetGenreRadios.class);
 
         AbstractPagingMethodCreator<AlbumService> albumPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ArtistService> artistPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ChartService> chartPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<EditorialService> editorialPagingMethodCreator = new PagingMethodCreator<>();
+        AbstractPagingMethodCreator<GenreService> genrePagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
         AbstractPagingMethodCreator<SearchService> advancedSearchMethodCreator = new AdvancedSearchMethodCreator();
 
@@ -140,6 +152,9 @@ public class DeezerClient {
                 .registerTypeAdapter(GetEditorials.class, editorialPagingMethodCreator)
                 .registerTypeAdapter(GetEditorialReleases.class, editorialPagingMethodCreator)
                 .registerTypeAdapter(GetEditorialSelection.class, editorialPagingMethodCreator)
+                .registerTypeAdapter(GetGenres.class, genrePagingMethodCreator)
+                .registerTypeAdapter(GetGenreArtists.class, genrePagingMethodCreator)
+                .registerTypeAdapter(GetGenreRadios.class, genrePagingMethodCreator)
                 .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
                 .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator);
 
@@ -159,6 +174,7 @@ public class DeezerClient {
         ArtistService artistService = asyncFeignBuilder.target(ArtistService.class, API_HOST);
         ChartService chartService = asyncFeignBuilder.target(ChartService.class, API_HOST);
         EditorialService editorialService = asyncFeignBuilder.target(EditorialService.class, API_HOST);
+        GenreService genreService = asyncFeignBuilder.target(GenreService.class, API_HOST);
         SearchService searchService = asyncFeignBuilder.target(SearchService.class, API_HOST);
 
         Stream.of(
@@ -166,6 +182,7 @@ public class DeezerClient {
                 artistPagingMethodCreator,
                 chartPagingMethodCreator,
                 editorialPagingMethodCreator,
+                genrePagingMethodCreator,
                 searchMethodCreator,
                 advancedSearchMethodCreator
         ).forEach(deezerService -> deezerService.setGson(gson));
@@ -174,10 +191,19 @@ public class DeezerClient {
         artistPagingMethodCreator.setDeezerService(artistService);
         chartPagingMethodCreator.setDeezerService(chartService);
         editorialPagingMethodCreator.setDeezerService(editorialService);
+        genrePagingMethodCreator.setDeezerService(genreService);
         searchMethodCreator.setDeezerService(searchService);
         advancedSearchMethodCreator.setDeezerService(searchService);
 
-        return new DeezerClient(gson, albumService, artistService, chartService, editorialService, searchService);
+        return new DeezerClient(
+                gson,
+                albumService,
+                artistService,
+                chartService,
+                editorialService,
+                genreService,
+                searchService
+        );
     }
 
     public Method<Album> getAlbum(long albumId) {
@@ -267,6 +293,22 @@ public class DeezerClient {
 
     public PagingMethod<Album> getEditorialSelection(long editorialId) {
         return new GetEditorialSelection(gson, editorialService, editorialId);
+    }
+
+    public Method<Genre> getGenre(long genreId) {
+        return new GetGenre(genreService, genreId);
+    }
+
+    public PagingMethod<Genre> getGenres() {
+        return new GetGenres(gson, genreService);
+    }
+
+    public PagingMethod<Artist> getGenreArtists(long genreId) {
+        return new GetGenreArtists(gson, genreService, genreId);
+    }
+
+    public PagingMethod<Radio> getGenreRadios(long genreId) {
+        return new GetGenreRadios(gson, genreService, genreId);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {
