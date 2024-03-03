@@ -13,6 +13,7 @@ import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Chart;
 import io.github.yvasyliev.deezer.objects.Editorial;
 import io.github.yvasyliev.deezer.objects.Genre;
+import io.github.yvasyliev.deezer.objects.Infos;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Podcast;
 import io.github.yvasyliev.deezer.objects.Radio;
@@ -23,6 +24,7 @@ import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.ChartService;
 import io.github.yvasyliev.deezer.service.EditorialService;
 import io.github.yvasyliev.deezer.service.GenreService;
+import io.github.yvasyliev.deezer.service.InfosService;
 import io.github.yvasyliev.deezer.service.SearchService;
 import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
@@ -61,6 +63,7 @@ import io.github.yvasyliev.deezer.v2.methods.genre.GetGenre;
 import io.github.yvasyliev.deezer.v2.methods.genre.GetGenreArtists;
 import io.github.yvasyliev.deezer.v2.methods.genre.GetGenreRadios;
 import io.github.yvasyliev.deezer.v2.methods.genre.GetGenres;
+import io.github.yvasyliev.deezer.v2.methods.infos.GetInfos;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
 import lombok.AccessLevel;
@@ -82,6 +85,7 @@ public class DeezerClient {
     private final ChartService chartService;
     private final EditorialService editorialService;
     private final GenreService genreService;
+    private final InfosService infosService;
     private final SearchService searchService;
 
     public static DeezerClient create() {
@@ -175,6 +179,7 @@ public class DeezerClient {
         ChartService chartService = asyncFeignBuilder.target(ChartService.class, API_HOST);
         EditorialService editorialService = asyncFeignBuilder.target(EditorialService.class, API_HOST);
         GenreService genreService = asyncFeignBuilder.target(GenreService.class, API_HOST);
+        InfosService infosService = asyncFeignBuilder.target(InfosService.class, API_HOST);
         SearchService searchService = asyncFeignBuilder.target(SearchService.class, API_HOST);
 
         Stream.of(
@@ -202,6 +207,7 @@ public class DeezerClient {
                 chartService,
                 editorialService,
                 genreService,
+                infosService,
                 searchService
         );
     }
@@ -309,6 +315,10 @@ public class DeezerClient {
 
     public PagingMethod<Radio> getGenreRadios(long genreId) {
         return new GetGenreRadios(gson, genreService, genreId);
+    }
+
+    public Method<Infos> getInfos() {
+        return new GetInfos(infosService);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {
