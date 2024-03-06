@@ -2,7 +2,6 @@ package io.github.yvasyliev.deezer.service;
 
 import feign.QueryMap;
 import feign.RequestLine;
-import io.github.yvasyliev.deezer.objects.AdvancedSearchPage;
 import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Playlist;
@@ -29,10 +28,10 @@ public interface SearchService extends DeezerService {
     String SEARCH_USER = "/search/user";
 
     @RequestLine(GET + SEARCH)
-    AdvancedSearchPage<Track> advancedSearch(@QueryMap Map<String, Object> queryParams);
+    Page<Track, AdvancedSearchMethod<Track>> advancedSearch(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH)
-    CompletableFuture<AdvancedSearchPage<Track>> advancedSearchAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Track, AdvancedSearchMethod<Track>>> advancedSearchAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ALBUM)
     Page<Album, AdvancedSearchMethod<Album>> advancedSearchAlbum(@QueryMap Map<String, Object> queryParams);
@@ -41,34 +40,34 @@ public interface SearchService extends DeezerService {
     CompletableFuture<Page<Album, AdvancedSearchMethod<Album>>> advancedSearchAlbumAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ARTIST)
-    AdvancedSearchPage<Artist> advancedSearchArtist(@QueryMap Map<String, Object> queryParams);
+    Page<Artist, AdvancedSearchMethod<Artist>> advancedSearchArtist(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ARTIST)
-    CompletableFuture<AdvancedSearchPage<Artist>> advancedSearchArtistAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Artist, AdvancedSearchMethod<Artist>>> advancedSearchArtistAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_PLAYLIST)
-    AdvancedSearchPage<Playlist> advancedSearchPlaylist(@QueryMap Map<String, Object> queryParams);
+    Page<Playlist, AdvancedSearchMethod<Playlist>> advancedSearchPlaylist(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_PLAYLIST)
-    CompletableFuture<AdvancedSearchPage<Playlist>> advancedSearchPlaylistAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Playlist, AdvancedSearchMethod<Playlist>>> advancedSearchPlaylistAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_RADIO)
-    AdvancedSearchPage<Radio> advancedSearchRadio(@QueryMap Map<String, Object> queryParams);
+    Page<Radio, AdvancedSearchMethod<Radio>> advancedSearchRadio(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_RADIO)
-    CompletableFuture<AdvancedSearchPage<Radio>> advancedSearchRadioAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Radio, AdvancedSearchMethod<Radio>>> advancedSearchRadioAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_TRACK)
-    AdvancedSearchPage<Track> advancedSearchTrack(@QueryMap Map<String, Object> queryParams);
+    Page<Track, AdvancedSearchMethod<Track>> advancedSearchTrack(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_TRACK)
-    CompletableFuture<AdvancedSearchPage<Track>> advancedSearchTrackAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Track, AdvancedSearchMethod<Track>>> advancedSearchTrackAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_USER)
-    AdvancedSearchPage<User> advancedSearchUser(@QueryMap Map<String, Object> queryParams);
+    Page<User, AdvancedSearchMethod<User>> advancedSearchUser(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_USER)
-    CompletableFuture<AdvancedSearchPage<User>> advancedSearchUserAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<User, AdvancedSearchMethod<User>>> advancedSearchUserAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH)
     SearchPage<Track> search(@QueryMap Map<String, Object> queryParams);

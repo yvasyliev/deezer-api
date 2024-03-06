@@ -22,4 +22,9 @@ public class AdvancedSearchAlbum extends AdvancedSearchMethod<Album> {
     public CompletableFuture<Page<Album, AdvancedSearchMethod<Album>>> executeAsync() {
         return searchService.advancedSearchAlbumAsync(getQueryParams());
     }
+
+    @Override
+    public String toString() {
+        return SearchService.SEARCH_ALBUM + getQueryParams();
+    }
 }

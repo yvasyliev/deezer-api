@@ -34,8 +34,9 @@ import io.github.yvasyliev.deezer.v2.json.creators.AbstractPagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.AdvancedSearchMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.PagingMethodCreator;
 import io.github.yvasyliev.deezer.v2.json.creators.SearchMethodCreator;
-import io.github.yvasyliev.deezer.v2.json.deserializers.PagingMethodDeserializer;
-import io.github.yvasyliev.deezer.v2.json.deserializers.SearchMethodDeserializer;
+import io.github.yvasyliev.deezer.v2.json.deserializers.AbstractMethodDeserializer;
+import io.github.yvasyliev.deezer.v2.json.deserializers.AdvancedSearchMethodDeserializer;
+import io.github.yvasyliev.deezer.v2.json.deserializers.MethodDeserializer;
 import io.github.yvasyliev.deezer.v2.logger.DeezerLogger;
 import io.github.yvasyliev.deezer.v2.methods.AdvancedSearchMethod;
 import io.github.yvasyliev.deezer.v2.methods.Method;
@@ -79,7 +80,13 @@ import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioLists;
 import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioTop;
 import io.github.yvasyliev.deezer.v2.methods.radio.GetRadioTracks;
 import io.github.yvasyliev.deezer.v2.methods.radio.GetRadios;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearch;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchAlbum;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchArtist;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchPlaylist;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchRadio;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchTrack;
+import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchUser;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -88,7 +95,6 @@ import lombok.RequiredArgsConstructor;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -116,37 +122,49 @@ public class DeezerClient {
             Function<Gson, GsonDecoder> gsonDecoderCreator,
             Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCreator
     ) {
-        PagingMethodDeserializer pagingMethodDeserializer = new PagingMethodDeserializer();
-        pagingMethodDeserializer.put(Pattern.compile("/album/(\\d+)/fans"), GetAlbumFans.class);
-        pagingMethodDeserializer.put(Pattern.compile("/album/(\\d+)/tracks"), GetAlbumTracks.class);
-        pagingMethodDeserializer.put(Pattern.compile("/artist/(\\d+)/albums"), GetArtistAlbums.class);
-        pagingMethodDeserializer.put(Pattern.compile("/artist/(\\d+)/fans"), GetArtistFans.class);
-        pagingMethodDeserializer.put(Pattern.compile("/artist/(\\d+)/playlists"), GetArtistPlaylists.class);
-        pagingMethodDeserializer.put(Pattern.compile("/artist/(\\d+)/radio"), GetArtistRadio.class);
-        pagingMethodDeserializer.put(Pattern.compile("/artist/(\\d+)/related"), GetArtistRelated.class);
-        pagingMethodDeserializer.put(Pattern.compile("/artist/(\\d+)/top"), GetArtistTop.class);
-        pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/albums"), GetChartAlbums.class);
-        pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/artists"), GetChartArtists.class);
-        pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/playlists"), GetChartPlaylists.class);
-        pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/podcasts"), GetChartPodcasts.class);
-        pagingMethodDeserializer.put(Pattern.compile("/chart/(\\d+)/tracks"), GetChartTracks.class);
-        pagingMethodDeserializer.put(Pattern.compile(EditorialService.EDITORIALS), GetEditorials.class);
-        pagingMethodDeserializer.put(Pattern.compile("/editorial/(\\d+)/releases"), GetEditorialReleases.class);
-        pagingMethodDeserializer.put(Pattern.compile("/editorial/(\\d+)/selection"), GetEditorialSelection.class);
-        pagingMethodDeserializer.put(Pattern.compile(GenreService.GENRES), GetGenres.class);
-        pagingMethodDeserializer.put(Pattern.compile("/genre/(\\d+)/artists"), GetGenreArtists.class);
-        pagingMethodDeserializer.put(Pattern.compile("/genre/(\\d+)/radios"), GetGenreRadios.class);
-        pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/fans"), GetPlaylistFans.class);
-        pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/radio"), GetPlaylistRadio.class);
-        pagingMethodDeserializer.put(Pattern.compile("/playlist/(\\d+)/tracks"), GetPlaylistTracks.class);
-        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIOS), GetRadios.class);
-        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIO_GENRES), GetRadioGenres.class);
-        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIO_LISTS), GetRadioLists.class);
-        pagingMethodDeserializer.put(Pattern.compile(RadioService.RADIO_TOP), GetRadioTop.class);
-        pagingMethodDeserializer.put(Pattern.compile("/radio/(\\d+)/tracks"), GetRadioTracks.class);
 
-        SearchMethodDeserializer searchMethodDeserializer = new SearchMethodDeserializer();
-        searchMethodDeserializer.put(SearchService.SEARCH_ALBUM, SearchAlbum.class);
+        AbstractMethodDeserializer<Method<?>> methodDeserializer = MethodDeserializer
+                .builder()
+                .classMap("/album/(\\d+)/fans", GetAlbumFans.class)
+                .classMap("/album/(\\d+)/tracks", GetAlbumTracks.class)
+                .classMap("/artist/(\\d+)/albums", GetArtistAlbums.class)
+                .classMap("/artist/(\\d+)/fans", GetArtistFans.class)
+                .classMap("/artist/(\\d+)/playlists", GetArtistPlaylists.class)
+                .classMap("/artist/(\\d+)/radio", GetArtistRadio.class)
+                .classMap("/artist/(\\d+)/related", GetArtistRelated.class)
+                .classMap("/artist/(\\d+)/top", GetArtistTop.class)
+                .classMap("/chart/(\\d+)/albums", GetChartAlbums.class)
+                .classMap("/chart/(\\d+)/artists", GetChartArtists.class)
+                .classMap("/chart/(\\d+)/playlists", GetChartPlaylists.class)
+                .classMap("/chart/(\\d+)/podcasts", GetChartPodcasts.class)
+                .classMap("/chart/(\\d+)/tracks", GetChartTracks.class)
+                .classMap(EditorialService.EDITORIALS, GetEditorials.class)
+                .classMap("/editorial/(\\d+)/releases", GetEditorialReleases.class)
+                .classMap("/editorial/(\\d+)/selection", GetEditorialSelection.class)
+                .classMap(GenreService.GENRES, GetGenres.class)
+                .classMap("/genre/(\\d+)/artists", GetGenreArtists.class)
+                .classMap("/genre/(\\d+)/radios", GetGenreRadios.class)
+                .classMap("/playlist/(\\d+)/fans", GetPlaylistFans.class)
+                .classMap("/playlist/(\\d+)/radio", GetPlaylistRadio.class)
+                .classMap("/playlist/(\\d+)/tracks", GetPlaylistTracks.class)
+                .classMap(RadioService.RADIOS, GetRadios.class)
+                .classMap(RadioService.RADIO_GENRES, GetRadioGenres.class)
+                .classMap(RadioService.RADIO_LISTS, GetRadioLists.class)
+                .classMap(RadioService.RADIO_TOP, GetRadioTop.class)
+                .classMap("/radio/(\\d+)/tracks", GetRadioTracks.class)
+                .classMap(SearchService.SEARCH_ALBUM, SearchAlbum.class)
+                .build();
+
+        AbstractMethodDeserializer<AdvancedSearchMethod<?>> advancedSearchMethodDeserializer = AdvancedSearchMethodDeserializer
+                .builder()
+                .classMap(SearchService.SEARCH, AdvancedSearch.class)
+                .classMap(SearchService.SEARCH_ALBUM, AdvancedSearchAlbum.class)
+                .classMap(SearchService.SEARCH_ARTIST, AdvancedSearchArtist.class)
+                .classMap(SearchService.SEARCH_PLAYLIST, AdvancedSearchPlaylist.class)
+                .classMap(SearchService.SEARCH_RADIO, AdvancedSearchRadio.class)
+                .classMap(SearchService.SEARCH_TRACK, AdvancedSearchTrack.class)
+                .classMap(SearchService.SEARCH_USER, AdvancedSearchUser.class)
+                .build();
 
         AbstractPagingMethodCreator<AlbumService> albumPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<ArtistService> artistPagingMethodCreator = new PagingMethodCreator<>();
@@ -164,9 +182,9 @@ public class DeezerClient {
                 // deserializers
                 .registerTypeAdapter(Duration.class, new DurationDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
-                .registerTypeAdapter(PagingMethod.class, pagingMethodDeserializer)
-                .registerTypeAdapter(SearchMethod.class, searchMethodDeserializer)
-                .registerTypeAdapter(AdvancedSearchMethod.class, searchMethodDeserializer)
+                .registerTypeAdapter(PagingMethod.class, methodDeserializer)
+                .registerTypeAdapter(SearchMethod.class, methodDeserializer)
+                .registerTypeAdapter(AdvancedSearchMethod.class, advancedSearchMethodDeserializer)
                 // creators
                 .registerTypeAdapter(GetAlbumFans.class, albumPagingMethodCreator)
                 .registerTypeAdapter(GetAlbumTracks.class, albumPagingMethodCreator)
@@ -195,8 +213,14 @@ public class DeezerClient {
                 .registerTypeAdapter(GetRadioLists.class, radioPagingMethodCreator)
                 .registerTypeAdapter(GetRadioTop.class, radioPagingMethodCreator)
                 .registerTypeAdapter(GetRadioTracks.class, radioPagingMethodCreator)
-                .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
-                .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator);
+                .registerTypeAdapter(AdvancedSearch.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchAlbum.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchArtist.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchPlaylist.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchRadio.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchTrack.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(AdvancedSearchUser.class, advancedSearchMethodCreator)
+                .registerTypeAdapter(SearchAlbum.class, searchMethodCreator);
 
         Gson gson = gsonBuilderCreator.apply(gsonBuilder).create();
 
@@ -231,7 +255,7 @@ public class DeezerClient {
                 radioPagingMethodCreator,
                 searchMethodCreator,
                 advancedSearchMethodCreator
-        ).forEach(deezerService -> deezerService.setGson(gson));
+        ).forEach(methodCreator -> methodCreator.setGson(gson));
 
         albumPagingMethodCreator.setDeezerService(albumService);
         artistPagingMethodCreator.setDeezerService(artistService);
@@ -409,6 +433,34 @@ public class DeezerClient {
 
     public PagingMethod<Track> getRadioTracks(long radioId) {
         return new GetRadioTracks(gson, radioService, radioId);
+    }
+
+    public AdvancedSearchMethod<Track> search() {
+        return new AdvancedSearch(gson, searchService);
+    }
+
+    public AdvancedSearchMethod<Album> searchAlbum() {
+        return new AdvancedSearchAlbum(gson, searchService);
+    }
+
+    public AdvancedSearchMethod<Artist> searchArtist() {
+        return new AdvancedSearchArtist(gson, searchService);
+    }
+
+    public AdvancedSearchMethod<Playlist> searchPlaylist() {
+        return new AdvancedSearchPlaylist(gson, searchService);
+    }
+
+    public AdvancedSearchMethod<Radio> searchRadio() {
+        return new AdvancedSearchRadio(gson, searchService);
+    }
+
+    public AdvancedSearchMethod<Track> searchTrack() {
+        return new AdvancedSearchTrack(gson, searchService);
+    }
+
+    public AdvancedSearchMethod<User> searchUser() {
+        return new AdvancedSearchUser(gson, searchService);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {

@@ -31,7 +31,6 @@ import io.github.yvasyliev.deezer.objects.Radio;
 import io.github.yvasyliev.deezer.objects.SearchHistoryPage;
 import io.github.yvasyliev.deezer.objects.SearchPage;
 import io.github.yvasyliev.deezer.objects.Track;
-import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.AlbumService;
 import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.ChartService;
@@ -156,31 +155,6 @@ public class DeezerClient {
                 searchService::searchUserAsync
         ));
 
-        advancedSearchMethodFactories.put(SearchService.SEARCH, advancedSearchMethodFactory(
-                searchService::advancedSearch,
-                searchService::advancedSearchAsync
-        ));
-        advancedSearchMethodFactories.put(SearchService.SEARCH_ARTIST, advancedSearchMethodFactory(
-                searchService::advancedSearchArtist,
-                searchService::advancedSearchArtistAsync
-        ));
-        advancedSearchMethodFactories.put(SearchService.SEARCH_PLAYLIST, advancedSearchMethodFactory(
-                searchService::advancedSearchPlaylist,
-                searchService::advancedSearchPlaylistAsync
-        ));
-        advancedSearchMethodFactories.put(SearchService.SEARCH_RADIO, advancedSearchMethodFactory(
-                searchService::advancedSearchRadio,
-                searchService::advancedSearchRadioAsync
-        ));
-        advancedSearchMethodFactories.put(SearchService.SEARCH_TRACK, advancedSearchMethodFactory(
-                searchService::advancedSearchTrack,
-                searchService::advancedSearchTrackAsync
-        ));
-        advancedSearchMethodFactories.put(SearchService.SEARCH_USER, advancedSearchMethodFactory(
-                searchService::advancedSearchUser,
-                searchService::advancedSearchUserAsync
-        ));
-
         searchHistoryMethodDeserializer.setSearchHistoryMethodFactory(token -> searchHistoryMethodFactory(
                         searchService::searchHistory,
                         searchService::searchHistoryAsync,
@@ -272,16 +246,8 @@ public class DeezerClient {
         return searchMethod(searchService::search, searchService::searchAsync, q);
     }
 
-    public AdvancedSearchMethod<Track> search() {
-        return advancedSearchMethod(searchService::advancedSearch, searchService::advancedSearchAsync);
-    }
-
     public SearchMethod<Artist> searchArtist(String q) {
         return searchMethod(searchService::searchArtist, searchService::searchArtistAsync, q);
-    }
-
-    public AdvancedSearchMethod<Artist> searchArtist() {
-        return advancedSearchMethod(searchService::advancedSearchArtist, searchService::advancedSearchArtistAsync);
     }
 
     public SearchHistoryMethod searchHistory() {
@@ -292,28 +258,12 @@ public class DeezerClient {
         return searchMethod(searchService::searchPlaylist, searchService::searchPlaylistAsync, q);
     }
 
-    public AdvancedSearchMethod<Playlist> searchPlaylist() {
-        return advancedSearchMethod(searchService::advancedSearchPlaylist, searchService::advancedSearchPlaylistAsync);
-    }
-
     public SearchMethod<Radio> searchRadio(String q) {
         return searchMethod(searchService::searchRadio, searchService::searchRadioAsync, q);
     }
 
-    public AdvancedSearchMethod<Radio> searchRadio() {
-        return advancedSearchMethod(searchService::advancedSearchRadio, searchService::advancedSearchRadioAsync);
-    }
-
     public SearchMethod<Track> searchTrack(String q) {
         return searchMethod(searchService::searchTrack, searchService::searchTrackAsync, q);
-    }
-
-    public AdvancedSearchMethod<Track> searchTrack() {
-        return advancedSearchMethod(searchService::advancedSearchTrack, searchService::advancedSearchTrackAsync);
-    }
-
-    public AdvancedSearchMethod<User> searchUser() {
-        return advancedSearchMethod(searchService::advancedSearchUser, searchService::advancedSearchUserAsync);
     }
 
     // METHOD CREATORS
