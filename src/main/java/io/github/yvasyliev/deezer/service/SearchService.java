@@ -6,11 +6,11 @@ import io.github.yvasyliev.deezer.objects.Album;
 import io.github.yvasyliev.deezer.objects.Artist;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Radio;
-import io.github.yvasyliev.deezer.objects.SearchHistoryPage;
-import io.github.yvasyliev.deezer.objects.SearchPage;
+import io.github.yvasyliev.deezer.objects.SearchHistory;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.v2.methods.AdvancedSearchMethod;
+import io.github.yvasyliev.deezer.v2.methods.Method;
 import io.github.yvasyliev.deezer.v2.methods.SearchMethod;
 import io.github.yvasyliev.deezer.v2.objects.Page;
 
@@ -70,10 +70,10 @@ public interface SearchService extends DeezerService {
     CompletableFuture<Page<User, AdvancedSearchMethod<User>>> advancedSearchUserAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH)
-    SearchPage<Track> search(@QueryMap Map<String, Object> queryParams);
+    Page<Track, SearchMethod<Track>> search(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH)
-    CompletableFuture<SearchPage<Track>> searchAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Track, SearchMethod<Track>>> searchAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ALBUM)
     Page<Album, SearchMethod<Album>> searchAlbum(@QueryMap Map<String, Object> queryParams);
@@ -82,38 +82,38 @@ public interface SearchService extends DeezerService {
     CompletableFuture<Page<Album, SearchMethod<Album>>> searchAlbumAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ARTIST)
-    SearchPage<Artist> searchArtist(@QueryMap Map<String, Object> queryParams);
+    Page<Artist, SearchMethod<Artist>> searchArtist(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_ARTIST)
-    CompletableFuture<SearchPage<Artist>> searchArtistAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Artist, SearchMethod<Artist>>> searchArtistAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_HISTORY)
-    SearchHistoryPage searchHistory(@QueryMap Map<String, Object> queryParams);
+    Page<SearchHistory, Method<SearchHistory>> getSearchHistory(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_HISTORY)
-    CompletableFuture<SearchHistoryPage> searchHistoryAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<SearchHistory, Method<SearchHistory>>> getSearchHistoryAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_PLAYLIST)
-    SearchPage<Playlist> searchPlaylist(@QueryMap Map<String, Object> queryParams);
+    Page<Playlist, SearchMethod<Playlist>> searchPlaylist(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_PLAYLIST)
-    CompletableFuture<SearchPage<Playlist>> searchPlaylistAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Playlist, SearchMethod<Playlist>>> searchPlaylistAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_RADIO)
-    SearchPage<Radio> searchRadio(@QueryMap Map<String, Object> queryParams);
+    Page<Radio, SearchMethod<Radio>> searchRadio(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_RADIO)
-    CompletableFuture<SearchPage<Radio>> searchRadioAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Radio, SearchMethod<Radio>>> searchRadioAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_TRACK)
-    SearchPage<Track> searchTrack(@QueryMap Map<String, Object> queryParams);
+    Page<Track, SearchMethod<Track>> searchTrack(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_TRACK)
-    CompletableFuture<SearchPage<Track>> searchTrackAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<Track, SearchMethod<Track>>> searchTrackAsync(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_USER)
-    SearchPage<User> searchUser(@QueryMap Map<String, Object> queryParams);
+    Page<User, SearchMethod<User>> searchUser(@QueryMap Map<String, Object> queryParams);
 
     @RequestLine(GET + SEARCH_USER)
-    CompletableFuture<SearchPage<User>> searchUserAsync(@QueryMap Map<String, Object> queryParams);
+    CompletableFuture<Page<User, SearchMethod<User>>> searchUserAsync(@QueryMap Map<String, Object> queryParams);
 }

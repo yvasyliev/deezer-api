@@ -3,13 +3,13 @@ package io.github.yvasyliev.deezer.v2.objects;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import io.github.yvasyliev.deezer.objects.Pageable;
-import io.github.yvasyliev.deezer.v2.methods.AbstractPagingMethod;
+import io.github.yvasyliev.deezer.v2.methods.Method;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class Page<T extends Pageable, M extends AbstractPagingMethod<T, M>> {
+public class Page<T extends Pageable, M extends Method<?>> {
     /**
      * List of objects.
      */

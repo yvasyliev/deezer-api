@@ -18,6 +18,7 @@ import io.github.yvasyliev.deezer.objects.Options;
 import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Podcast;
 import io.github.yvasyliev.deezer.objects.Radio;
+import io.github.yvasyliev.deezer.objects.SearchHistory;
 import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.objects.User;
 import io.github.yvasyliev.deezer.service.AlbumService;
@@ -87,17 +88,25 @@ import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchPlaylist;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchRadio;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchTrack;
 import io.github.yvasyliev.deezer.v2.methods.search.AdvancedSearchUser;
+import io.github.yvasyliev.deezer.v2.methods.search.GetSearchHistory;
+import io.github.yvasyliev.deezer.v2.methods.search.Search;
 import io.github.yvasyliev.deezer.v2.methods.search.SearchAlbum;
+import io.github.yvasyliev.deezer.v2.methods.search.SearchArtist;
+import io.github.yvasyliev.deezer.v2.methods.search.SearchPlaylist;
+import io.github.yvasyliev.deezer.v2.methods.search.SearchRadio;
+import io.github.yvasyliev.deezer.v2.methods.search.SearchTrack;
+import io.github.yvasyliev.deezer.v2.methods.search.SearchUser;
+import io.github.yvasyliev.deezer.v2.objects.Page;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DeezerClient {
     private static final String API_HOST = "https://api.deezer.com";
     private final Gson gson;
@@ -111,16 +120,22 @@ public class DeezerClient {
     private final PlaylistService playlistService;
     private final RadioService radioService;
     private final SearchService searchService;
+    private String accessToken;
 
     public static DeezerClient create() {
-        return new DeezerClientBuilder().create();
+        return create(null);
+    }
+
+    public static DeezerClient create(String accessToken) {
+        return DeezerClient.custom().accessToken(accessToken).create();
     }
 
     @Builder(builderClassName = "DeezerClientBuilder", builderMethodName = "custom", buildMethodName = "create")
     private static DeezerClient create(
             Function<GsonBuilder, GsonBuilder> gsonBuilderCreator,
             Function<Gson, GsonDecoder> gsonDecoderCreator,
-            Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCreator
+            Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCreator,
+            String accessToken
     ) {
 
         AbstractMethodDeserializer<Method<?>> methodDeserializer = MethodDeserializer
@@ -152,7 +167,14 @@ public class DeezerClient {
                 .classMap(RadioService.RADIO_LISTS, GetRadioLists.class)
                 .classMap(RadioService.RADIO_TOP, GetRadioTop.class)
                 .classMap("/radio/(\\d+)/tracks", GetRadioTracks.class)
+                .classMap(SearchService.SEARCH, Search.class)
                 .classMap(SearchService.SEARCH_ALBUM, SearchAlbum.class)
+                .classMap(SearchService.SEARCH_ARTIST, SearchArtist.class)
+                .classMap(SearchService.SEARCH_HISTORY, GetSearchHistory.class)
+                .classMap(SearchService.SEARCH_PLAYLIST, SearchPlaylist.class)
+                .classMap(SearchService.SEARCH_RADIO, SearchRadio.class)
+                .classMap(SearchService.SEARCH_TRACK, SearchTrack.class)
+                .classMap(SearchService.SEARCH_USER, SearchUser.class)
                 .build();
 
         AbstractMethodDeserializer<AdvancedSearchMethod<?>> advancedSearchMethodDeserializer = AdvancedSearchMethodDeserializer
@@ -173,8 +195,8 @@ public class DeezerClient {
         AbstractPagingMethodCreator<GenreService> genrePagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<PlaylistService> playlistPagingMethodCreator = new PagingMethodCreator<>();
         AbstractPagingMethodCreator<RadioService> radioPagingMethodCreator = new PagingMethodCreator<>();
-        AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
         AbstractPagingMethodCreator<SearchService> advancedSearchMethodCreator = new AdvancedSearchMethodCreator();
+        AbstractPagingMethodCreator<SearchService> searchMethodCreator = new SearchMethodCreator();
 
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -220,7 +242,14 @@ public class DeezerClient {
                 .registerTypeAdapter(AdvancedSearchRadio.class, advancedSearchMethodCreator)
                 .registerTypeAdapter(AdvancedSearchTrack.class, advancedSearchMethodCreator)
                 .registerTypeAdapter(AdvancedSearchUser.class, advancedSearchMethodCreator)
-                .registerTypeAdapter(SearchAlbum.class, searchMethodCreator);
+                .registerTypeAdapter(Search.class, searchMethodCreator)
+                .registerTypeAdapter(SearchAlbum.class, searchMethodCreator)
+                .registerTypeAdapter(SearchArtist.class, searchMethodCreator)
+                .registerTypeAdapter(SearchHistory.class, searchMethodCreator)
+                .registerTypeAdapter(SearchPlaylist.class, searchMethodCreator)
+                .registerTypeAdapter(SearchRadio.class, searchMethodCreator)
+                .registerTypeAdapter(SearchTrack.class, searchMethodCreator)
+                .registerTypeAdapter(SearchUser.class, searchMethodCreator);
 
         Gson gson = gsonBuilderCreator.apply(gsonBuilder).create();
 
@@ -278,7 +307,8 @@ public class DeezerClient {
                 optionsService,
                 playlistService,
                 radioService,
-                searchService
+                searchService,
+                accessToken
         );
     }
 
@@ -439,41 +469,66 @@ public class DeezerClient {
         return new AdvancedSearch(gson, searchService);
     }
 
-    public AdvancedSearchMethod<Album> searchAlbum() {
+    public AdvancedSearchMethod<Album> searchAlbums() {
         return new AdvancedSearchAlbum(gson, searchService);
     }
 
-    public AdvancedSearchMethod<Artist> searchArtist() {
+    public AdvancedSearchMethod<Artist> searchArtists() {
         return new AdvancedSearchArtist(gson, searchService);
     }
 
-    public AdvancedSearchMethod<Playlist> searchPlaylist() {
+    public AdvancedSearchMethod<Playlist> searchPlaylists() {
         return new AdvancedSearchPlaylist(gson, searchService);
     }
 
-    public AdvancedSearchMethod<Radio> searchRadio() {
+    public AdvancedSearchMethod<Radio> searchRadios() {
         return new AdvancedSearchRadio(gson, searchService);
     }
 
-    public AdvancedSearchMethod<Track> searchTrack() {
+    public AdvancedSearchMethod<Track> searchTracks() {
         return new AdvancedSearchTrack(gson, searchService);
     }
 
-    public AdvancedSearchMethod<User> searchUser() {
+    public AdvancedSearchMethod<User> searchUsers() {
         return new AdvancedSearchUser(gson, searchService);
+    }
+
+    public SearchMethod<Track> search(String q) {
+        return new Search(gson, searchService, q);
+    }
+
+    public Method<Page<SearchHistory, Method<SearchHistory>>> getSearchHistory() {
+        return new GetSearchHistory(gson, searchService, accessToken);
     }
 
     public SearchMethod<Album> searchAlbums(String q) {
         return new SearchAlbum(gson, searchService, q);
     }
 
-    public AdvancedSearchMethod<Album> searchAlbums() {
-        return new AdvancedSearchAlbum(gson, searchService);
+    public SearchMethod<Artist> searchArtist(String q) {
+        return new SearchArtist(gson, searchService, q);
+    }
+
+    public SearchMethod<Playlist> searchPlaylist(String q) {
+        return new SearchPlaylist(gson, searchService, q);
+    }
+
+    public SearchMethod<Radio> searchRadio(String q) {
+        return new SearchRadio(gson, searchService, q);
+    }
+
+    public SearchMethod<Track> searchTrack(String q) {
+        return new SearchTrack(gson, searchService, q);
+    }
+
+    public SearchMethod<User> searchUser(String q) {
+        return new SearchUser(gson, searchService, q);
     }
 
     public static class DeezerClientBuilder {
         private Function<GsonBuilder, GsonBuilder> gsonBuilderCreator = gsonBuilder -> gsonBuilder;
         private Function<Gson, GsonDecoder> gsonDecoderCreator = GsonDecoder::new;
         private Function<AsyncFeign.AsyncBuilder<Object>, AsyncFeign.AsyncBuilder<Object>> asyncFeignBuilderCreator = asyncFeignBuilder -> asyncFeignBuilder;
+        private String accessToken;
     }
 }

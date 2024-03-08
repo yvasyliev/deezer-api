@@ -30,7 +30,6 @@ import io.github.yvasyliev.deezer.objects.Playlist;
 import io.github.yvasyliev.deezer.objects.Radio;
 import io.github.yvasyliev.deezer.objects.SearchHistoryPage;
 import io.github.yvasyliev.deezer.objects.SearchPage;
-import io.github.yvasyliev.deezer.objects.Track;
 import io.github.yvasyliev.deezer.service.AlbumService;
 import io.github.yvasyliev.deezer.service.ArtistService;
 import io.github.yvasyliev.deezer.service.ChartService;
@@ -130,38 +129,6 @@ public class DeezerClient {
         RadioService radioService = asyncBuilder.target(RadioService.class, API_HOST);
         SearchService searchService = asyncBuilder.target(SearchService.class, API_HOST);
 
-        searchMethodFactories.put(SearchService.SEARCH, searchMethodFactory(
-                searchService::search,
-                searchService::searchAsync
-        ));
-        searchMethodFactories.put(SearchService.SEARCH_ARTIST, searchMethodFactory(
-                searchService::searchArtist,
-                searchService::searchArtistAsync
-        ));
-        searchMethodFactories.put(SearchService.SEARCH_PLAYLIST, searchMethodFactory(
-                searchService::searchPlaylist,
-                searchService::searchPlaylistAsync
-        ));
-        searchMethodFactories.put(SearchService.SEARCH_RADIO, searchMethodFactory(
-                searchService::searchRadio,
-                searchService::searchRadioAsync
-        ));
-        searchMethodFactories.put(SearchService.SEARCH_TRACK, searchMethodFactory(
-                searchService::searchTrack,
-                searchService::searchTrackAsync
-        ));
-        searchMethodFactories.put(SearchService.SEARCH_USER, searchMethodFactory(
-                searchService::searchUser,
-                searchService::searchUserAsync
-        ));
-
-        searchHistoryMethodDeserializer.setSearchHistoryMethodFactory(token -> searchHistoryMethodFactory(
-                        searchService::searchHistory,
-                        searchService::searchHistoryAsync,
-                        token
-                ).get()
-        );
-
         return new DeezerClient(
                 albumService,
                 artistService,
@@ -238,32 +205,6 @@ public class DeezerClient {
 
     public Method<Radio> getRadio(long radioId) {
         return method(radioService::getRadio, radioService::getRadioAsync, radioId);
-    }
-
-    // SEARCH METHODS
-
-    public SearchMethod<Track> search(String q) {
-        return searchMethod(searchService::search, searchService::searchAsync, q);
-    }
-
-    public SearchMethod<Artist> searchArtist(String q) {
-        return searchMethod(searchService::searchArtist, searchService::searchArtistAsync, q);
-    }
-
-    public SearchHistoryMethod searchHistory() {
-        return searchHistoryMethod(searchService::searchHistory, searchService::searchHistoryAsync);
-    }
-
-    public SearchMethod<Playlist> searchPlaylist(String q) {
-        return searchMethod(searchService::searchPlaylist, searchService::searchPlaylistAsync, q);
-    }
-
-    public SearchMethod<Radio> searchRadio(String q) {
-        return searchMethod(searchService::searchRadio, searchService::searchRadioAsync, q);
-    }
-
-    public SearchMethod<Track> searchTrack(String q) {
-        return searchMethod(searchService::searchTrack, searchService::searchTrackAsync, q);
     }
 
     // METHOD CREATORS
